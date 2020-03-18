@@ -1,4 +1,4 @@
 class Serpent {
     private int taille;
-    private String nom;
+    private String nom = "Chaussettes";
 }
