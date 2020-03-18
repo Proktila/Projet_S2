@@ -1,0 +1,3 @@
+class Serpent {
+    private taille;
+}
