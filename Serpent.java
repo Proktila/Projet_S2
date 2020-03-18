@@ -1,3 +1,4 @@
 class Serpent {
-    private taille;
+    private int taille;
+    private String nom;
 }
