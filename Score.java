@@ -3,6 +3,10 @@ public class Score {
     private int actualScore = 0;
     private String pseudoBestScore;
 
+    public Score(){
+        
+    }
+
     public int getBestScore(){
         return this.bestScore;
     }
