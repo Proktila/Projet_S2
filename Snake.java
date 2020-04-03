@@ -3,8 +3,10 @@ import java.awt.Color;
 import javax.swing.*;
 import java.awt.Graphics;
 
-public class Snake {
-    private int size = 3;
+public class Snake extends JPanel {
+    private static final long serialVersionUID = 1L;
+
+    private int sizeS = 3;
     private int posX;
     private int posY;
     private int nbFruits = 0;
@@ -12,7 +14,10 @@ public class Snake {
     private int direction; // 0 = haut, 1 = droite, 2 = bas, 3 = gauche
     private boolean isAlive = true;
 
+    public Snake(){ super(); }
+
     public Snake(String skinS, int dirS, int posXS, int posYS){
+        super();
         this.skin = skinS;
         this.direction = dirS;
         this.posX = posXS;
@@ -69,8 +74,8 @@ public class Snake {
         return this.skin;
     }
 
-    public int getSize(){
-        return this.size;
+    public int getSizeS(){
+        return this.sizeS;
     }
 
     public int getDirection(){
