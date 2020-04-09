@@ -25,7 +25,7 @@ public class Snake extends JPanel {
         this.posTete = posTete;
     }
 
-    public void run(){
+    public void run(double speed){
         while( this.nbsVies > 0 ){
 
         }
@@ -47,8 +47,42 @@ public class Snake extends JPanel {
         }
     }
 
-    public void eat(){
+    public boolean isOnFruit(){
+        // Envoie maquête ?
+        // Recherche de tous les fruits
+        //  comparer la position des fruits a la tête du serpent
+        // si tete serpent = posFruit -> eat()
+    }
 
+    public boolean isFaceWall(){
+        // Envoie maquête ?
+        // Recherche de tous les murs
+        //  comparer la position des murs a la tête du serpent
+        // si tete serpent devant mur et petit delai pour bouger et tjr devant mur alors
+        // loseLife()
+    }
+
+
+    public void eat(){
+        // eaten Fruit
+    }
+    public void die(){
+        // detruis le serpent
+    }
+    public void loseSize(){
+        this.taille -= 1;
+    }
+
+    public void addSize(){
+        this.taille += 1;
+    }
+
+    public void loseLife(){
+        this.taille -= 1;
+    }
+
+    public void addLife(){
+        this.taille += 1;
     }
 
     public double[][] getPosCorp() {
