@@ -6,26 +6,27 @@ import java.awt.Graphics;
 public class Snake extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    private int sizeS = 3;
-    private int posX;
-    private int posY;
-    private int nbFruits = 0;
-    private String skin;
-    private int direction; // 0 = haut, 1 = droite, 2 = bas, 3 = gauche
-    private boolean isAlive = true;
+    private double posCorp[][]; // taille map
+    private int taille = 3;
+    private double vitesse;
+    private int nbFruitsManger = 0;
+    private Score score;
+    private int nbsVies = 3;
+    private String skin = "normal";
+    private double posTete[] = new double[2];
+    private int direction = 0; // 0 = haut, 1 = droite, 2 = bas, 3 = gauche
 
     public Snake(){ super(); }
 
-    public Snake(String skinS, int dirS, int posXS, int posYS){
-        super();
-        this.skin = skinS;
-        this.direction = dirS;
-        this.posX = posXS;
-        this.posY = posYS;
+    public Snake(double[][] posCorp, double vitesse, String skin, double[] posTete) {
+        this.posCorp = posCorp;
+        this.vitesse = vitesse;
+        this.skin = skin;
+        this.posTete = posTete;
     }
 
     public void run(){
-        while( this.isAlive ){
+        while( this.nbsVies > 0 ){
 
         }
     }
@@ -50,44 +51,88 @@ public class Snake extends JPanel {
 
     }
 
-    public void setPosXSnake(int posXs){
-        this.posX = posXs;
+    public double[][] getPosCorp() {
+        return posCorp;
     }
 
-    public void setPosYSnake(int posYs){
-        this.posY = posYs;
+    public void setPosCorp(double[][] posCorp) {
+        this.posCorp = posCorp;
     }
 
-    public int getPosXSnake(){
-        return this.posX;
+    public int getTaille() {
+        return taille;
     }
 
-    public int getPosYSnake(){
-        return this.posY;
+    public void setTaille(int taille) {
+        this.taille = taille;
     }
 
-    public int getNbFruits(){
-        return this.nbFruits;
+    public double getVitesse() {
+        return vitesse;
     }
 
-    public String getSkin(){
-        return this.skin;
+    public void setVitesse(double vitesse) {
+        this.vitesse = vitesse;
     }
 
-    public int getSizeS(){
-        return this.sizeS;
+    public int getNbFruitsManger() {
+        return nbFruitsManger;
     }
 
-    public int getDirection(){
-        return this.direction;
+    public void setNbFruitsManger(int nbFruitsManger) {
+        this.nbFruitsManger = nbFruitsManger;
     }
 
-    public boolean getIsAlive(){
-        return this.isAlive;
+    public Score getScore() {
+        return score;
     }
 
-    public String toString(){
-        return "";
+    public void setScore(Score score) {
+        this.score = score;
     }
 
+    public int getNbsVies() {
+        return nbsVies;
+    }
+
+    public void setNbsVies(int nbsVies) {
+        this.nbsVies = nbsVies;
+    }
+
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin;
+    }
+
+    public double[] getPosTete() {
+        return posTete;
+    }
+
+    public void setPosTete(double[] posTete) {
+        this.posTete = posTete;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "Snake{" +
+                "sizeS=" + sizeS +
+                ", posX=" + posX +
+                ", posY=" + posY +
+                ", nbFruits=" + nbFruits +
+                ", skin='" + skin + '\'' +
+                ", direction=" + direction +
+                ", isAlive=" + isAlive +
+                '}';
+    }
 }
