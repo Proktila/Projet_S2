@@ -51,7 +51,7 @@ public class Snake extends JPanel {
         // Envoie maquête ?
         // Recherche de tous les fruits
         //  comparer la position des fruits a la tête du serpent
-        // si tete serpent = posFruit -> eat()
+        // si tete serpent = posFruit -> eat(Fruit fruit)
     }
 
     public boolean isFaceWall(){
@@ -63,18 +63,30 @@ public class Snake extends JPanel {
     }
 
 
-    public void eat(){
+    public void eat(Fruit fruit){
         // eaten Fruit
+        this.nbFruitsManger += 1;
+        // recup stats fruit
+        // faire grandir le serpent de x longueurs en fonction des stats du fruit
+        this.addSize(1);
     }
     public void die(){
         // detruis le serpent
+        // affiche game over
     }
+
     public void loseSize(){
-        this.taille -= 1;
+        this.loseSize(1);
+    }
+    public void loseSize(int size){
+        this.taille -= size;
     }
 
     public void addSize(){
-        this.taille += 1;
+        this.addSize(1);
+    }
+    public void addSize(int size){
+        this.taille += size;
     }
 
     public void loseLife(){
@@ -85,8 +97,8 @@ public class Snake extends JPanel {
         this.taille += 1;
     }
 
-    public double[][] getPosCorp() {
-        return posCorp;
+    public double[][] getPosCorps() {
+        return posCorps;
     }
 
     public void setPosCorp(double[][] posCorp) {
@@ -110,7 +122,7 @@ public class Snake extends JPanel {
     }
 
     public int getNbFruitsManger() {
-        return nbFruitsManger;
+        return this.nbFruitsManger;
     }
 
     public void setNbFruitsManger(int nbFruitsManger) {
@@ -118,7 +130,7 @@ public class Snake extends JPanel {
     }
 
     public Score getScore() {
-        return score;
+        return this.score;
     }
 
     public void setScore(Score score) {
@@ -134,7 +146,7 @@ public class Snake extends JPanel {
     }
 
     public String getSkin() {
-        return skin;
+        return this.skin;
     }
 
     public void setSkin(String skin) {
@@ -142,7 +154,7 @@ public class Snake extends JPanel {
     }
 
     public double[] getPosTete() {
-        return posTete;
+        return this.posTete;
     }
 
     public void setPosTete(double[] posTete) {
@@ -150,7 +162,7 @@ public class Snake extends JPanel {
     }
 
     public int getDirection() {
-        return direction;
+        return this.direction;
     }
 
     public void setDirection(int direction) {
