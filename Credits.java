@@ -14,9 +14,9 @@ public class Credits extends JFrame {
     setSize(500,600);                                // Fixe la taille par défaut
     setVisible(true);                                // Affiche la fenetre
 
-    JPanel pano = new JPanel();
-    pano.setBackground(Color.BLACK);
-    this.setContentPane(pano);
+    //JPanel pano = new JPanel();                       // Pour mettre un arrière plan de couleur
+    //pano.setBackground(Color.BLACK);
+    //this.setContentPane(pano);                  
 
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Gestion de la fermeture
   }
