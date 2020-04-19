@@ -1,14 +1,23 @@
 import javax.swing.*; // Pour les composants graphiques que l'on ajoutera dans la méthode creerWidget
 import java.awt.*;    // Pour la JFrame++++++++++++++++++
+import java.awt.Color;
+import javax.swing.JFrame;
+
  
 public class Credits extends JFrame {
 
   public Credits() {
  
     creerWidget();
- 
-    setSize(500,500);                                // Fixe la taille par défaut
+ 	
+ 	this.setTitle("Page credit du jeu");
+    setSize(500,600);                                // Fixe la taille par défaut
     setVisible(true);                                // Affiche la fenetre
+
+    JPanel pano = new JPanel();
+    pano.setBackground(Color.BLACK);
+    this.setContentPane(pano);
+
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Gestion de la fermeture
   }
  
@@ -26,8 +35,8 @@ public class Credits extends JFrame {
 	JTextArea taText2 = new JTextArea(text2);
 	JTextArea taText3 = new JTextArea(text3);
 
-	JPanel pano = new JPanel(new GridLayout(4,1));
-	pano.add(taText0, BorderLayout.SOUTH);
+	JPanel pano = new JPanel(new FlowLayout(FlowLayout.CENTER, 4000 ,100));
+	pano.add(taText0);
 	pano.add(taText1);   // Création d'un JPanel qui va contenir
 	pano.add(taText2);
 	pano.add(taText3);
