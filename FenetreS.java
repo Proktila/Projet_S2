@@ -1,6 +1,5 @@
 import javax.swing.*;
-import java.awt.Graphics;
-import java.awt.Color;
+import java.awt.*;
 import java.util.Scanner;
 
 public class FenetreS extends JFrame {
@@ -8,8 +7,8 @@ public class FenetreS extends JFrame {
     private static final long serialVersionUID = 1L;
 
     // Elements du menu PARAMETRE
-    protected JSlider volumeMusique;
-    protected JSlider volumeBruits;
+    protected JSlider slVolumeMusique;
+    protected JSlider slVolumeBruits;
     protected JRadioButton rbFrancais;
     protected JRadioButton rbAnglais;
     static final int VOL_MIN = 0;
@@ -44,18 +43,18 @@ public class FenetreS extends JFrame {
 
 
     public void initParametres() {
-        volumeMusique = new JSlider(JSlider.HORIZONTAL, VOL_MIN, VOL_MAX, VOL_INIT);
-        volumeBruits = new JSlider(JSlider.HORIZONTAL, VOL_MIN, VOL_MAX, VOL_INIT);
+        slVolumeMusique = new JSlider(JSlider.HORIZONTAL, VOL_MIN, VOL_MAX, VOL_INIT);
+        slVolumeBruits = new JSlider(JSlider.HORIZONTAL, VOL_MIN, VOL_MAX, VOL_INIT);
 
-        volumeMusique.setMajorTickSpacing(10);
-        volumeMusique.setMinorTickSpacing(5);
-        volumeMusique.setPaintTicks(true);
-        volumeMusique.setPaintLabels(true);
+        slVolumeMusique.setMajorTickSpacing(10);
+        slVolumeMusique.setMinorTickSpacing(5);
+        slVolumeMusique.setPaintTicks(true);
+        slVolumeMusique.setPaintLabels(true);
 
-        volumeBruits.setMajorTickSpacing(10);
-        volumeBruits.setMinorTickSpacing(5);
-        volumeBruits.setPaintTicks(true);
-        volumeBruits.setPaintLabels(true);
+        slVolumeBruits.setMajorTickSpacing(10);
+        slVolumeBruits.setMinorTickSpacing(5);
+        slVolumeBruits.setPaintTicks(true);
+        slVolumeBruits.setPaintLabels(true);
 
         rbFrancais = new JRadioButton("Français", true);
         rbAnglais = new JRadioButton("English", false);
@@ -71,19 +70,18 @@ public class FenetreS extends JFrame {
         JLabel lLangue = new JLabel("Langue");
 
         JPanel panRbLangue = new JPanel();
-        panRbAnglais.setLayout(new BoxLayout(panRbAnglais, BoxLayout.X_AXIS));
-        panRbAnglais.add(rbFrancais);
-        panRbAnglais.add(rbAnglais);
+        panRbLangue.setLayout(new BoxLayout(panRbLangue, BoxLayout.X_AXIS));
+        panRbLangue.add(rbFrancais);
+        panRbLangue.add(rbAnglais);
         JPanel panLangues = new JPanel();
-        panAnglais.add(lLangue);
-        panAnglais.add(panRbLangue);
+        panLangues.add(lLangue);
+        panLangues.add(panRbLangue);
 
-        panGrid.add(lSon);
         JPanel panGrid = new JPanel(new GridLayout(3,2));
         panGrid.add(lMusique);
-        panGrid.add(slSon);
+        panGrid.add(slVolumeMusique);
         panGrid.add(lBruitages);
-        panGrid.add(slBruits);
+        panGrid.add(slVolumeBruits);
         panGrid.add(lLangue);
         panGrid.add(panLangues);
 
