@@ -157,6 +157,8 @@ public class Menu extends JFrame {
                 addDifficile();
             }
         });
+
+        this.container.add(this.panJouer);
     }
 
 
@@ -215,6 +217,8 @@ public class Menu extends JFrame {
             }
         });
 
+        this.container.add(this.panFacile);
+
     }
 
 
@@ -271,6 +275,8 @@ public class Menu extends JFrame {
                 addJouer();
             }
         });
+
+        this.container.add(this.panNormal);
     }
 
 
@@ -327,6 +333,8 @@ public class Menu extends JFrame {
                 addJouer();
             }
         });
+
+        this.container.add(this.panDifficile);
     }
 
 
@@ -349,6 +357,8 @@ public class Menu extends JFrame {
                 this.difficulty = null;
             }
         });
+
+        this.container.add(this.panTrad);
     }
 
 
@@ -371,6 +381,8 @@ public class Menu extends JFrame {
                 this.difficulty = null;
             }
         });
+
+        this.container.add(this.panLaby);
     }
 
 
@@ -393,6 +405,8 @@ public class Menu extends JFrame {
                 this.difficulty = null;
             }
         });
+
+        this.container.add(this.panChrono);
     }
 
 
@@ -415,6 +429,8 @@ public class Menu extends JFrame {
                 this.difficulty = null;
             }
         });
+
+        this.container.add(this.panDuo);
     }
 
 }
