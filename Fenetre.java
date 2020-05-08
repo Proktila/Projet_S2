@@ -18,6 +18,7 @@ class Fenetre extends JFrame {
     private final Color BG_COLOR = new Color(50,99,23);
     private final Color FG_COLOR = new Color(99, 205, 42);
     private final Font TEXT_FONT = new Font("Monospaced", Font.BOLD, 50);
+    private final Model model;
 
     //COLOR
     private Color blue = new Color(47, 81, 103);
@@ -97,6 +98,7 @@ class Fenetre extends JFrame {
 
 
     // Elements du menu PARAMETRE
+    private JLabel lParam;
     JPanel panTitleParam;
     JLabel lImgTitreDroite;
     JLabel lImgTitreGauche;
@@ -104,14 +106,10 @@ class Fenetre extends JFrame {
     protected JSlider slVolumeBruits;
     protected JRadioButton rbFrench;
     protected JRadioButton rbEnglish;
-    protected JButton bBack;
-    private final int VOL_MIN = 0;
-    private final int VOL_MAX = 100;
-    private final int VOL_INIT = 75;
+    protected SnakeButton backParam;
+
 
     // variables a modifier par les listener du menu parametres
-    private int volumeMusique = VOL_INIT;
-    private int volumeBruits = VOL_INIT;
     private String lang;
     /**FIN MENU SKIN**/
 
@@ -148,45 +146,52 @@ class Fenetre extends JFrame {
 
     /**FIN MENU SCORE**/
 
+    /**MENU JOUER**/
+
+    private SnakeButton backPlay;
+    private SnakeButton butEasy;
+    private SnakeButton butNormal;
+    private SnakeButton butHard;
+    private SnakeButton butTrad;
+    private SnakeButton butLaby;
+    private SnakeButton butChrono;
+    private SnakeButton butDuo;
+    private SnakeButton backDifficulty;
+    private JLabel lPlay;
+
+    private JPanel panPlay;
+    private JPanel panDifficulty;
+
+    /**FIN MENU JOUER**/
+
     /** Credits **/
     private SnakeButton backCredits;
     private JPanel panelCredits;
+    private JLabel lCredits;
+    /** Credits **/
 
     /**CONSTRUCTEUR de fenetre**/
-    public Fenetre() {
-
+    public Fenetre(Model model) {
 
         con = getContentPane();
+
+        this.model = model;
         this.setLayout(null);
 
         this.initAttribut();
 
-        this.creerParametresVue();
-        //this.addCredit();
-        // Menu Principal
-        //this.creerTitre(lMenuPrincipal, imgCoupeGauche, imgCoupeDroite);
-        //this.creerWidgetMenuPrincipal();
-
-        // SKIN
-        //this.creerTitre(lSkin, imgCoupeGauche, imgCoupeGauche);
-        //this.creerParametresVue();
-        //this.addSkin();
-
-        //SCORE
-        //this.creerTitreScore(lscore, imgCoupeGauche, imgCoupeGauche);
-        //this.creerInterface(pantitre2);
-
+        this.creerWidgetMenuPrincipal();
 
         this.getContentPane().setBackground(green);
         this.setLocation(100, 0);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //gestion de la fermeture
+        // gestion de la fermeture
 
         this.setTitle("Snake");
         this.setSize(1280, 720);
         this.setResizable(false);
 
-        this.setVisible(true); //afiche fenetre
+        this.setVisible(true); // affiche fenetre
 
     }
 
@@ -199,11 +204,14 @@ class Fenetre extends JFrame {
         initSkin();
         initScore();
         initParametre();
+        initCredits();
+        initJouer();
         backCredits = new SnakeButton("retour");
     }
     public void initMenuPrincipal(){
         lMenuPrincipal = new JLabel (" Menu principal ") ;
         setupTitle(lMenuPrincipal);
+        creerTitre(lMenuPrincipal,null,null);
 
         imageGauche = new ImageIcon("img/menuPrinc/serpent1.png");
         imageDroite = new ImageIcon("img/menuPrinc/serpent2.png");
@@ -217,28 +225,34 @@ class Fenetre extends JFrame {
         boutonScores = new SnakeButton("Tableau des scores");
         boutonParametres = new SnakeButton("Parametres");
         boutonCredits = new SnakeButton("Credits");
-
-        //mettre en commentaire pour l'instant
-        /*cbJouer = new ControlBoutonMenuPrincipal(this);
-        cbSkins = new ControlBoutonMenuPrincipal(this);
-        cbScores = new ControlBoutonMenuPrincipal(this);
-        cbParametres = new ControlBoutonMenuPrincipal(this);
-        cbCredits = new ControlBoutonMenuPrincipal(this);
-
-        boutonJouer.addActionListener(cbJouer);
-        boutonSkins.addActionListener(cbSkins);
-        boutonScores.addActionListener(cbScores);
-        boutonParametres.addActionListener(cbParametres);
-        boutonCredits.addActionListener(cbCredits);*/
     }
 
+    public void initJouer() {
+
+        butEasy = new SnakeButton("Facile");
+        butNormal = new SnakeButton("Normal");
+        butHard = new SnakeButton("Difficile");
+        butTrad = new SnakeButton("Traditionnel");
+        butLaby = new SnakeButton("Labyrinthe");
+        butChrono = new SnakeButton("Chrono");
+        butDuo = new SnakeButton("Duo");
+        backPlay = new SnakeButton("Retour");
+        backDifficulty = new SnakeButton("Retour");
+        lPlay = new JLabel("Jouer");
+        setupTitle(lPlay);
+        creerTitre(lPlay,null,null);
+    }
+    public void initCredits(){
+        lCredits = new JLabel("Credits");
+        setupTitle(lCredits);
+        creerTitre(lCredits,null,null);
+    }
     public void initScore(){
         lscore = new JLabel("TABLEAU DES SCORES");
         setupTitle(lscore);
         bRetour = new SnakeButton("retour");
 
-
-        //contenu des cellules
+        // contenu des cellules
         data = new Object[][]{
                 {"Normal", "serpent", "105"},
                 {"Chrono", "serpent", "100"},
@@ -249,19 +263,18 @@ class Fenetre extends JFrame {
                 {"...", "serpent", "50"},
 
         };
-
-        //Les titres des colonnes
+        // Les titres des colonnes
         title = new String[]{"Thème", "Nom du serpent", "Score"};
 
         tableau = new JTable(data, title);
 
-        //tableau
+        // tableau
         table = new TableModel(data, title);
         render = new Tableau();
         tableau.setModel(table);
         tableau.setDefaultRenderer(Object.class, render);
 
-        //titre des colonnes
+        // titre des colonnes
         tableau.getTableHeader().setBackground(lightGreen);
         tableau.getTableHeader().setForeground(blue);
         tableau.getTableHeader().setFont(new Font("Monospaced", Font.BOLD, 30));
@@ -272,7 +285,7 @@ class Fenetre extends JFrame {
         tableau.getColumnModel().getColumn(1).setPreferredWidth(300);
         tableau.getColumnModel().getColumn(2).setPreferredWidth(200);
 
-        //image coupe
+        // image coupe
         imgCoupe = new ImageIcon("img/score/coupe.png");
 
         imgCoupeGauche =  new JLabel(imgCoupe);
@@ -283,7 +296,7 @@ class Fenetre extends JFrame {
         lSkin = new JLabel("Skin");
         setupTitle(lSkin);
 
-        //SKIN Menu
+        // SKIN Menu
         skinMap = new SnakeButton("Theme map");
         skinPseudo = new SnakeButton("pseudoSerpent");
         backFromSkin = new SnakeButton("Retour");
@@ -296,12 +309,12 @@ class Fenetre extends JFrame {
 
         backFromSkinChild = new SnakeButton("Retour");
 
-        //SKIN SERPENT
+        // SKIN SERPENT
 
         cbSerpent = new JComboBox(listeSerpent);
         setupCb(cbSerpent);
 
-        //SKIN MAP
+        // SKIN MAP
         cbMap = new JComboBox(listeMap);
         setupCb(cbMap);
 
@@ -318,8 +331,8 @@ class Fenetre extends JFrame {
     }
 
     public void initParametre(){
-        slVolumeMusique = new JSlider(JSlider.HORIZONTAL, VOL_MIN, VOL_MAX, VOL_INIT);
-        slVolumeBruits = new JSlider(JSlider.HORIZONTAL, VOL_MIN, VOL_MAX, VOL_INIT);
+        slVolumeMusique = new JSlider(JSlider.HORIZONTAL,model.getVOL_MIN(), model.getVOL_MAX(), model.getVOL_INIT());
+        slVolumeBruits = new JSlider(JSlider.HORIZONTAL, model.getVOL_MIN(), model.getVOL_MAX(), model.getVOL_INIT());
 
         slVolumeMusique.setMajorTickSpacing(10);
         slVolumeMusique.setMinorTickSpacing(5);
@@ -336,13 +349,17 @@ class Fenetre extends JFrame {
         lImgTitreGauche =  new JLabel(new ImageIcon("img/paramIcon.png"));
         lImgTitreDroite =  new JLabel(new ImageIcon("img/paramIcon.png"));
 
+        lParam = new JLabel("Parametres");
+        setupTitle(lParam);
+        creerTitre(lParam, lImgTitreDroite, lImgTitreGauche);
+
         rbFrench = new JRadioButton(new ImageIcon("img/langFR.png"), true);
         rbEnglish = new JRadioButton(new ImageIcon("img/langEN.png"), false);
         ButtonGroup rbLangue = new ButtonGroup();
         rbLangue.add(rbFrench);
         rbLangue.add(rbEnglish);
 
-        bBack = new SnakeButton("Retour");
+        backParam = new SnakeButton("Retour");
     }
 
 
@@ -356,9 +373,11 @@ class Fenetre extends JFrame {
         titreP.setBackground(blue);
         if(img != null){
             titreP.add(img);
+            titreP.add(Box.createHorizontalStrut(50));
         }
         titreP.add(titre);
         if(img2 != null){
+            titreP.add(Box.createHorizontalStrut(50));
             titreP.add(img2);
         }
         con.add(titreP);
@@ -368,60 +387,22 @@ class Fenetre extends JFrame {
     /**DEBUT Methodes menu principale : Marion**/
 
     public void creerWidgetMenuPrincipal(){
+        creerTitre(lMenuPrincipal,null,null);
 
-        JPanel panoLabelMenuPrincipal = new JPanel();
-        panoLabelMenuPrincipal.setBackground(green);
-        panoLabelMenuPrincipal.add(lMenuPrincipal);
+        pantitre2 = setupContent();
+        JPanel content = new JPanel();
+        setupPanelBtn(content,5);
 
-        pantitre2 = new JPanel();
-        pantitre2.setBackground(green);
-        pantitre2.add(panoLabelMenuPrincipal);
+        content.add(boutonJouer);
+        content.add(boutonSkins);
+        content.add(boutonScores);
+        content.add(boutonParametres);
+        content.add(boutonCredits);
 
-        JPanel panoBoutonJouer = new JPanel();
-        panoBoutonJouer.setBackground(green);
-        panoBoutonJouer.add(boutonJouer);
+        pantitre2.add(content);
+        setContentPane(pantitre2);
 
-        JPanel panoBoutonSkins = new JPanel();
-        panoBoutonSkins.setBackground(green);
-        panoBoutonSkins.add(boutonSkins);
 
-        JPanel panoBoutonScores = new JPanel();
-        panoBoutonScores.setBackground(green);
-        panoBoutonScores.add(boutonScores);
-
-        JPanel panoBoutonParametres = new JPanel();
-        panoBoutonParametres.setBackground(green);
-        panoBoutonParametres.add(boutonParametres);
-
-        JPanel panoBoutonCredits = new JPanel();
-        panoBoutonCredits.setBackground(green);
-        panoBoutonCredits.add(boutonCredits);
-
-        JPanel panoSerpentGauche = new JPanel();
-        panoSerpentGauche.setBackground(green);
-        panoSerpentGauche.add(lserpentGauche);
-
-        JPanel panoSerpentDroite = new JPanel();
-        panoSerpentDroite.setBackground(green);
-        panoSerpentDroite.add(lserpentDroite);
-
-        //ajout tous les panel des bouttons à un seul panel d'ensemble
-        JPanel panoMenuPrincipalCentre = new JPanel();
-        panoMenuPrincipalCentre.setLayout(new BoxLayout(panoMenuPrincipalCentre, BoxLayout.Y_AXIS));
-        panoMenuPrincipalCentre.add(pantitre2);
-        panoMenuPrincipalCentre.add(panoBoutonJouer);
-        panoMenuPrincipalCentre.add(panoBoutonSkins);
-        panoMenuPrincipalCentre.add(panoBoutonScores);
-        panoMenuPrincipalCentre.add(panoBoutonParametres);
-        panoMenuPrincipalCentre.add(panoBoutonCredits);
-
-        JPanel grid = new JPanel();
-        grid.setLayout(new GridLayout(1,3));
-        grid.add(panoSerpentGauche);
-        grid.add(panoMenuPrincipalCentre);
-        grid.add(panoSerpentDroite);
-
-        setContentPane(grid);
     }
 
     /**FIN methodes menu principale**/
@@ -446,9 +427,6 @@ class Fenetre extends JFrame {
         JLabel taText6 = new JLabel("notre tuteur monsieur Couchot etc. ");
 
 
-        JLabel lCredits = new JLabel("Credits");
-        setupTitle(lCredits);
-        creerTitre(lCredits,null,null);
         panelCredits = setupContent();
 
         JPanel content = new JPanel();
@@ -479,8 +457,36 @@ class Fenetre extends JFrame {
         panelCredits.add(content);
         setContentPane(panelCredits);
 
-
     }
+
+    public void addPlay() {
+        panPlay = setupContent();
+        JPanel content = new JPanel();
+        setupPanelBtn(content,5);
+
+        content.add(butEasy);
+        content.add(butNormal);
+        content.add(butHard);
+        content.add(backPlay);
+
+        panPlay.add(content);
+        setContentPane(panPlay);
+    }
+    public void addDifficulty(){
+        panDifficulty = setupContent();
+        JPanel content = new JPanel();
+        setupPanelBtn(content,5);
+
+        content.add(butTrad);
+        content.add(butLaby);
+        content.add(butChrono);
+        content.add(butDuo);
+        content.add(backDifficulty);
+
+        panDifficulty.add(content);
+        setContentPane(panDifficulty);
+    }
+
 
 
 
@@ -525,11 +531,13 @@ class Fenetre extends JFrame {
         skinButtonPanel.add(titreP);
         setContentPane(skinButtonPanel);
     }
+    public void setBackPlay(){
+        panPlay.setVisible(true);
+        panPlay.add(titreP);
+        setContentPane(panPlay);
+    }
 
     public void creerParametresVue() {
-        JLabel lTitre = new JLabel("Parametres");
-        setupTitle(lTitre);
-        creerTitre(lTitre, lImgTitreDroite, lImgTitreGauche);
         panTitleParam = setupContent();
 
         JLabel lSon = new JLabel("Parametres son");
@@ -575,7 +583,7 @@ class Fenetre extends JFrame {
         panRbLangue.add(rbEnglish);
 
         JPanel panButtonCenter = new JPanel(new GridLayout(1,1));
-        panButtonCenter.add(bBack);
+        panButtonCenter.add(backParam);
 
         JPanel panParametre = new JPanel();
         panParametre.setBackground(BG_COLOR);
@@ -600,28 +608,6 @@ class Fenetre extends JFrame {
 
 
         // listeners du menu parametre (a bouger dans le controleur et adapter)
-        bBack.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                // fonction a faire
-                // changeMenu("menu");
-            }
-        });
-
-        slVolumeMusique.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                JSlider source = (JSlider)e.getSource();
-                if (!source.getValueIsAdjusting())
-                    volumeMusique = source.getValue();
-            }
-        });
-
-        slVolumeBruits.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                JSlider source = (JSlider)e.getSource();
-                if (!source.getValueIsAdjusting())
-                    volumeBruits = source.getValue();
-            }
-        });
 
     }
 
@@ -639,15 +625,6 @@ class Fenetre extends JFrame {
         setContentPane(skinButtonPanel);
     }
 
-    public void setupContainer(){
-        this.getContentPane().removeAll();
-        this.repaint();
-        this.revalidate();
-        con=getContentPane();
-        this.setLayout(null);
-        con.setBackground(green);
-        this.creerTitre(lSkin, null,null);
-    }
     /**methode à commenter**/
     /**@param **/
     public void addSkinSerpent(){
@@ -660,8 +637,6 @@ class Fenetre extends JFrame {
         content.add(backFromSkinChild);
         skinSerpentButtonPanel.add(content);
         setContentPane(skinSerpentButtonPanel);
-
-
 
     }
 
@@ -676,13 +651,6 @@ class Fenetre extends JFrame {
         content.add(cbSerpent);
         content.add(backFromSkinChild);
 
-        /*backFromSkinChild.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                skinMapButtonPanel.setVisible(false);
-                setBackSkin();
-            }
-        });*/
         skinMapButtonPanel.add(content);
         setContentPane(skinMapButtonPanel);
     }
@@ -710,13 +678,13 @@ class Fenetre extends JFrame {
 
     /**DEBUT methodes menu score : Lisa**/
 
-    //je cree une image(x2)
-    //je cree un label dans l'image(x2)
-    //je cree un label pour cette image(x2)
-    //je cree un panel avec cette image(x2)
-    //je creer un panel avec ces 2 panels d'image et le titre
-    //ce panel va dans un autre panel
-    //ce panel est ajouter dans un panel (avec contenu page)
+    // je cree une image(x2)
+    // je cree un label dans l'image(x2)
+    // je cree un label pour cette image(x2)
+    // je cree un panel avec cette image(x2)
+    // je creer un panel avec ces 2 panels d'image et le titre
+    // ce panel va dans un autre panel
+    // ce panel est ajouter dans un panel (avec contenu page)
     // ce panel est ajouter dans un panel final
 
     /**methode à commenter**/
@@ -738,7 +706,7 @@ class Fenetre extends JFrame {
         pantitre.add(titre);
         pantitre.add(panImgGauche);
 
-        //pan titre2
+        // pan titre2
         pantitre2 = new JPanel();
         pantitre2.setBackground(green);
         pantitre2.add(pantitre);
@@ -752,13 +720,13 @@ class Fenetre extends JFrame {
     /**@param **/
     public void creerInterface(JPanel titre) {
 
-        //panel tableau
+        // panel tableau
         JPanel pan = new JPanel();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
         pan.add(tableau.getTableHeader());
         pan.add(tableau);
 
-        //images medailles
+        // images medailles
         imgMedaille1 = new ImageIcon("img/score/medaille1.png");
         imgMedaille2 = new ImageIcon("img/score/Medaille2.png");
         imgMedaille3 = new ImageIcon("img/score/Medaille3.png");
@@ -808,12 +776,12 @@ class Fenetre extends JFrame {
         panTable.add(panImgMedailleDroite2);
 
 
-        //pan tableau2
+        // pan tableau2
         JPanel pantable2 = new JPanel();
         pantable2.setBackground(green);
         pantable2.add(panTable);
 
-        //pan boutton
+        // pan boutton
         JPanel panBoutton = new JPanel();
         panBoutton.setBackground(green);
         panBoutton.add(Box.createRigidArea(new Dimension(0, 200)));
@@ -847,14 +815,37 @@ class Fenetre extends JFrame {
 
     /**ajout tous les bouttons quand vues faites**/
     public void setControlButton(ControlBouton controlBut){
+        // Menu
+        this.boutonJouer.addActionListener(controlBut);
         this.boutonScores.addActionListener(controlBut);
         this.boutonSkins.addActionListener(controlBut);
+        this.boutonCredits.addActionListener(controlBut);
+        this.boutonParametres.addActionListener(controlBut);
+        // Score
+        this.bRetour.addActionListener(controlBut);
+        // Skin
         this.skinSerpent.addActionListener(controlBut);
         this.skinMap.addActionListener(controlBut);
         this.skinPseudo.addActionListener(controlBut);
         this.backFromSkin.addActionListener(controlBut);
         this.backFromSkinChild.addActionListener(controlBut);
-        this.bRetour.addActionListener(controlBut);
+        // Credits
+        this.backCredits.addActionListener(controlBut);
+        // Paramètre
+        this.backParam.addActionListener(controlBut);
+        this.slVolumeBruits.addChangeListener(controlBut);
+        this.slVolumeMusique.addChangeListener(controlBut);
+        // Jouer
+        this.backPlay.addActionListener(controlBut);
+        this.butEasy.addActionListener(controlBut);
+        this.butNormal.addActionListener(controlBut);
+        this.butHard.addActionListener(controlBut);
+        this.butTrad.addActionListener(controlBut);
+        this.butLaby.addActionListener(controlBut);
+        this.butChrono.addActionListener(controlBut);
+        this.butDuo.addActionListener(controlBut);
+        this.backDifficulty.addActionListener(controlBut);
+        
     }
 
     /**FIN methodes controller*/
@@ -868,6 +859,11 @@ class Fenetre extends JFrame {
         return boutonSkins;
     }
 
+    public SnakeButton getBoutonJouer() { return boutonJouer; }
+
+    public SnakeButton getBoutonParametres() { return boutonParametres; }
+
+    public SnakeButton getBoutonCredits() { return boutonCredits; }
 
     /**DEBUT getter des bouttons pour menu skin**/
     public SnakeButton getSkinSerpent() { return skinSerpent; }
@@ -876,9 +872,43 @@ class Fenetre extends JFrame {
 
     public SnakeButton getSkinPseudo() { return skinPseudo; }
 
+    public SnakeButton getBackFromSkinChild() { return backFromSkinChild; }
+
+
+    /**FIN getter bouttons pour menu SKIN**/
+
+    /**DEBUT getter des bouttons back des menu**/
+
     public SnakeButton getBackFromSkin() { return backFromSkin; }
 
-    public SnakeButton getBackFromSkinChild() { return backFromSkinChild; }
+    public SnakeButton getBackCredits() { return backCredits; }
+
+    public SnakeButton getBackParam() { return backParam; }
+
+    public SnakeButton getBackPlay() { return backPlay; }
+
+    /**FIN getter des bouttons back des menu**/
+
+    /**DEBUT getter des bouttons pour menu jouer**/
+    public SnakeButton getButEasy() { return butEasy; }
+
+    public SnakeButton getButNormal() {return butNormal; }
+
+    public SnakeButton getButHard() { return butHard; }
+
+    public SnakeButton getButTrad() { return butTrad; }
+
+    public SnakeButton getButLaby() { return butLaby; }
+
+    public SnakeButton getButChrono() { return butChrono; }
+
+    public SnakeButton getButDuo() { return butDuo; }
+
+    public SnakeButton getBackDifficulty() { return backDifficulty; }
+
+    /**FIN getter des boutons pour menu jouer**/
+
+    /**DEBUT getter des Panel pour menu skin**/
 
     public JPanel getSkinButtonPanel() { return skinButtonPanel; }
 
@@ -888,34 +918,82 @@ class Fenetre extends JFrame {
 
     public JPanel getSkinMapButtonPanel() { return skinMapButtonPanel; }
 
+    /**FIN getter des Panel pour menu skin**/
+
+    /**DEBUT getter des Panel pour menu jouer**/
+
+    public JPanel getPanPlay() { return panPlay; }
+
+    public JPanel getPanDifficulty() {
+        return panDifficulty;
+    }
+    /**FIN getter des Panel pour menu jouer**/
+
+    /**DEBUT getter des Slider pour menu param**/
+
+    public JSlider getSlVolumeMusique() { return slVolumeMusique; }
+
+    public JSlider getSlVolumeBruits() { return slVolumeBruits; }
+
+    /**FIN getter des Slider pour menu param**/
 
 
-    /**FIN getter bouttons pour menu SKIN**/
+
+
+
+
+
+
 
 
     public SnakeButton getbRetour() { return bRetour; }
 
     /**DEBUT méthodes changement de menu**/
+
+    public void changerMenuJouer(){
+        setupContainer();
+        this.creerTitre(lPlay,null,null);
+        this.addPlay();
+        setVisible(true);
+    }
+    public void changerMenuParam(){
+        setupContainer();
+        this.creerTitre(lParam,lImgTitreDroite,lImgTitreGauche);
+        this.creerParametresVue();
+        setVisible(true);
+    }
+    public void changerMenuCredit(){
+        setupContainer();
+        this.creerTitre(lCredits,null,null);
+        this.addCredit();
+        setVisible(true);
+    }
+
     public void changerMenuScore(){
-        this.getContentPane().removeAll();
+        setupContainer();
         this.creerTitreScore(lscore,  imgCoupeGauche, imgCoupeDroite);
         this.creerInterface(pantitre2);
-        this.setLocation(100,0);
         this.setVisible(true);
     }
 
     public void changerMenuSkin(){
         setupContainer();
+        this.creerTitre(lSkin, null,null);
         this.addSkin();
         setVisible(true);
     }
 
     public void changerMenuPrincipal(){
-        this.getContentPane().removeAll();
+        setupContainer();
         this.creerTitre(lMenuPrincipal, imgCoupeGauche, imgCoupeDroite);
         this.creerWidgetMenuPrincipal();
-        this.setLocation(100,0);
         this.setVisible(true);
+    }
+
+    public void setupContainer(){
+        this.getContentPane().removeAll();
+        this.repaint();
+        this.revalidate();
     }
     /**FIN methodes changement menu score**/
 }

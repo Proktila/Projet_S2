@@ -7,7 +7,7 @@ public class ControlGroup {
     public ControlGroup(Model model) {
 
         this.model = model;
-        fen = new Fenetre();
+        fen = new Fenetre(model);
         controlBut = new ControlBouton(fen, model);
     }
 }
