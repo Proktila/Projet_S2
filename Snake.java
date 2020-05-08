@@ -52,6 +52,7 @@ public class Snake extends JPanel {
         // Recherche de tous les fruits
         //  comparer la position des fruits a la tête du serpent
         // si tete serpent = posFruit -> eat(Fruit fruit)
+        return false;
     }
 
     public boolean isFaceWall(){
@@ -60,6 +61,7 @@ public class Snake extends JPanel {
         //  comparer la position des murs a la tête du serpent
         // si tete serpent devant mur et petit delai pour bouger et tjr devant mur alors
         // loseLife()
+        return false;
     }
 
 
@@ -75,110 +77,14 @@ public class Snake extends JPanel {
         // affiche game over
     }
 
-    public void loseSize(){
-        this.loseSize(1);
-    }
     public void loseSize(int size){
         this.taille -= size;
     }
 
-    public void addSize(){
-        this.addSize(1);
-    }
     public void addSize(int size){
         this.taille += size;
     }
 
-    public void loseLife(){
-        this.taille -= 1;
-    }
 
-    public void addLife(){
-        this.taille += 1;
-    }
 
-    public double[][] getPosCorps() {
-        return posCorps;
-    }
-
-    public void setPosCorp(double[][] posCorp) {
-        this.posCorp = posCorp;
-    }
-
-    public int getTaille() {
-        return taille;
-    }
-
-    public void setTaille(int taille) {
-        this.taille = taille;
-    }
-
-    public double getVitesse() {
-        return vitesse;
-    }
-
-    public void setVitesse(double vitesse) {
-        this.vitesse = vitesse;
-    }
-
-    public int getNbFruitsManger() {
-        return this.nbFruitsManger;
-    }
-
-    public void setNbFruitsManger(int nbFruitsManger) {
-        this.nbFruitsManger = nbFruitsManger;
-    }
-
-    public Score getScore() {
-        return this.score;
-    }
-
-    public void setScore(Score score) {
-        this.score = score;
-    }
-
-    public int getNbsVies() {
-        return nbsVies;
-    }
-
-    public void setNbsVies(int nbsVies) {
-        this.nbsVies = nbsVies;
-    }
-
-    public String getSkin() {
-        return this.skin;
-    }
-
-    public void setSkin(String skin) {
-        this.skin = skin;
-    }
-
-    public double[] getPosTete() {
-        return this.posTete;
-    }
-
-    public void setPosTete(double[] posTete) {
-        this.posTete = posTete;
-    }
-
-    public int getDirection() {
-        return this.direction;
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
-
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "Snake{" +
-                "sizeS=" + sizeS +
-                ", posX=" + posX +
-                ", posY=" + posY +
-                ", nbFruits=" + nbFruits +
-                ", skin='" + skin + '\'' +
-                ", direction=" + direction +
-                ", isAlive=" + isAlive +
-                '}';
-    }
 }

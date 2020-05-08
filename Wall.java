@@ -36,9 +36,6 @@ public class Wall extends JComponent {
         System.out.println("paintComponent successfully ran");
     }
 
-    public void attribution(PanelS pS){
-        pS.add(this);
-    }
 
     public int getPosX(){
         return this.posX;
