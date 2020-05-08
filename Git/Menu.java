@@ -22,28 +22,32 @@ public class Menu extends JFrame {
 
     private String title = "SN'HACK";
 
-    private JButton but0;
-    private JButton but1;
-    private JButton but2;
-    private JButton but3;
-    private JButton but4;
-    private JButton but5;
-    private JButton but6;
-    private JButton but7;
-    private JButton but8;
+    private JButton butPlay;
+    private JButton butEasy;
+    private JButton butNormal;
+    private JButton butHard;
+    private JButton butTrad;
+    private JButton butLaby;
+    private JButton butChrono;
+    private JButton butDuo;
+    private JButton butBack;
 
     private JPanel panTitle;
-    private JPanel panJouer;
-    private JPanel panFacile;
+    private JPanel panPlay;
+    private JPanel panEasy;
     private JPanel panNormal;
-    private JPanel panDifficile;
+    private JPanel panHard;
+    private JPanel panTrad;
+    private JPanel panLaby;
+    private JPanel panChrono;
+    private JPanel panDuo;
 
     private JLabel titleLabel;
     private Container container;
 
-    private Color vertF = new Color(50, 99, 23);
-    private Color vertC = new Color(99, 205, 42);
-    private Color bleu = new Color(47, 81, 103);
+    private Color greenD = new Color(50, 99, 23);
+    private Color greenL = new Color(99, 205, 42);
+    private Color blue = new Color(47, 81, 103);
 
     private Font buttonFont = new Font("Monospaced", Font.PLAIN, 28);
     private Font titleFont = new Font("Monospaced", Font.PLAIN, 28);
@@ -63,7 +67,7 @@ public class Menu extends JFrame {
         this.init();
 
         this.addTitle();
-        this.addJouer();
+        this.addPlay();
 
         this.setLocation(100,0);
 
@@ -71,39 +75,39 @@ public class Menu extends JFrame {
 
     public void init() {
 
-        this.but0 = new JButton("Jouer");
+        this.butPlay = new JButton("Jouer");
 
-        this.but1 = new JButton("Facile");
-        this.but2 = new JButton("Normal");
-        this.but3 = new JButton("Difficile");
+        this.butEasy = new JButton("Facile");
+        this.butNormal = new JButton("Normal");
+        this.butHard = new JButton("Difficile");
 
-        this.but4 = new JButton("Traditionnel");
-        this.but5 = new JButton("Labyrinthe");
-        this.but6 = new JButton("Chrono");
-        this.but7 = new JButton("Duo");
+        this.butTrad = new JButton("Traditionnel");
+        this.butLaby = new JButton("Labyrinthe");
+        this.butChrono = new JButton("Chrono");
+        this.butDuo = new JButton("Duo");
 
-        this.but8 = new JButton("Back");
-/*
-        designButton(but0);
-        designButton(but1);
-        designButton(but2);
-        designButton(but3);
-        designButton(but4);
-        designButton(but5);
-        designButton(but6);
-        designButton(but7);
-        designButton(but8);
-*/
+        this.butBack = new JButton("Back");
+
+        this.designButton(this.butPlay);
+        this.designButton(this.butEasy);
+        this.designButton(this.butNormal);
+        this.designButton(this.butHard);
+        this.designButton(this.butTrad);
+        this.designButton(this.butLaby);
+        this.designButton(this.butChrono);
+        this.designButton(this.butDuo);
+        this.designButton(this.butBack);
+
     }
 
     public void addTitle() {
         this.panTitle = new JPanel();
         this.panTitle.setBounds(0, 20, 1280, 100);
-        this.panTitle.setBackground(this.bleu);
+        this.panTitle.setBackground(this.blue);
 
         this.titleLabel = new JLabel(this.title);
-        // titleLabel.setForeground(Color.white);
-        titleLabel.setFont(this.titleFont);
+        this.titleLabel.setForeground(Color.WHITE);
+        this.titleLabel.setFont(this.titleFont);
 
         this.panTitle.add(this.titleLabel);
         this.container.add(this.panTitle);
@@ -112,112 +116,112 @@ public class Menu extends JFrame {
 
     public void panButton(JPanel jp) {
         jp.setBounds(490,200,300,400);
-        jp.setBackground(this.vertC);
+        jp.setBackground(this.greenD);
         jp.setLayout(new GridLayout(5, 2, 10, 10));
     }
 
     public void designButton(JButton jb) {
-        jb.setBackground(this.vertF);
-        jb.setForeground(Color.white);
+        jb.setBackground(this.greenD);
+        jb.setForeground(Color.WHITE);
         jb.setFocusPainted(false);
         jb.setFont(this.buttonFont);
     }
 
-    public void addJouer() {
-        this.panJouer = new JPanel();
-        this.panButton(this.panJouer);
+    public void addPlay() {
+        this.panPlay = new JPanel();
+        this.panButton(this.panPlay);
 
-        this.panJouer.add(this.but1);
-        this.panJouer.add(this.but2);
-        this.panJouer.add(this.but3);
+        this.panPlay.add(this.butEasy);
+        this.panPlay.add(this.butNormal);
+        this.panPlay.add(this.butHard);
 
-        this.but1.addActionListener( new ActionListener()
+        this.butEasy.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
-                this.panJouer.setVisible(false);
+                this.panPlay.setVisible(false);
                 this.difficulty = "Facile";
-                addFacile();
+                addEasy();
             }
         });
 
-        this.but2.addActionListener( new ActionListener()
+        this.butNormal.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panJouer.setVisible(false);
+                this.panPlay.setVisible(false);
                 this.difficulty = "Normal";
                 addNormal();
             }
         });
 
-        this.but3.addActionListener( new ActionListener()
+        this.butHard.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panJouer.setVisible(false);
+                this.panPlay.setVisible(false);
                 this.difficulty = "Difficile";
-                addDifficile();
+                addHard();
             }
         });
 
-        this.container.add(this.panJouer);
+        this.container.add(this.panPlay);
     }
 
 
-    public void addFacile(){
-        this.panFacile = new JPanel();
-        this.panButton(this.panFacile);
+    public void addEasy(){
+        this.panEasy = new JPanel();
+        this.panButton(this.panEasy);
 
-        this.panFacile.add(this.but4);
-        this.panFacile.add(this.but5);
-        this.panFacile.add(this.but6);
-        this.panFacile.add(this.but7);
-        this.panFacile.add(this.but8);
+        this.panEasy.add(this.butTrad);
+        this.panEasy.add(this.butLaby);
+        this.panEasy.add(this.butChrono);
+        this.panEasy.add(this.butDuo);
+        this.panEasy.add(this.butBack);
 
-        this.but4.addActionListener( new ActionListener()
+        this.butTrad.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panFacile.setVisible(false);
+                this.panEasy.setVisible(false);
                 this.mode = "Traditionnel";
                 addTrad();
             }
         });
 
-        this.but5.addActionListener( new ActionListener()
+        this.butLaby.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panFacile.setVisible(false);
+                this.panEasy.setVisible(false);
                 this.mode = "Labyrinthe";
                 addLaby();
             }
         });
 
-        this.but6.addActionListener( new ActionListener()
+        this.butChrono.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panFacile.setVisible(false);
+                this.panEasy.setVisible(false);
                 this.mode = "Chrono";
                 addChrono();
             }
         });
 
-        this.but7.addActionListener( new ActionListener()
+        this.butDuo.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panFacile.setVisible(false);
+                this.panEasy.setVisible(false);
                 this.mode = "Duo";
                 addDuo();
             }
         });
 
-        this.but8.addActionListener( new ActionListener()
+        this.butBack.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panFacile.setVisible(false);
+                this.panEasy.setVisible(false);
                 this.difficulty = null;
-                addJouer();
+                addPlay();
             }
         });
 
-        this.container.add(this.panFacile);
+        this.container.add(this.panEasy);
 
     }
 
@@ -231,7 +235,7 @@ public class Menu extends JFrame {
         this.panNormal.add(this.but6);
         this.panNormal.add(this.but7);
 
-        this.but4.addActionListener( new ActionListener()
+        this.butTrad.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
                 this.panNormal.setVisible(false);
@@ -240,7 +244,7 @@ public class Menu extends JFrame {
             }
         });
 
-        this.but5.addActionListener( new ActionListener()
+        this.butLaby.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
                 this.panNormal.setVisible(false);
@@ -249,7 +253,7 @@ public class Menu extends JFrame {
             }
         });
 
-        this.but6.addActionListener( new ActionListener()
+        this.butChrono.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
                 this.panNormal.setVisible(false);
@@ -258,7 +262,7 @@ public class Menu extends JFrame {
             }
         });
 
-        this.but7.addActionListener( new ActionListener()
+        this.butDuo.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
                 this.panNormal.setVisible(false);
@@ -267,12 +271,12 @@ public class Menu extends JFrame {
             }
         });
 
-        this.but8.addActionListener( new ActionListener()
+        this.butBack.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
                 this.panNormal.setVisible(false);
                 this.difficulty = null;
-                addJouer();
+                addPlay();
             }
         });
 
@@ -280,79 +284,79 @@ public class Menu extends JFrame {
     }
 
 
-    public void addDifficile(){
-        this.panDifficile = new JPanel();
-        this.panButton(this.panDifficile);
+    public void addHard(){
+        this.panHard = new JPanel();
+        this.panButton(this.panHard);
 
-        this.panDifficile.add(this.but4);
-        this.panDifficile.add(this.but5);
-        this.panDifficile.add(this.but6);
-        this.panDifficile.add(this.but7);
+        this.panHard.add(this.butTrad);
+        this.panHard.add(this.butLaby);
+        this.panHard.add(this.butChrono);
+        this.panHard.add(this.butDuo);
 
-        this.but4.addActionListener( new ActionListener()
+        this.butTrad.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panDifficile.setVisible(false);
+                this.panHard.setVisible(false);
                 this.mode = "Traditionnel";
                 addTrad();
             }
         });
 
-        this.but5.addActionListener( new ActionListener()
+        this.butLaby.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panDifficile.setVisible(false);
+                this.panHard.setVisible(false);
                 this.mode = "Labyrinthe";
                 addLaby();
             }
         });
 
-        this.but6.addActionListener( new ActionListener()
+        this.butChrono.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panDifficile.setVisible(false);
+                this.panHard.setVisible(false);
                 this.mode = "Chrono";
                 addChrono();
             }
         });
 
-        this.but7.addActionListener( new ActionListener()
+        this.butDuo.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panDifficile.setVisible(false);
+                this.panHard.setVisible(false);
                 this.mode = "Duo";
                 addDuo();
             }
         });
 
-        this.but8.addActionListener( new ActionListener()
+        this.butBack.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
-                this.panDifficile.setVisible(false);
+                this.panHard.setVisible(false);
                 this.difficulty = null;
-                addJouer();
+                addPlay();
             }
         });
 
-        this.container.add(this.panDifficile);
+        this.container.add(this.panHard);
     }
 
 
     public void addTrad(){
         this.panTrad = new JPanel();
         this.panButton(this.panTrad);
-        this.panTrad.add(this.but8);
+        this.panTrad.add(this.butBack);
 
-        this.but8.addActionListener( new ActionListener()
+        this.butBack.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
                 this.panTrad.setVisible(false);
                 if( this.difficulty == "Facile" ){
-                    addFacile();
+                    addEasy();
                 } else if( this.difficulty == "Normal" ) {
                     addNormal();
                 } else {
-                    addDifficile();
+                    addHard();
                 }
                 this.difficulty = null;
             }
@@ -365,18 +369,18 @@ public class Menu extends JFrame {
     public void addLaby(){
         this.panLaby = new JPanel();
         this.panButton(this.panLaby);
-        this.panLaby.add(this.but8);
+        this.panLaby.add(this.butBack);
 
-        this.but8.addActionListener( new ActionListener()
+        this.butBack.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
                 this.panTrad.setVisible(false);
                 if( this.difficulty == "Facile" ){
-                    addFacile();
+                    addEasy();
                 } else if( this.difficulty == "Normal" ) {
                     addNormal();
                 } else {
-                    addDifficile();
+                    addHard();
                 }
                 this.difficulty = null;
             }
@@ -389,18 +393,18 @@ public class Menu extends JFrame {
     public void addChrono(){
         this.panChrono = new JPanel();
         this.panButton(this.panChrono);
-        this.panChrono.add(this.but8);
+        this.panChrono.add(this.butBack);
 
-        this.but8.addActionListener( new ActionListener()
+        this.butBack.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
                 this.panTrad.setVisible(false);
                 if( this.difficulty == "Facile" ){
-                    addFacile();
+                    addEasy();
                 } else if( this.difficulty == "Normal" ) {
                     addNormal();
                 } else {
-                    addDifficile();
+                    addHard();
                 }
                 this.difficulty = null;
             }
@@ -413,18 +417,18 @@ public class Menu extends JFrame {
     public void addDuo(){
         this.panDuo = new JPanel();
         this.panButton(this.panDuo);
-        this.panDuo.add(this.but8);
+        this.panDuo.add(this.butBack);
 
-        this.but8.addActionListener( new ActionListener()
+        this.butBack.addActionListener( new ActionListener()
         {
             public void actionPerformed(ActionEvent e){
                 this.panTrad.setVisible(false);
                 if( this.difficulty == "Facile" ){
-                    addFacile();
+                    addEasy();
                 } else if( this.difficulty == "Normal" ) {
                     addNormal();
                 } else {
-                    addDifficile();
+                    addHard();
                 }
                 this.difficulty = null;
             }
