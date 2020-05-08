@@ -143,6 +143,9 @@ class Fenetre extends JFrame {
 
     /**FIN MENU SCORE**/
 
+    /** Credits **/
+    private SnakeButton backCredits;
+    private JPanel panelCredits;
 
     /**CONSTRUCTEUR de fenetre**/
     public Fenetre() {
@@ -153,9 +156,10 @@ class Fenetre extends JFrame {
 
         this.initAttribut();
 
+        this.addCredit();
         // Menu Principal
-        this.creerTitre(lMenuPrincipal, imgCoupeGauche, imgCoupeDroite);
-        this.creerWidgetMenuPrincipal();
+        //this.creerTitre(lMenuPrincipal, imgCoupeGauche, imgCoupeDroite);
+        //this.creerWidgetMenuPrincipal();
 
         // SKIN
         //this.creerTitre(lSkin, imgCoupeGauche, imgCoupeGauche);
@@ -189,6 +193,7 @@ class Fenetre extends JFrame {
         initSkin();
         initScore();
         initParametre();
+        backCredits = new SnakeButton("retour");
     }
     public void initMenuPrincipal(){
         lMenuPrincipal = new JLabel (" Menu principal ") ;
@@ -434,6 +439,51 @@ class Fenetre extends JFrame {
         obj.setForeground(FG_COLOR);
     }
 
+    public void addCredit(){
+        JLabel taText1 = new JLabel("Le jeu à été concu par");
+        JLabel taText2 = new JLabel("Julien, Lisa, Marion, Theo, Nathan, Arthur");
+        JLabel taText3 = new JLabel("La musique utilisee est celle de");
+        JLabel taText4 = new JLabel("Harry potter, Nyan Cat etc");
+        JLabel taText5 = new JLabel("Pour la realisation de ce jeu on tient a remercier ");
+        JLabel taText6 = new JLabel("notre tuteur monsieur Couchot etc. ");
+
+
+        JLabel lCredits = new JLabel("Credits");
+        setupTitle(lCredits);
+        creerTitre(lCredits,null,null);
+        panelCredits = setupContent();
+
+        JPanel content = new JPanel();
+        content.setBackground(blue);
+        content.setBounds(340,200,600,425);
+
+        applyStyle(taText1);
+        applyStyle(taText2);
+        applyStyle(taText3);
+        applyStyle(taText4);
+        applyStyle(taText5);
+        applyStyle(taText6);
+
+        content.add(taText1);
+        content.add(Box.createVerticalStrut(50));
+        content.add(taText2);
+        content.add(Box.createVerticalStrut(50));
+        content.add(taText3);
+        content.add(Box.createVerticalStrut(50));
+        content.add(taText4);
+        content.add(Box.createVerticalStrut(50));
+        content.add(taText5);
+        content.add(Box.createVerticalStrut(50));
+        content.add(taText6);
+        content.add(backCredits);
+
+
+        panelCredits.add(content);
+        setContentPane(panelCredits);
+
+
+    }
+
     /**methode à commenter**/
     /**@param **/
     public void creerParametresVue() {
@@ -625,13 +675,6 @@ class Fenetre extends JFrame {
         content.add(tfPseudo);
         content.add(backFromSkinChild);
 
-        /*backFromSkinChild.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                skinPseudoButtonPanel.setVisible(false);
-                setBackSkin();
-            }
-        });*/
 
         skinPseudoButtonPanel.add(content);
         setContentPane(skinPseudoButtonPanel);
