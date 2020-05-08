@@ -97,16 +97,19 @@ class Fenetre extends JFrame {
 
 
     // Elements du menu PARAMETRE
+    JPanel panTitleParam;
+    JLabel lImgTitreDroite;
+    JLabel lImgTitreGauche;
     protected JSlider slVolumeMusique;
     protected JSlider slVolumeBruits;
-    protected JRadioButton rbFrancais;
-    protected JRadioButton rbAnglais;
-    protected SnakeButton bBack;
+    protected JRadioButton rbFrench;
+    protected JRadioButton rbEnglish;
+    protected JButton bBack;
     private final int VOL_MIN = 0;
     private final int VOL_MAX = 100;
     private final int VOL_INIT = 75;
 
-    // vars listener parametres
+    // variables a modifier par les listener du menu parametres
     private int volumeMusique = VOL_INIT;
     private int volumeBruits = VOL_INIT;
     private String lang;
@@ -136,6 +139,8 @@ class Fenetre extends JFrame {
 
     private JPanel pantitre2;
 
+
+
     TableModel table;
     Tableau render;
 
@@ -156,7 +161,8 @@ class Fenetre extends JFrame {
 
         this.initAttribut();
 
-        this.addCredit();
+        this.creerParametresVue();
+        //this.addCredit();
         // Menu Principal
         //this.creerTitre(lMenuPrincipal, imgCoupeGauche, imgCoupeDroite);
         //this.creerWidgetMenuPrincipal();
@@ -327,26 +333,18 @@ class Fenetre extends JFrame {
         slVolumeBruits.setPaintLabels(true);
         slVolumeBruits.setSnapToTicks(true);
 
-        ImageIcon frFlag = new ImageIcon("fr.png");
-        ImageIcon enFlag = new ImageIcon("en.png");
+        lImgTitreGauche =  new JLabel(new ImageIcon("img/paramIcon.png"));
+        lImgTitreDroite =  new JLabel(new ImageIcon("img/paramIcon.png"));
 
-        rbFrancais = new JRadioButton(frFlag, true);
-        rbAnglais = new JRadioButton(enFlag, false);
+        rbFrench = new JRadioButton(new ImageIcon("img/langFR.png"), true);
+        rbEnglish = new JRadioButton(new ImageIcon("img/langEN.png"), false);
         ButtonGroup rbLangue = new ButtonGroup();
-        rbLangue.add(rbFrancais);
-        rbLangue.add(rbAnglais);
+        rbLangue.add(rbFrench);
+        rbLangue.add(rbEnglish);
 
-        bBack = new SnakeButton("BACK");
+        bBack = new SnakeButton("Retour");
     }
 
-    //pas sur que ce soit pour tous le monde (exemple : lisa
-    //utilise sa propre méthode car change en fonction de ce
-    // qu'il y a dans la fenetre
-
-    //je pense qu'il faut qu'on fasse chacun sa propre fonction
-    //titre car personne obtient le mem résultat avec des fonctions
-    //titre (j'ai essayer avec Marion, moi et Arthur) à chaque fois
-    //résultat différent
 
     /**Créer la bandelore au dessus du meni**/
     /**@param **/
@@ -484,80 +482,7 @@ class Fenetre extends JFrame {
 
     }
 
-    /**methode à commenter**/
-    /**@param **/
-    public void creerParametresVue() {
 
-        JLabel lSon = new JLabel("Son");
-        JLabel lMusique = new JLabel("Volume de la musique");
-        JLabel lBruitages = new JLabel("Volumes des bruitages");
-        JLabel lLangue = new JLabel("Langue");
-
-        applyStyle(lSon);
-        applyStyle(lMusique);
-        applyStyle(lBruitages);
-        applyStyle(lLangue);
-
-        lLangue.setHorizontalAlignment(JLabel.CENTER);
-
-        Dimension slDimensions = slVolumeMusique.getPreferredSize();
-        slDimensions.width = 400;
-        slVolumeMusique.setPreferredSize(slDimensions);
-        slVolumeBruits.setPreferredSize(slDimensions);
-        slVolumeMusique.setBackground(BG_COLOR);
-        slVolumeBruits.setBackground(BG_COLOR);
-
-        JPanel panRbLangue = new JPanel();
-        panRbLangue.setBackground(null);
-        panRbLangue.setBounds(440,200,400,600);
-        panRbLangue.setLayout(new GridLayout(6,1,5,5));
-
-        JPanel v1 = new JPanel();
-        v1.add(lMusique);
-        v1.add(slVolumeMusique);
-        applyStyle(v1);
-
-        JPanel v2 = new JPanel();
-        v2.add(lBruitages);
-        v2.add(slVolumeBruits);
-        applyStyle(v2);
-
-        JPanel drapeau = new JPanel();
-        drapeau.add(rbFrancais);
-        drapeau.add(rbAnglais);
-        applyStyle(drapeau);
-
-        panRbLangue.add(v1);
-        panRbLangue.add(v2);
-        panRbLangue.add(lLangue);
-        panRbLangue.add(drapeau);
-        panRbLangue.add(bBack);
-
-        con.add(panRbLangue);
-
-        bBack.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                // fonction a faire
-                // changeMenu("menu");
-            }
-        });
-
-        slVolumeMusique.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                JSlider source = (JSlider)e.getSource();
-                if (!source.getValueIsAdjusting())
-                    volumeMusique = source.getValue();
-            }
-        });
-
-        slVolumeBruits.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                JSlider source = (JSlider)e.getSource();
-                if (!source.getValueIsAdjusting())
-                    volumeBruits = source.getValue();
-            }
-        });
-    }
 
 
     /**methode à commenter**/
@@ -599,6 +524,105 @@ class Fenetre extends JFrame {
         skinButtonPanel.setVisible(true);
         skinButtonPanel.add(titreP);
         setContentPane(skinButtonPanel);
+    }
+
+    public void creerParametresVue() {
+        JLabel lTitre = new JLabel("Parametres");
+        setupTitle(lTitre);
+        creerTitre(lTitre, lImgTitreDroite, lImgTitreGauche);
+        panTitleParam = setupContent();
+
+        JLabel lSon = new JLabel("Parametres son");
+        JLabel lMusique = new JLabel("Volume de la musique");
+        JLabel lBruitages = new JLabel("Volume des bruitages");
+        JLabel lLangue = new JLabel("Langue");
+
+        // centre les textes dans leurs labels et applique la bonne police
+        lMusique.setHorizontalAlignment(JLabel.CENTER);
+        lBruitages.setHorizontalAlignment(JLabel.CENTER);
+        lSon.setHorizontalAlignment(JLabel.CENTER);
+        lLangue.setHorizontalAlignment(JLabel.CENTER);
+        applyStyle(lSon);
+        applyStyle(lMusique);
+        applyStyle(lBruitages);
+        applyStyle(lLangue);
+        applyStyle(rbFrench);
+        applyStyle(rbEnglish);
+        lSon.setFont(fBtn);
+        lLangue.setFont(fBtn);
+
+        // applique une dimension de 400px par 25px au JSlider et donne la couleur du background
+        Dimension slDimensions = new Dimension(400,25);
+        slVolumeMusique.setPreferredSize(slDimensions);
+        slVolumeBruits.setPreferredSize(slDimensions);
+        slVolumeMusique.setBackground(BG_COLOR);
+        slVolumeBruits.setBackground(BG_COLOR);
+
+        JPanel panSonTitre = new JPanel(new GridLayout(1,1));
+        panSonTitre.add(lSon);
+
+        JPanel panSon = new JPanel(new GridLayout(2,2));
+        panSon.add(lMusique);
+        panSon.add(slVolumeMusique);
+        panSon.add(lBruitages);
+        panSon.add(slVolumeBruits);
+
+        JPanel panLangueTitre = new JPanel(new GridLayout(1,1));
+        panLangueTitre.add(lLangue);
+
+        JPanel panRbLangue = new JPanel();
+        panRbLangue.add(rbFrench);
+        panRbLangue.add(rbEnglish);
+
+        JPanel panButtonCenter = new JPanel(new GridLayout(1,1));
+        panButtonCenter.add(bBack);
+
+        JPanel panParametre = new JPanel();
+        panParametre.setBackground(BG_COLOR);
+        panParametre.setBounds(240,150,800,525);
+        panParametre.setLayout(new BoxLayout(panParametre, BoxLayout.Y_AXIS));
+        panParametre.add(panSonTitre);
+        panParametre.add(panSon);
+        panParametre.add(Box.createVerticalStrut(25));
+        panParametre.add(panLangueTitre);
+        panParametre.add(panRbLangue);
+        panParametre.add(panButtonCenter);
+
+        applyStyle(panSonTitre);
+        applyStyle(panSon);
+        applyStyle(panLangueTitre);
+        applyStyle(panRbLangue);
+        applyStyle(panButtonCenter);
+        applyStyle(panParametre);
+
+        panTitleParam.add(panParametre);
+        setContentPane(panTitleParam);
+
+
+        // listeners du menu parametre (a bouger dans le controleur et adapter)
+        bBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                // fonction a faire
+                // changeMenu("menu");
+            }
+        });
+
+        slVolumeMusique.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider)e.getSource();
+                if (!source.getValueIsAdjusting())
+                    volumeMusique = source.getValue();
+            }
+        });
+
+        slVolumeBruits.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider)e.getSource();
+                if (!source.getValueIsAdjusting())
+                    volumeBruits = source.getValue();
+            }
+        });
+
     }
 
     /**methode à commenter**/
