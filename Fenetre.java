@@ -462,7 +462,7 @@ class Fenetre extends JFrame {
     public void addPlay() {
         panPlay = setupContent();
         JPanel content = new JPanel();
-        setupPanelBtn(content,5);
+        setupPanelBtn(content,4);
 
         content.add(butEasy);
         content.add(butNormal);
@@ -513,9 +513,9 @@ class Fenetre extends JFrame {
     /**methode à commenter**/
     /**@param **/
     public void setupPanelBtn(JPanel p,int row){
-        p.setLayout(new GridLayout(row,1,10,10));
+        p.setLayout(new GridLayout(row,1,5,5));
         p.setBackground(null);
-        p.setBounds(490,200,300,400);
+        p.setBounds(490,160,300,475);
     }
 
     public JPanel setupContent(){
