@@ -49,6 +49,6 @@ public class Credits extends JFrame {
 	pano.add(but1);
 
 
-	setContentPane(pano);         // Ajoute pano à la fenêtre principale
+	setContentPane(pano);  // Ajoute pano à la fenêtre principale
 	}
 }

@@ -8,12 +8,12 @@ import java.sql.SQLOutput;
 
 public class ControlBouton implements ActionListener, ChangeListener {
 
-    Fenetre fen;
+    FenetreMenu fen;
     Model model;
     String backFromSkinChild;
 
 
-    public ControlBouton(Fenetre fen, Model model) {
+    public ControlBouton(FenetreMenu fen, Model model) {
         this.fen = fen;
         this.model = model;
         this.fen.setControlButton(this);

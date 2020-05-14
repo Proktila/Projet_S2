@@ -2,7 +2,7 @@
 
 import javax.swing.table.AbstractTableModel;
 
-/**class à commenter**/
+/**class qui permet de gérer les données des cellulles**/
 class TableModel extends AbstractTableModel
 {
 

@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class Fenetre extends JFrame {
+class FenetreMenu extends JFrame {
 
 
     /**DEBUT COMMUN POUR TOUS**/
@@ -171,7 +171,7 @@ class Fenetre extends JFrame {
     /** Credits **/
 
     /**CONSTRUCTEUR de fenetre**/
-    public Fenetre(Model model) {
+    public FenetreMenu(Model model) {
 
         con = getContentPane();
 
@@ -248,11 +248,16 @@ class Fenetre extends JFrame {
         creerTitre(lCredits,null,null);
     }
     public void initScore(){
+
+        //JLabel titre
         lscore = new JLabel("TABLEAU DES SCORES");
+        //fonction seTup pour mettre à jout
         setupTitle(lscore);
+        //initialisation du bouton retour
         bRetour = new SnakeButton("retour");
 
         // contenu des cellules
+        //tableau d'objet à 2 dimension
         data = new Object[][]{
                 {"Normal", "serpent", "105"},
                 {"Chrono", "serpent", "100"},
@@ -266,21 +271,24 @@ class Fenetre extends JFrame {
         // Les titres des colonnes
         title = new String[]{"Thème", "Nom du serpent", "Score"};
 
+        //initialisation du tableau
         tableau = new JTable(data, title);
 
-        // tableau
+        // tableau qui appelle les classes TableModel et Tableau
         table = new TableModel(data, title);
         render = new Tableau();
         tableau.setModel(table);
         tableau.setDefaultRenderer(Object.class, render);
 
-        // titre des colonnes
+        // styles des titres des colonnes du tableau
         tableau.getTableHeader().setBackground(lightGreen);
         tableau.getTableHeader().setForeground(blue);
         tableau.getTableHeader().setFont(new Font("Monospaced", Font.BOLD, 30));
 
+        // espacement entre les celulles du tableau
         tableau.setRowHeight(30);
 
+        //largeur des cellulles du tableau
         tableau.getColumnModel().getColumn(0).setPreferredWidth(200);
         tableau.getColumnModel().getColumn(1).setPreferredWidth(300);
         tableau.getColumnModel().getColumn(2).setPreferredWidth(200);
@@ -288,8 +296,25 @@ class Fenetre extends JFrame {
         // image coupe
         imgCoupe = new ImageIcon("img/score/coupe.png");
 
+        //label coupe (gauche et droite)
         imgCoupeGauche =  new JLabel(imgCoupe);
         imgCoupeDroite =  new JLabel(imgCoupe);
+
+        // images medailles
+        imgMedaille1 = new ImageIcon("img/score/medaille1.png");
+        imgMedaille2 = new ImageIcon("img/score/Medaille2.png");
+        imgMedaille3 = new ImageIcon("img/score/Medaille3.png");
+
+        // label avec images de médailles
+        //médailles de droite
+        lMedaille1Droite =  new JLabel(imgMedaille1);
+        lMedaille2Droite =  new JLabel(imgMedaille2);
+        lMedaille3Droite =  new JLabel(imgMedaille3);
+
+        //médailles à gauche
+        lMedaille1Gauche =  new JLabel(imgMedaille1);
+        lMedaille2Gauche =  new JLabel(imgMedaille2);
+        lMedaille3Gauche =  new JLabel(imgMedaille3);
     }
 
     public void initSkin(){
@@ -687,8 +712,8 @@ class Fenetre extends JFrame {
     // ce panel est ajouter dans un panel (avec contenu page)
     // ce panel est ajouter dans un panel final
 
-    /**methode à commenter**/
-    /**@param **/
+    /**méthode création du titre**/
+    /**@param JLabel titre et JLabel de 2 images**/
     public void creerTitreScore(JLabel titre, JLabel img, JLabel img2){
         //panCoupe
         JPanel panImgDroite = new JPanel();
@@ -716,42 +741,29 @@ class Fenetre extends JFrame {
     }
 
 
-    /**methode à commenter**/
-    /**@param **/
+    /**création du contenu de la page score**/
+    /**@param JPanel titre qui est ajouter à la page**/
     public void creerInterface(JPanel titre) {
 
-        // panel tableau
+        // panel tableau (tableau + titres colonnes)
         JPanel pan = new JPanel();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
         pan.add(tableau.getTableHeader());
         pan.add(tableau);
 
-        // images medailles
-        imgMedaille1 = new ImageIcon("img/score/medaille1.png");
-        imgMedaille2 = new ImageIcon("img/score/Medaille2.png");
-        imgMedaille3 = new ImageIcon("img/score/Medaille3.png");
-
-
-        lMedaille1Droite =  new JLabel(imgMedaille1);
-        lMedaille2Droite =  new JLabel(imgMedaille2);
-        lMedaille3Droite =  new JLabel(imgMedaille3);
-
-
-        lMedaille1Gauche =  new JLabel(imgMedaille1);
-        lMedaille2Gauche =  new JLabel(imgMedaille2);
-        lMedaille3Gauche =  new JLabel(imgMedaille3);
-
-
+        //création Jpanel avec tous les label des médailles de droite
         JPanel panImgMedailleDroite = new JPanel();
         panImgMedailleDroite.setLayout(new BoxLayout(panImgMedailleDroite, BoxLayout.Y_AXIS));
+        //création d'une box area pour ajuster la position des médailles
         panImgMedailleDroite.add(Box.createRigidArea(new Dimension(0, 25)));
         panImgMedailleDroite.setBackground(green);
         panImgMedailleDroite.add(lMedaille1Droite);
         panImgMedailleDroite.add(lMedaille2Droite);
         panImgMedailleDroite.add(lMedaille3Droite);
 
-
+        //création Jpanel avec tous les label des médailles de gauche
         JPanel panImgMedailleGauche = new JPanel();
+        //création d'une box area pour ajuster la position des médailles
         panImgMedailleGauche.setLayout(new BoxLayout(panImgMedailleGauche, BoxLayout.Y_AXIS));
         panImgMedailleGauche.add(Box.createRigidArea(new Dimension(0, 25)));
         panImgMedailleGauche.setBackground(green);
@@ -759,10 +771,12 @@ class Fenetre extends JFrame {
         panImgMedailleGauche.add(lMedaille2Gauche);
         panImgMedailleGauche.add(lMedaille3Gauche);
 
+        //panel supplémentaire regroupant le panel qui contient les médaille de droite
         JPanel panImgMedailleDroite2 = new JPanel();
         panImgMedailleDroite2.setBackground(green);
         panImgMedailleDroite2.add(panImgMedailleDroite);
 
+        //panel supplémentaire regroupant le panel qui contient les médaille de gauche
         JPanel panImgMedailleGauche2 = new JPanel();
         panImgMedailleGauche2.setBackground(green);
         panImgMedailleGauche2.add(panImgMedailleGauche);
@@ -774,7 +788,6 @@ class Fenetre extends JFrame {
         panTable.add(panImgMedailleGauche2);
         panTable.add(pan);
         panTable.add(panImgMedailleDroite2);
-
 
         // pan tableau2
         JPanel pantable2 = new JPanel();
@@ -795,18 +808,17 @@ class Fenetre extends JFrame {
         panCadre.add(pantable2);
         panCadre.add(panBoutton);
 
+        //ajoutu d'un panel dans un panel
         JPanel panEnsemble = new JPanel();
         panEnsemble.setLayout(new BoxLayout(panEnsemble, BoxLayout.Y_AXIS));
         panEnsemble.add(panCadre);
 
+        //la panel final est affiché
         JPanel panFinal = new JPanel();
         panFinal.setBackground(green);
         panFinal.add(panEnsemble);
 
-        JPanel panFinal2 = new JPanel();
-        panFinal2.add(panFinal);
-
-        this.setContentPane(panFinal2);
+        this.setContentPane(panFinal);
 
     }
     /**FIN methodes menu score**/

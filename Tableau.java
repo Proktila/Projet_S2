@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
-/**class à commenter**/
+/**class qui permet de mettre un fond de couleur sur les 3 premières lignes du tableau**/
 class Tableau extends DefaultTableCellRenderer {
 
     public Component getTableCellRendererComponent(JTable table, Object value,
