@@ -4,14 +4,14 @@ import java.io.IOException;
 
 class Sound {
 
-    public static Clip playBgMusic(String audioLocation) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-
+    public static Clip playMusic(String audioLocation, int defaultVolume) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         File audioPath = new File(audioLocation);
 
         AudioInputStream audio = AudioSystem.getAudioInputStream(audioPath);
         Clip clip = AudioSystem.getClip();
 
         clip.open(audio);
+        setVolume(clip, defaultVolume);
         clip.start();
 
         clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -19,7 +19,6 @@ class Sound {
     }
 
     public static void playSound(String audioLocation, int volume) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-
         File audioPath = new File(audioLocation);
 
         AudioInputStream audio = AudioSystem.getAudioInputStream(audioPath);
