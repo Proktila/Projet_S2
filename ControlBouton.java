@@ -114,6 +114,8 @@ public class ControlBouton implements ActionListener, ChangeListener {
         if(a.getSource().equals(fen.getButTrad())){
             // lance le leu traditionelle
             model.setMode("Traditionnel");
+            fen.dispose();
+            FenetreSnake fenetreSnake = new FenetreSnake(model);
         }
         if(a.getSource().equals(fen.getButLaby())){
             // lance le jeu labyrinthe
