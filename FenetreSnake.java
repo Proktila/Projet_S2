@@ -202,7 +202,7 @@ class Gameplay extends JPanel implements KeyListener, ActionListener {
                     snake[i][0] = snake[i-1][0];
                 }
                 if(snake[i][0] > 980){
-                    snake[i][0] = 280;
+                    dead = true;
                 }
             }
             // rappelle la méthode paint()
@@ -217,7 +217,7 @@ class Gameplay extends JPanel implements KeyListener, ActionListener {
                     snake[i][0] = snake[i-1][0];
                 }
                 if(snake[i][0] < 280){
-                    snake[i][0] = 980;
+                    dead = true;
                 }
             }
             repaint();
@@ -230,8 +230,8 @@ class Gameplay extends JPanel implements KeyListener, ActionListener {
                 }else{
                     snake[i][1] = snake[i-1][1];
                 }
-                if(snake[i][1] > 720){
-                    snake[i][1] = 0;
+                if(snake[i][1] > 660){
+                    dead = true;
                 }
             }
             repaint();
@@ -245,7 +245,7 @@ class Gameplay extends JPanel implements KeyListener, ActionListener {
                     snake[i][1] = snake[i-1][1];
                 }
                 if(snake[i][1] < 0){
-                    snake[i][1] = 720;
+                    dead = true;
                 }
             }
             repaint();
