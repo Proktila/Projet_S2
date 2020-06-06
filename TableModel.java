@@ -2,16 +2,16 @@
 
 import javax.swing.table.AbstractTableModel;
 
-/**class qui permet de gérer les données des cellulles**/
+/**class qui permet de gérer les données des cellules**/
 class TableModel extends AbstractTableModel
 {
 
     // Valeur d'une cellule
-    private Object[][] object ;
+    private String[][] object ;
     // Titre d'une colonne
     private String[] titrecolonne ;
 
-    public TableModel(Object[][] object,String[] titrecolonne)
+    public TableModel(String[][] object,String[] titrecolonne)
     {
         this.object = object ;
         this.titrecolonne = titrecolonne;
@@ -38,10 +38,9 @@ class TableModel extends AbstractTableModel
         return String.class;
     }
 
-    public Object getValueAt(int rowIndex, int columnIndex)
+    public String getValueAt(int rowIndex, int columnIndex)
     {
-
-        return object[rowIndex][columnIndex] ;
+        return object[rowIndex][columnIndex];
 
     }
 }
