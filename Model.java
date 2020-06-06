@@ -9,9 +9,18 @@ class Model {
 
     private int volumeMusique = VOL_INIT;
     private int volumeBruits = VOL_INIT;
+
+    private Score score;
+
     public Model(){
 
+        score = new Score();
+
     }
+
+    public Score getScore() { return score; }
+
+    public void setScore(Score score) { this.score = score; }
 
     public String getDifficulty() { return difficulty; }
 
