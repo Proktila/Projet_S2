@@ -116,7 +116,7 @@ class FenetreMenu extends JFrame {
 
     /**DEBUT MENU SCORE**/
 
-    private Object[][] data;
+    private String[][] data;
     private String[] title;
     private JTable tableau;
 
@@ -183,10 +183,10 @@ class FenetreMenu extends JFrame {
         this.creerWidgetMenuPrincipal();
 
         this.getContentPane().setBackground(green);
-        this.setLocation(100, 0);
+        //this.setLocation(100, 0);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // gestion de la fermeture
-
+        this.setLocation(100,0);
         this.setTitle("Snake");
         this.setSize(1280, 720);
         this.setResizable(false);
@@ -258,14 +258,14 @@ class FenetreMenu extends JFrame {
 
         // contenu des cellules
         //tableau d'objet à 2 dimension
-        data = new Object[][]{
-                {"Normal", "serpent", "105"},
-                {"Chrono", "serpent", "100"},
-                {"...", "serpent", "100"},
-                {"...", "serpent", "90"},
-                {"...", "serpent", "80"},
-                {"...", "serpent", "70"},
-                {"...", "serpent", "50"},
+        data = new String[][]{
+                {"","", ""},
+                {"", "", ""},
+                {"", "", ""},
+                {"", "", ""},
+                {"", "", ""},
+                {"", "", ""},
+                {"", "", ""},
 
         };
         // Les titres des colonnes
@@ -388,7 +388,7 @@ class FenetreMenu extends JFrame {
     }
 
 
-    /**Créer la bandelore au dessus du meni**/
+    /**Créer la banderole au dessus du menu**/
     /**@param **/
     public void creerTitre(JLabel titre,  JLabel img, JLabel img2) {
 
@@ -427,11 +427,9 @@ class FenetreMenu extends JFrame {
         pantitre2.add(content);
         setContentPane(pantitre2);
 
-
     }
 
     /**FIN methodes menu principale**/
-
 
     /**DEBUT methodes menu skin : Arthur**/
 
@@ -450,7 +448,6 @@ class FenetreMenu extends JFrame {
         JLabel taText4 = new JLabel("Harry potter, Nyan Cat etc");
         JLabel taText5 = new JLabel("Pour la realisation de ce jeu on tient a remercier ");
         JLabel taText6 = new JLabel("notre tuteur monsieur Couchot etc. ");
-
 
         panelCredits = setupContent();
 
@@ -478,7 +475,6 @@ class FenetreMenu extends JFrame {
         content.add(taText6);
         content.add(backCredits);
 
-
         panelCredits.add(content);
         setContentPane(panelCredits);
 
@@ -497,6 +493,7 @@ class FenetreMenu extends JFrame {
         panPlay.add(content);
         setContentPane(panPlay);
     }
+
     public void addDifficulty(){
         panDifficulty = setupContent();
         JPanel content = new JPanel();
@@ -511,9 +508,6 @@ class FenetreMenu extends JFrame {
         panDifficulty.add(content);
         setContentPane(panDifficulty);
     }
-
-
-
 
 
     /**methode à commenter**/
@@ -713,7 +707,7 @@ class FenetreMenu extends JFrame {
     // ce panel est ajouter dans un panel final
 
     /**méthode création du titre**/
-    /**@param JLabel titre et JLabel de 2 images**/
+    /**@param titre titre et JLabel de 2 images**/
     public void creerTitreScore(JLabel titre, JLabel img, JLabel img2){
         //panCoupe
         JPanel panImgDroite = new JPanel();
@@ -742,7 +736,7 @@ class FenetreMenu extends JFrame {
 
 
     /**création du contenu de la page score**/
-    /**@param JPanel titre qui est ajouter à la page**/
+    /**@param titre titre qui est ajouter à la page**/
     public void creerInterface(JPanel titre) {
 
         // panel tableau (tableau + titres colonnes)
@@ -1007,6 +1001,39 @@ class FenetreMenu extends JFrame {
         this.repaint();
         this.revalidate();
     }
+
+    public String[][] getData() {
+        return data;
+    }
+
+    public void setData(String[][] data) {
+        this.data = data;
+    }
+
+    public JTable getTableau() {
+        return tableau;
+    }
+
+    public void setTableau(JTable tableau) {
+        this.tableau = tableau;
+    }
+
+    public TableModel getTable() {
+        return table;
+    }
+
+    public void setTable(TableModel table) {
+        this.table = table;
+    }
+
+    public Tableau getRender() {
+        return render;
+    }
+
+    public void setRender(Tableau render) {
+        this.render = render;
+    }
+
     /**FIN methodes changement menu score**/
 }
 
