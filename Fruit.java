@@ -15,13 +15,11 @@ public class Fruit {
 	private String effet;
 	private int posX;
 	private int posY;
-	private Model model;
 	
 	public Fruit(){}
 
-	public Fruit(String type,Model model){
+	public Fruit(String type){
 		this.typeFruit = type;
-		this.model = model;
 		this.setFruit();
 	}
 
@@ -174,7 +172,7 @@ public class Fruit {
         imgFruit = new ImageIcon(imgFruit.getImage().getScaledInstance(20, 20, BufferedImage.SCALE_SMOOTH));
 	}
 
-	public void effect(){
+	public void effect(Model model){
 		switch(typeFruit){
 			default:
 				break;
@@ -219,6 +217,8 @@ public class Fruit {
 				break;
 		}
 	}
+
+
 
 
 	public String toString(){

@@ -74,7 +74,7 @@ class Gameplay extends JPanel{
     private boolean pause=false;
     private SnakeButton pauseBut;
 
-    private Fruit currentFruit;
+    private Fruit currentFruit = new Fruit();
 
 
     public Gameplay(JFrame fen,FenetreMenu fenetreMenu,Model model) {
@@ -129,8 +129,10 @@ class Gameplay extends JPanel{
             snake[1][1]=20;
             snake[0][1]=20;
 
-            this.currentFruit= model.choisirFruit();
+            this.currentFruit = new Fruit();
+            this.currentFruit = model.choisirFruit();
             this.currentFruit.validFruit(snake,model.getTaille());
+            System.out.println(currentFruit);
 
         }
         // Dessine les deux bandes bleu sur les côtés
@@ -188,12 +190,12 @@ class Gameplay extends JPanel{
         if((currentFruit.getPosX() == snake[0][0]) && (currentFruit.getPosY() == snake[0][1])){
             model.setScoreS(model.getScoreS()+10);
             // augmente la vitesse
-            currentFruit.effect();
+            currentFruit.effect(this.model);
             this.currentFruit = model.choisirFruit();
             this.currentFruit.validFruit(snake,model.getTaille());
         }
-        // affiche le fruit à l'endroit voulu
         this.currentFruit.getImgFruit().paintIcon(this,g,currentFruit.getPosX(),currentFruit.getPosY());
+        // affiche le fruit à l'endroit voulu
         if(dead){
             g.setColor(blue);
             g.fillRect(120,235,500,250);

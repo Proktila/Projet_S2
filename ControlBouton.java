@@ -134,7 +134,7 @@ public class ControlBouton implements ActionListener, ChangeListener {
         }
         if(a.getSource().equals(fenMenu.getButTrad())){
             // lance le jeu traditionelle
-            model.setMode("Traditionnel");
+            model.setMode("traditionnel");
             fenMenu.setVisible(false);
             model.getScore().setActualMode(fenMenu.getButTrad().getText());
             fenSnake  = new FenetreSnake(fenMenu, model);
