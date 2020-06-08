@@ -218,8 +218,6 @@ class Gameplay extends JPanel{
 
     }
 
-
-
     public boolean isDead() {
         return dead;
     }
@@ -238,10 +236,7 @@ class Gameplay extends JPanel{
 
     public int[][] getSnake() { return snake; }
 
-
-
     public int getBegin() { return begin; }
-
 
     public void setRight(boolean right) {
         this.right = right;
@@ -271,17 +266,15 @@ class Gameplay extends JPanel{
         this.snake = snake;
     }
 
-
-
     public FenetreMenu getFenetreMenu() {
         return fenetreMenu;
     }
-
 
     public SnakeButton getPauseBut() { return pauseBut; }
 
     public void setPause(boolean pause) { this.pause = pause; }
 
     public boolean isPause() { return pause; }
+
 }
 

@@ -17,7 +17,6 @@ class Model {
     private int scoreS = 0;
 
     public Model(){
-
         score = new Score();
 
     }
@@ -420,8 +419,6 @@ class Model {
         return fruit;
     }
 
-
-
     public Score getScore() { return score; }
 
     public void setScore(Score score) { this.score = score; }
@@ -459,4 +456,5 @@ class Model {
     public int getScoreS() { return scoreS; }
 
     public void setScoreS(int scoreS) { this.scoreS = scoreS; }
+
 }

@@ -25,10 +25,6 @@ public class ControlSnake implements KeyListener, ActionListener {
     Timer timer;
 
 
-    public void init(){
-
-    }
-
     public ControlSnake(FenetreSnake fenetreSnake, Model model){
         this.model = model;
         this.fenetreSnake = fenetreSnake;
@@ -49,7 +45,6 @@ public class ControlSnake implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        init();
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             // des qu'on bouge begin augmentera et ne repositionnera plus le serpent
             gameplay.setBegin(gameplay.getBegin()+1);
@@ -105,15 +100,12 @@ public class ControlSnake implements KeyListener, ActionListener {
             gameplay.setLeft(false);
         }
         if(e.getKeyCode() == KeyEvent.VK_SPACE && gameplay.isDead()) {
-            String pseudoSnake = "pseudo";
-            String theme = "theme";
             String[][] tScore = gameplay.getFenetreMenu().getData();
             try {
-                addScore(tScore);
+                addScoreInTableMenu();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            model.getScore().setActualScore(model.getScoreS());
             gameplay.getFenetreMenu().setData(tScore);
             // remise a zero lorsqu'on appuie sur espace et que l'on est mort
             model.setDelay(100);
@@ -128,6 +120,13 @@ public class ControlSnake implements KeyListener, ActionListener {
             gameplay.repaint();
         }else if(e.getKeyCode() == KeyEvent.VK_SPACE && !gameplay.isDead()){
             // ferme le jeu et ouvre le menu
+            String[][] tScore = gameplay.getFenetreMenu().getData();
+            try {
+                addScoreInTableMenu();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            gameplay.getFenetreMenu().setData(tScore);
             model.setDelay(100);
             gameplay.setBegin(0);
             model.setScoreS(0);
@@ -241,53 +240,19 @@ public class ControlSnake implements KeyListener, ActionListener {
 
     }
 
-
-    public void addScore(String[][] tabScore) throws IOException {
-        List<String> lAddScore = new java.util.ArrayList<>();
-        List<Integer> test = new java.util.ArrayList<>();
-        lAddScore.add(String.valueOf(model.getScoreS()));
-        //ajout du score dans le fichier score
-        Path fichier = Paths.get("src/score.txt");
-        Files.write(fichier, lAddScore, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
-        //lecture du fichier score
-        BufferedReader reader = new BufferedReader(new FileReader("src/score.txt"));
-        String sNewScoreAdd;
-        while (true) {
-            if (!((sNewScoreAdd = reader.readLine()) != null)) break;
-            //Afficher les scores
-            System.out.println("score : " + sNewScoreAdd);
-            //pas de doublons dans la liste des scores
-            if(!lAddScore.contains(sNewScoreAdd)){
-                //ajout du score à la liste
-                lAddScore.add(sNewScoreAdd);
-            }
-            //tri décroissant des scores
-            for (String myString : lAddScore) {
-                test.add(Integer.parseInt(myString));
-            }
-            test.sort(Collections.reverseOrder());
-            System.out.println(lAddScore);
-            lAddScore.clear();
-            for (Integer myInt : test) {
-                if(!lAddScore.contains(String.valueOf(myInt))){
-                    //ajout du score à la liste
-                    lAddScore.add(String.valueOf(myInt));
-                }
-            }
-            //affiche contenu liste
-            System.out.println(lAddScore);
-            //ajout des scores dans le tableau des scores (menu)
-            for(int i = 0; i<lAddScore.size(); i++) {
-                //si un score nouveau et plus grand que le dernier du tableau est réalisé
-                if(lAddScore.size() == 8){
-                    //le dernier score du tableau est supprimé
-                    lAddScore.remove(7);
-                }else{
-                    //ajout des scores dans l'ordre décroissant dans le tableau
-                    tabScore[i][2] = lAddScore.get(i);
-                }
-            }
+    public void addScoreInTableMenu() throws IOException {
+        //récup pseudo
+        try {
+            model.getScore().setActualPseudo(String.valueOf(gameplay.getFenetreMenu().getTfPseudo().getText()));
+        } catch (PseudoOutOfBoundsException | SansPseudoException e) {
+            e.printStackTrace();
         }
-        reader.close();
+        //récup score
+        model.getScore().setActualScore(String.valueOf(model.getScoreS()));
+        //effectue la selection pour laffichage
+        model.getScore().initListScore();
+        model.getScore().addScore();
+        model.getScore().addScoreInFich();
     }
+
 }

@@ -4,7 +4,11 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLOutput;
+import java.util.Collections;
 
 public class ControlBouton implements ActionListener, ChangeListener {
 
@@ -44,6 +48,11 @@ public class ControlBouton implements ActionListener, ChangeListener {
         }
         // menu principal vers menu score
         if (a.getSource().equals(fenMenu.getBoutonScores())) {
+            try {
+                showScore();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             fenMenu.changerMenuScore();
         }
         // menu principal vers menu jouer
@@ -72,10 +81,17 @@ public class ControlBouton implements ActionListener, ChangeListener {
                     backFromSkinChild=null;
                     break;
                 case "skinPseudo":
-                    fenMenu.getSkinPseudoButtonPanel().setVisible(false);
-                    fenMenu.setBackSkin();
-                    backFromSkinChild=null;
-                    break;
+                    try {
+                        model.getScore().setActualPseudo(String.valueOf(fenMenu.getTfPseudo().getText()));
+                        String pseudo = String.valueOf(model.getScore().getActualPseudo());
+                        fenMenu.getTfPseudo().setText(pseudo);
+                        fenMenu.getSkinPseudoButtonPanel().setVisible(false);
+                        fenMenu.setBackSkin();
+                        backFromSkinChild=null;
+                        break;
+                    } catch (PseudoOutOfBoundsException | SansPseudoException p) {
+                        fenMenu.creerDialogErr(p.getMessage());
+                    }
             }
         }
         // menu skin vers skin Serpent
@@ -101,43 +117,91 @@ public class ControlBouton implements ActionListener, ChangeListener {
             fenMenu.getPanPlay().setVisible(false);
             fenMenu.addDifficulty();
             model.setDifficulty("easy");
+            model.getScore().setActualDifficulty(fenMenu.getButEasy().getText());
         }
         if(a.getSource().equals(fenMenu.getButNormal())){
             fenMenu.getPanPlay().setVisible(false);
             fenMenu.addDifficulty();
             model.setDifficulty("normal");
+            model.getScore().setActualDifficulty(fenMenu.getButNormal().getText());
         }
         if(a.getSource().equals(fenMenu.getButHard())){
             fenMenu.getPanPlay().setVisible(false);
             fenMenu.addDifficulty();
             model.setDifficulty("hard");
+            model.getScore().setActualMode(fenMenu.getButTrad().getText());
+            model.getScore().setActualDifficulty(fenMenu.getButHard().getText());
         }
         if(a.getSource().equals(fenMenu.getButTrad())){
             // lance le jeu traditionelle
             model.setMode("Traditionnel");
             fenMenu.setVisible(false);
-            fenSnake  = new FenetreSnake(fenMenu);
+            model.getScore().setActualMode(fenMenu.getButTrad().getText());
+            fenSnake  = new FenetreSnake(fenMenu, model);
             ControlSnake controlSnake = new ControlSnake(fenSnake,model);
 
         }
         if(a.getSource().equals(fenMenu.getButLaby())){
             // lance le jeu labyrinthe
             model.setMode("Labyrinthe");
+            model.getScore().setActualMode(fenMenu.getButLaby().getText());
         }
         if(a.getSource().equals(fenMenu.getButChrono())){
             // lance le jeu labyrinthe
             model.setMode("Chrono");
+            model.getScore().setActualMode(fenMenu.getButChrono().getText());
         }
         if(a.getSource().equals(fenMenu.getButDuo())){
             // lance le jeu labyrinthe
             model.setMode("Duo");
         }
         if(a.getSource().equals(fenMenu.getBackDifficulty())){
-            System.out.println("test");
             fenMenu.getPanDifficulty().setVisible(false);
             fenMenu.setBackPlay();
         }
 
+    }
+    public void showScore() throws IOException {
+        model.getScore().initListScore();
+        BufferedReader readerScore;
+        readerScore = new BufferedReader(new FileReader("src/score.txt"));
+        String line;
+        int nbline = 0;
+        int indPseudo = 0;
+        int indScore = 0;
+        while ((line = readerScore.readLine()) != null) {
+            nbline++;
+            // Récupération données dans le fichier texte
+            if (nbline == 1) {
+                model.getScore().getListMode().add(line);
+               }
+            if (nbline == 2) {
+                model.getScore().getListDifficulty().add(line);
+                }
+            if (nbline == 3) {
+                model.getScore().getListData().sort(Collections.reverseOrder());
+                model.getScore().getListPseudo().add(line);
+                //indPseudo = model.getScore().getListPseudo().indexOf(model.getScore().test2());
+            }
+            if (nbline == 4) {
+                model.getScore().getListData().add(Integer.valueOf(line));
+                model.getScore().getListScore().add(line);
+                indScore = model.getScore().getListData().indexOf(Integer.valueOf(line));
+                nbline = 0;
+            }
+
+
+            for (int i = 0; i < model.getScore().getListData().size(); i++) {
+                //if(model.getScore().getListScore().add(String.valueOf(i)))
+                fenMenu.getData()[i][0] = model.getScore().getListMode().get(i);
+                fenMenu.getData()[i][1] = model.getScore().getListDifficulty().get(i);
+
+                fenMenu.getData()[i][2] = model.getScore().getListPseudo().get(i);
+                //}
+                fenMenu.getData()[i][3] = model.getScore().getListScore().get(i);
+            }
+        }
+        readerScore.close();
     }
 
     public FenetreSnake getFenSnake() {

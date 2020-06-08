@@ -258,18 +258,17 @@ class FenetreMenu extends JFrame {
 
         // contenu des cellules
         //tableau d'objet à 2 dimension
-        data = new String[][]{
-                {"","", ""},
-                {"", "", ""},
-                {"", "", ""},
-                {"", "", ""},
-                {"", "", ""},
-                {"", "", ""},
-                {"", "", ""},
-
+        data = new String[][]{{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},
+                {"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},
+                {"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},
+                {"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},
+                {"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},
+                {"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},
+                {"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},
+                {"","","",""},{"","","",""}
         };
         // Les titres des colonnes
-        title = new String[]{"Thème", "Nom du serpent", "Score"};
+        title = new String[]{"Mode","Difficulté", "Pseudo", "Score"};
 
         //initialisation du tableau
         tableau = new JTable(data, title);
@@ -290,8 +289,9 @@ class FenetreMenu extends JFrame {
 
         //largeur des cellulles du tableau
         tableau.getColumnModel().getColumn(0).setPreferredWidth(200);
-        tableau.getColumnModel().getColumn(1).setPreferredWidth(300);
+        tableau.getColumnModel().getColumn(1).setPreferredWidth(250);
         tableau.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tableau.getColumnModel().getColumn(3).setPreferredWidth(150);
 
         // image coupe
         imgCoupe = new ImageIcon("img/score/coupe.png");
@@ -743,8 +743,12 @@ class FenetreMenu extends JFrame {
         JPanel pan = new JPanel();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
         pan.add(tableau.getTableHeader());
-        pan.add(tableau);
-
+        JScrollPane scrollPane = new JScrollPane(tableau, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setLayout(new ScrollPaneLayout());
+        scrollPane.setBackground(BG_COLOR);
+        scrollPane.setBorder(BorderFactory.createLineBorder(BG_COLOR));
+        pan.add(scrollPane);
+        pan.setPreferredSize(new Dimension(700, 250));
         //création Jpanel avec tous les label des médailles de droite
         JPanel panImgMedailleDroite = new JPanel();
         panImgMedailleDroite.setLayout(new BoxLayout(panImgMedailleDroite, BoxLayout.Y_AXIS));
@@ -856,6 +860,15 @@ class FenetreMenu extends JFrame {
 
     /**FIN methodes controller*/
 
+
+    /**Méthode pour afficher les messages d'erreur
+     * @param messageErr pour intialiser un message spécifique**/
+    public void creerDialogErr(String messageErr) {
+        //création OptionPane, le message est de type erreur
+        JOptionPane messErr = new JOptionPane();
+        messErr.showMessageDialog(this,messageErr, "Erreur", JOptionPane.ERROR_MESSAGE);
+    }
+
     /**getter des boutton pour changer les menus**/
     public SnakeButton getBoutonScores() {
         return boutonScores;
@@ -944,14 +957,6 @@ class FenetreMenu extends JFrame {
     /**FIN getter des Slider pour menu param**/
 
 
-
-
-
-
-
-
-
-
     public SnakeButton getbRetour() { return bRetour; }
 
     /**DEBUT méthodes changement de menu**/
@@ -1036,7 +1041,14 @@ class FenetreMenu extends JFrame {
 
     public Model getModel() { return model; }
 
-    /**FIN methodes changement menu score**/
+    public JTextField getTfPseudo() {
+        return tfPseudo;
+    }
+
+    public void setTfPseudo(JTextField tfPseudo) {
+        this.tfPseudo = tfPseudo;
+    }
+
 }
 
 

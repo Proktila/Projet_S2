@@ -19,12 +19,12 @@ class TableModel extends AbstractTableModel
 
     public int getColumnCount()
     {
-        return 3;
+        return 4;
     }
 
     public int getRowCount()
     {
-        return 7;
+        return 50;
     }
     public String getColumnName(int column)
     {
