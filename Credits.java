@@ -12,13 +12,10 @@ public class Credits extends JFrame {
 
   public Credits() {
 
- 	setTitle("Page credit du jeu"); 
-
+ 	setTitle("Page credit du jeu");
  	initAttributs();
-
     setSize(1280,720);                                // Fixe la taille par défaut        
-    setVisible(true);    
-
+    setVisible(true);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Gestion de la fermeture
   }
 

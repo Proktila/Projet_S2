@@ -185,7 +185,7 @@ public class Fruit {
 				model.setTaille(model.getTaille()+3);
 				break;
 			case "raisin":
-				model.setScoreS(model.getScoreS()+50);
+				model.getScore().setActualScore(model.getScore().getActualScore()+50);
 				break;
 			case "mure":
 				model.setDelay(model.getDelay()+50);
@@ -211,7 +211,7 @@ public class Fruit {
 			case "piment":
 				break;
 			case "radis":
-				model.setScoreS(model.getScoreS()-50);
+				model.getScore().setActualScore(model.getScore().getActualScore()-50);
 				break;
 			case "aubergine":
 				break;

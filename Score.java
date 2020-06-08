@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Score {
     private String bestScore;
-    private String actualScore;
+    private int actualScore;
     private String actualPseudo;
     private String bestDifficulty;
     private String actualDifficulty;
@@ -50,11 +50,11 @@ public class Score {
         this.bestScore = bestScore;
     }
 
-    public String getActualScore() {
+    public int getActualScore() {
         return actualScore;
     }
 
-    public void setActualScore(String actualScore) {
+    public void setActualScore(int actualScore) {
         this.actualScore = actualScore;
     }
 

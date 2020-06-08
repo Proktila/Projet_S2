@@ -139,6 +139,7 @@ public class ControlBouton implements ActionListener, ChangeListener {
             model.getScore().setActualMode(fenMenu.getButTrad().getText());
             fenSnake  = new FenetreSnake(fenMenu, model);
             ControlSnake controlSnake = new ControlSnake(fenSnake,model);
+
         }
         if(a.getSource().equals(fenMenu.getButLaby())){
             // lance le jeu labyrinthe
@@ -166,37 +167,33 @@ public class ControlBouton implements ActionListener, ChangeListener {
         readerScore = new BufferedReader(new FileReader("src/score.txt"));
         String line;
         int nbline = 0;
-        int indPseudo = 0;
-        int indScore = 0;
+
         while ((line = readerScore.readLine()) != null) {
             nbline++;
             // Récupération données dans le fichier texte
             if (nbline == 1) {
                 model.getScore().getListMode().add(line);
+                System.out.println(line);
                }
             if (nbline == 2) {
                 model.getScore().getListDifficulty().add(line);
+                System.out.println(line);
                 }
             if (nbline == 3) {
-                model.getScore().getListData().sort(Collections.reverseOrder());
                 model.getScore().getListPseudo().add(line);
-                //indPseudo = model.getScore().getListPseudo().indexOf(model.getScore().test2());
+                System.out.println(line);
             }
             if (nbline == 4) {
                 model.getScore().getListData().add(Integer.valueOf(line));
                 model.getScore().getListScore().add(line);
-                indScore = model.getScore().getListData().indexOf(Integer.valueOf(line));
                 nbline = 0;
             }
 
 
             for (int i = 0; i < model.getScore().getListData().size(); i++) {
-                //if(model.getScore().getListScore().add(String.valueOf(i)))
                 fenMenu.getData()[i][0] = model.getScore().getListMode().get(i);
                 fenMenu.getData()[i][1] = model.getScore().getListDifficulty().get(i);
-
                 fenMenu.getData()[i][2] = model.getScore().getListPseudo().get(i);
-                //}
                 fenMenu.getData()[i][3] = model.getScore().getListScore().get(i);
             }
         }

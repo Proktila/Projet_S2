@@ -453,8 +453,5 @@ class Model {
 
     public void setTaille(int taille) { this.taille = taille; }
 
-    public int getScoreS() { return scoreS; }
-
-    public void setScoreS(int scoreS) { this.scoreS = scoreS; }
 
 }
