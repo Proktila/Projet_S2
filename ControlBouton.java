@@ -139,21 +139,20 @@ public class ControlBouton implements ActionListener, ChangeListener {
             model.getScore().setActualMode(fenMenu.getButTrad().getText());
             fenSnake  = new FenetreSnake(fenMenu, model);
             ControlSnake controlSnake = new ControlSnake(fenSnake,model);
-
         }
         if(a.getSource().equals(fenMenu.getButLaby())){
             // lance le jeu labyrinthe
-            model.setMode("Labyrinthe");
+            model.setMode("labyrinthe");
             model.getScore().setActualMode(fenMenu.getButLaby().getText());
         }
         if(a.getSource().equals(fenMenu.getButChrono())){
             // lance le jeu labyrinthe
-            model.setMode("Chrono");
+            model.setMode("chrono");
             model.getScore().setActualMode(fenMenu.getButChrono().getText());
         }
         if(a.getSource().equals(fenMenu.getButDuo())){
             // lance le jeu labyrinthe
-            model.setMode("Duo");
+            model.setMode("duo");
         }
         if(a.getSource().equals(fenMenu.getBackDifficulty())){
             fenMenu.getPanDifficulty().setVisible(false);

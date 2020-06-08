@@ -27,13 +27,13 @@ public class Credits extends JFrame {
 
 	 
 	JLabel taText0 = new JLabel("CREDITS"); 
-	taText0.setFont(new java.awt.Font("Monospaced", Font.BOLD,50));
+	taText0.setFont(new Font("Monospaced", Font.BOLD,50));
 	JLabel taText1 = new JLabel("Le jeu à été concu par Julien, Lisa, Marion, Theo, Nathan, Arthur");
-	taText1.setFont(new java.awt.Font("Monospaced", Font.BOLD,20));
+	taText1.setFont(new Font("Monospaced", Font.BOLD,20));
 	JLabel taText2 = new JLabel("La musique utilisee est celle de Harry potter, Nyan Cat etc");
-	taText2.setFont(new java.awt.Font("Monospaced", Font.BOLD,20));
+	taText2.setFont(new Font("Monospaced", Font.BOLD,20));
 	JLabel taText3 = new JLabel("Pour la realisation de ce jeu on tient a remercier notre tuteur monsieur Couchot etc. ");
-	taText3.setFont(new java.awt.Font("Monospaced", Font.BOLD,20));
+	taText3.setFont(new Font("Monospaced", Font.BOLD,20));
 
 	JButton but1 = new JButton("Retour Menu");
 
