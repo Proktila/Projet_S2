@@ -1034,6 +1034,8 @@ class FenetreMenu extends JFrame {
         this.render = render;
     }
 
+    public Model getModel() { return model; }
+
     /**FIN methodes changement menu score**/
 }
 

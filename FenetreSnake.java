@@ -10,14 +10,13 @@ public class FenetreSnake extends JFrame {
     Gameplay gameplay;
     FenetreMenu fenetreMenu;
 
-    public FenetreSnake(FenetreMenu fenetreMenu) {
-        gameplay = new Gameplay(this,fenetreMenu);
+    public FenetreSnake(FenetreMenu fenetreMenu,Model model) {
+        gameplay = new Gameplay(this,fenetreMenu,model);
         setSize(1280, 720);
         setLocation(100,0);
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(gameplay);
     }
 
     public Gameplay getGameplay() {
@@ -31,6 +30,7 @@ public class FenetreSnake extends JFrame {
 
 class Gameplay extends JPanel{
 
+    private Model model;
     private Color blue = new Color(47, 81, 103);
     private Color green = new Color(50, 99, 23);
 
@@ -51,10 +51,7 @@ class Gameplay extends JPanel{
 
     // Un timer pour la vitesse
     private Timer timer;
-    private int delay = 100;
 
-    // taille du serpent au commencement
-    private int taille=3;
 
     // on ne donne aucune direction au serpent au commencement
     private boolean right = false;
@@ -67,161 +64,165 @@ class Gameplay extends JPanel{
 
     private ImageIcon foodImg;
 
-    // position random du fruit dans le jeu
-    private int foodX = randomXFood();
-    private int foodY = randomYFood();
-
     // booléen si le serpent est mort
     private boolean dead = false;
 
-    // score du serpent
-    private int score = 0;
     private JFrame fen;
 
-    FenetreMenu fenetreMenu;
+    private FenetreMenu fenetreMenu;
+
+    private boolean pause=false;
+    private SnakeButton pauseBut;
+
+    private Fruit currentFruit;
 
 
-    public Gameplay(JFrame fen,FenetreMenu fenetreMenu) {
+    public Gameplay(JFrame fen,FenetreMenu fenetreMenu,Model model) {
+        this.model= model;
+        setLayout(null);
         this.fen=fen;
         this.fenetreMenu = fenetreMenu;
+        initGameplay();
+    }
+
+    public void initGameplay(){
+        JPanel panelButton = new JPanel();
+        panelButton.setLayout(null);
+        panelButton.setBackground(blue);
+        panelButton.setBounds(0,0,280,720);
+        SnakeButton pauseBut = new SnakeButton("");
+        pauseBut.setIcon(new ImageIcon("img/btn/pause.png"));
+        pauseBut.setRolloverIcon(new ImageIcon("img/btn/pause.png"));
+        pauseBut.setPressedIcon(new ImageIcon("img/btn/pause.png"));
+        pauseBut.setBounds(30,30,200,91);
+        pauseBut.setFocusable(false);
+        this.pauseBut=pauseBut;
+        panelButton.add(pauseBut);
+        JPanel panelButtonGameplay = new JPanel();
+        panelButtonGameplay.setLayout(null);
+        panelButtonGameplay.setBounds(0,0,1280,720);
+        panelButtonGameplay.add(panelButton);
+        this.setBounds(280,0,1000,720);
+
+        panelButtonGameplay.add(this);
+        panelButtonGameplay.setFocusable(true);
+        panelButtonGameplay.setFocusTraversalKeysEnabled(false);
+        fen.setContentPane(panelButtonGameplay);
     }
 
     public void setControlSnake(ControlSnake controlSnake){
         this.addKeyListener(controlSnake);
+        this.pauseBut.addActionListener(controlSnake);
     }
 
-    public void paintComponent(Graphics g){
-        //requestFocus();
+    @Override
+    protected void paintComponent(Graphics g){
+
+        super.paintComponent(g);
+        if(begin == 0){
+            // positionne le snake au commencement
+            snake[2][0]=0;
+            snake[1][0]=20;
+            snake[0][0]=40;
+
+            snake[2][1]=20;
+            snake[1][1]=20;
+            snake[0][1]=20;
+
+            this.currentFruit= model.choisirFruit();
+            this.currentFruit.validFruit(snake,model.getTaille());
+
+        }
+        // Dessine les deux bandes bleu sur les côtés
+        g.setColor(blue);
+        g.fillRect(720,0,280,720);
+
+        // Dessine le milieu du jeu
+        g.setColor(green);
+        g.fillRect(0,0,720,720);
+
+        // Dessine le score
+        g.setColor(lightGreen);
+        g.setFont(new Font("Monospaced", Font.BOLD, 18));
+        g.drawString("Scores: "+model.getScoreS(),740,20);
+
+        // Dessine la taile du serpent
+        g.drawString("Taille: "+model.getTaille(),740,40);
+
+
+        // le snake regarde à droite de base
+        rightHead = new ImageIcon("img/snake/basicGreenHeadRight.png");
+        rightHead.paintIcon(this,g,snake[0][0],snake[0][1]);
+
+        for(int i = 0; i < model.getTaille(); i++){
+            // si la tete va vers la droite
+            if(i==0 && right){
+                rightHead = new ImageIcon("img/snake/basicGreenHeadRight.png");
+                rightHead.paintIcon(this,g,snake[i][0],snake[i][1]);
+            }
+            // si la tete va vers la gauche
+            if(i==0 && left){
+                leftHead = new ImageIcon("img/snake/basicGreenHeadLeft.png");
+                leftHead.paintIcon(this,g,snake[i][0],snake[i][1]);
+            }
+            // si la tete va vers le bas
+            if(i==0 && down){
+                downHead = new ImageIcon("img/snake/basicGreenHeadDown.png");
+                downHead.paintIcon(this,g,snake[i][0],snake[i][1]);
+            }
+            // si la tete va vers le haut
+            if(i==0 && up){
+                upHead = new ImageIcon("img/snake/basicGreenHeadUp.png");
+                upHead.paintIcon(this,g,snake[i][0],snake[i][1]);
+            }
+            // si c'est un corp
+            if(i != 0){
+                body = new ImageIcon("img/snake/basicGreenBody.png");
+                body.paintIcon(this,g,snake[i][0],snake[i][1]);
+            }
+        }
+        // on affecte l'image à food
+        foodImg = new ImageIcon("img/snake/body.png");
+
+        // si le fruit se trouve aux même endroit que la tete du snake
+        if((currentFruit.getPosX() == snake[0][0]) && (currentFruit.getPosY() == snake[0][1])){
+            model.setScoreS(model.getScoreS()+10);
+            // augmente la vitesse
+            currentFruit.effect();
+            this.currentFruit = model.choisirFruit();
+            this.currentFruit.validFruit(snake,model.getTaille());
+        }
+        // affiche le fruit à l'endroit voulu
+        this.currentFruit.getImgFruit().paintIcon(this,g,currentFruit.getPosX(),currentFruit.getPosY());
         if(dead){
             g.setColor(blue);
-            g.fillRect(390,235,500,250);
-            repaint();
-            revalidate();
+            g.fillRect(120,235,500,250);
             g.setColor(lightGreen);
             g.setFont(new Font("Monospaced", Font.BOLD, 50));
-            g.drawString("GAME OVER ",500,300);
-            g.drawString("Scores: "+score,500,350);
-            // Dessine la taille du serpent
-            g.drawString("Taille: "+taille,500,400);
-            g.setFont(new Font("Monospaced", Font.BOLD, 20));
+            g.drawString("GAME OVER ",230,300);
+            g.drawString("Scores: "+model.getScoreS(),230,350);
+            // Dessine la taile du serpent
+            g.drawString("Taille: "+model.getTaille(),230,400);
         }
-        else{
-            // positionne le snake au commencement
-            if(begin == 0){
-                snake[2][0]=300;
-                snake[1][0]=320;
-                snake[0][0]=340;
-
-                snake[2][1]=20;
-                snake[1][1]=20;
-                snake[0][1]=20;
-            }
-            // Dessine les deux bandes bleu sur les côtés
+        if(pause){
             g.setColor(blue);
-            g.fillRect(0,0,280,720);
-            g.fillRect(1000,0,280,720);
-
-
-            // Dessine le milieu du jeu
-            g.setColor(green);
-            g.fillRect(280,0,720,720);
-
-            // Dessine le score
+            g.fillRect(120,235,500,250);
             g.setColor(lightGreen);
-            g.setFont(new Font("Monospaced", Font.BOLD, 18));
-            g.drawString("Scores: "+score,160,20);
-
-            // Dessine la taille du serpent
-            g.drawString("Taille: "+taille,1020,20);
-
-            // le snake regarde à droite de base
-            rightHead = new ImageIcon("img/snake/basicGreenHeadRight.png");
-            rightHead.paintIcon(this,g,snake[0][0],snake[0][1]);
-
-            for(int i = 0; i < taille; i++){
-                // si la tete va vers la droite
-                if(i==0 && right){
-                    rightHead = new ImageIcon("img/snake/basicGreenHeadRight.png");
-                    rightHead.paintIcon(this,g,snake[i][0],snake[i][1]);
-                }
-                // si la tete va vers la gauche
-                if(i==0 && left){
-                    leftHead = new ImageIcon("img/snake/basicGreenHeadLeft.png");
-                    leftHead.paintIcon(this,g,snake[i][0],snake[i][1]);
-                }
-                // si la tete va vers le bas
-                if(i==0 && down){
-                    downHead = new ImageIcon("img/snake/basicGreenHeadDown.png");
-                    downHead.paintIcon(this,g,snake[i][0],snake[i][1]);
-                }
-                // si la tete va vers le haut
-                if(i==0 && up){
-                    upHead = new ImageIcon("img/snake/basicGreenHeadUp.png");
-                    upHead.paintIcon(this,g,snake[i][0],snake[i][1]);
-                }
-                // si c'est un corp
-                if(i != 0){
-                    body = new ImageIcon("img/snake/basicGreenBody.png");
-                    body.paintIcon(this,g,snake[i][0],snake[i][1]);
-                }
-            }
-            // on affecte l'image à food
-            foodImg = new ImageIcon("img/snake/pomme.png");
-            // si le fruit se trouve aux même endroit que la tete du snake
-            if((foodX == snake[0][0]) && (foodY == snake[0][1])){
-                while (foodIsOnSnake(foodX,foodY)){
-                    // tant que le fruit apparait sur le serpent, genere une nouvelle position
-                    foodX = randomXFood();
-                    foodY = randomYFood();
-                }
-                score = score + 10;
-                taille++;
-                // augmente la vitesse
-                delay--;
-            }
-
-            // affiche le fruit à l'endroit voulu
-            foodImg.paintIcon(this,g,foodX,foodY);
-            g.dispose();
+            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            // Dessine la taile du serpent
+            g.drawString("Taille: "+model.getTaille(),230,400);
         }
+
+
+        g.dispose();
+
     }
+
+
 
     public boolean isDead() {
         return dead;
     }
-
-    /*
-    Renvoie un entier random entre les bornes de la largeur de la fenetre
-     */
-    public int randomXFood(){
-        int random = (int)(Math.random()*((940-280)+1))+280;
-        while(random%20 !=0){
-            random = (int)(Math.random()*((940-280)+1))+280;
-        }
-        return random;
-    }
-
-    /*
-    Renvoie un entier random entre les bornes de la hauteur de la fenetre
-     */
-    public int randomYFood(){
-        int random = (int) (Math.random() * ((660) + 1));
-        while(random % 20 != 0){
-            random = (int) (Math.random() * ((660) + 1));
-        }
-        return random;
-    }
-    // renvoie true si le fruit se trouve sur une partie du serpent
-    public boolean foodIsOnSnake(int x, int y ){
-        for(int i = 0; i < taille;i++){
-            if((x == snake[i][0]) && (y == snake[i][1])){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     //les getters
     public JFrame getFen() { return fen; }
 
@@ -237,15 +238,10 @@ class Gameplay extends JPanel{
 
     public int[][] getSnake() { return snake; }
 
-    public int getScore() { return score; }
 
-    public int getTaille() { return taille; }
 
     public int getBegin() { return begin; }
 
-    public void setTaille(int taille) {
-        this.taille = taille;
-    }
 
     public void setRight(boolean right) {
         this.right = right;
@@ -275,16 +271,17 @@ class Gameplay extends JPanel{
         this.snake = snake;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
 
-    public int getDelay() {
-        return delay;
-    }
 
     public FenetreMenu getFenetreMenu() {
         return fenetreMenu;
     }
+
+
+    public SnakeButton getPauseBut() { return pauseBut; }
+
+    public void setPause(boolean pause) { this.pause = pause; }
+
+    public boolean isPause() { return pause; }
 }
 
