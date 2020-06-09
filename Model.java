@@ -2,6 +2,7 @@ class Model {
 
     private String difficulty;
     private String mode;
+    private String map = "";
 
     private final int VOL_MIN = 0;
     private final int VOL_MAX = 100;
@@ -429,29 +430,31 @@ class Model {
 
     public String getMode() { return mode; }
 
+    public String getMap() { return map; }
+
     public int getVOL_MIN() { return VOL_MIN; }
 
     public int getVOL_MAX() { return VOL_MAX;}
 
     public int getVOL_INIT() { return VOL_INIT; }
 
-    public void setMode(String mode) { this.mode = mode; }
-
     public int getVolumeMusique() { return volumeMusique; }
-
-    public void setVolumeMusique(int volumeMusique) { this.volumeMusique = volumeMusique; }
 
     public int getVolumeBruits() { return volumeBruits; }
 
-    public void setVolumeBruits(int volumeBruits) { this.volumeBruits = volumeBruits; }
-
     public int getDelay() { return delay; }
-
-    public void setDelay(int delay) { this.delay = delay; }
 
     public int getTaille() { return taille; }
 
     public void setTaille(int taille) { this.taille = taille; }
 
+    public void setMode(String mode) { this.mode = mode; }
 
+    public void setVolumeMusique(int volumeMusique) { this.volumeMusique = volumeMusique; }
+
+    public void setVolumeBruits(int volumeBruits) { this.volumeBruits = volumeBruits; }
+
+    public void setDelay(int delay) { this.delay = delay; }
+
+    public void setMap(String map) { this.map = map; }
 }

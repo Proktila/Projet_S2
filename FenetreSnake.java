@@ -33,14 +33,13 @@ class Gameplay extends JPanel{
     private Model model;
     private Color blue = new Color(47, 81, 103);
     private Color green = new Color(50, 99, 23);
+    private Color lightGreen = new Color(99, 205, 42);
 
     /*
     Tableau à double entré ou la 1ere entrée est la position d'une partie du snake par ex snake[0] = tete
     et la deuxième entré est soit la valeur x soit y ex snake[0][0] = posx de la tete
      */
     private int[][] snake = new int[720][2];
-
-    private Color lightGreen = new Color(99, 205, 42);
 
     // Les différentes partie du serpent
     private ImageIcon rightHead;
@@ -51,7 +50,6 @@ class Gameplay extends JPanel{
 
     // Un timer pour la vitesse
     private Timer timer;
-
 
     // on ne donne aucune direction au serpent au commencement
     private boolean right = false;
@@ -75,7 +73,6 @@ class Gameplay extends JPanel{
     private SnakeButton pauseBut;
 
     private Fruit currentFruit = new Fruit();
-
 
     public Gameplay(JFrame fen,FenetreMenu fenetreMenu,Model model) {
         this.model= model;
@@ -140,7 +137,7 @@ class Gameplay extends JPanel{
         g.fillRect(720,0,280,720);
 
         // Dessine le milieu du jeu
-        g.setColor(green);
+        g.setColor(setMapColor(model.getMap()));
         g.fillRect(0,0,720,720);
 
         // Dessine le score
@@ -218,6 +215,17 @@ class Gameplay extends JPanel{
 
         g.dispose();
 
+    }
+
+    private Color setMapColor(String map) {
+        switch (map) {
+            case "Rouge":
+                return Color.RED;
+            case "Bleu":
+                return Color.BLUE;
+            default:
+                return this.green;
+        }
     }
 
     public boolean isDead() {

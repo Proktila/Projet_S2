@@ -89,7 +89,7 @@ class FenetreMenu extends JFrame {
     // SKIN MAP
     private JPanel skinMapButtonPanel;
     private JComboBox cbMap;
-    private Object[] listeMap = new Object[]{"Element 1", "Element 2", "Element 3", "Element 4", "Element 5"};
+    private Object[] listeMap = new Object[]{"Rouge", "Bleu", "Element 3", "Element 4", "Element 5"};
 
     // SKIN PSEUDO
     private JPanel skinPseudoButtonPanel;
@@ -523,8 +523,8 @@ class FenetreMenu extends JFrame {
     /**methode à commenter**/
     /**@param **/
     public void setupCb(JComboBox cb){
-        cbSerpent.setPreferredSize(new Dimension(300,91));
-        cbSerpent.setBackground(blue);
+        cb.setPreferredSize(new Dimension(300,91));
+        cb.setBackground(blue);
         cb.setForeground(lightGreen);
         cb.setFont(fBtn);
     }
@@ -667,7 +667,7 @@ class FenetreMenu extends JFrame {
         JPanel content = new JPanel();
         content.setBackground(null);
         content.setBounds(490,200,300,400);
-        content.add(cbSerpent);
+        content.add(cbMap);
         content.add(backFromSkinChild);
 
         skinMapButtonPanel.add(content);
@@ -836,6 +836,7 @@ class FenetreMenu extends JFrame {
         // Skin
         this.skinSerpent.addActionListener(controlBut);
         this.skinMap.addActionListener(controlBut);
+        this.cbMap.addActionListener(controlBut);
         this.skinPseudo.addActionListener(controlBut);
         this.backFromSkin.addActionListener(controlBut);
         this.backFromSkinChild.addActionListener(controlBut);
@@ -958,6 +959,8 @@ class FenetreMenu extends JFrame {
 
 
     public SnakeButton getbRetour() { return bRetour; }
+
+    public JComboBox getCbMap() { return cbMap; }
 
     /**DEBUT méthodes changement de menu**/
 

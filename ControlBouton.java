@@ -159,7 +159,10 @@ public class ControlBouton implements ActionListener, ChangeListener {
             fenMenu.getPanDifficulty().setVisible(false);
             fenMenu.setBackPlay();
         }
-
+        // choix map
+        if (a.getSource().equals(fenMenu.getCbMap())){
+            model.setMap(( (JComboBox) a.getSource()).getSelectedItem().toString());
+        }
     }
     public void showScore() throws IOException {
         model.getScore().initListScore();
