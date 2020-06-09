@@ -84,7 +84,7 @@ class FenetreMenu extends JFrame {
     // SKIN SERPENT
     private JPanel skinSerpentButtonPanel;
     private JComboBox cbSerpent;
-    private Object[] listeSerpent = new Object[]{"Element 1", "Element 2", "Element 3", "Element 4", "Element 5"};
+    private Object[] listeSerpent = new Object[]{"basic", "nyan", "Element 3", "Element 4", "Element 5"};
 
     // SKIN MAP
     private JPanel skinMapButtonPanel;
@@ -836,6 +836,7 @@ class FenetreMenu extends JFrame {
         // Skin
         this.skinSerpent.addActionListener(controlBut);
         this.skinMap.addActionListener(controlBut);
+        this.cbSerpent.addActionListener(controlBut);
         this.cbMap.addActionListener(controlBut);
         this.skinPseudo.addActionListener(controlBut);
         this.backFromSkin.addActionListener(controlBut);
@@ -1052,6 +1053,7 @@ class FenetreMenu extends JFrame {
         this.tfPseudo = tfPseudo;
     }
 
+    public JComboBox getCbSerpent() { return cbSerpent; }
 }
 
 

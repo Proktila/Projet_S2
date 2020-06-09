@@ -51,19 +51,11 @@ class Gameplay extends JPanel{
     // Un timer pour la vitesse
     private Timer timer;
 
-    // on ne donne aucune direction au serpent au commencement
-    private boolean right = false;
-    private boolean left = false;
-    private boolean up = false;
-    private boolean down = false;
 
     // variable qui sert à positionner le serpent au début
     private int begin = 0;
 
     private ImageIcon foodImg;
-
-    // booléen si le serpent est mort
-    private boolean dead = false;
 
     private JFrame fen;
 
@@ -73,6 +65,8 @@ class Gameplay extends JPanel{
     private SnakeButton pauseBut;
 
     private Fruit currentFruit = new Fruit();
+
+    private String chemin = "img/snake/";
 
     public Gameplay(JFrame fen,FenetreMenu fenetreMenu,Model model) {
         this.model= model;
@@ -128,7 +122,7 @@ class Gameplay extends JPanel{
 
             this.currentFruit = new Fruit();
             this.currentFruit = model.choisirFruit();
-            this.currentFruit.validFruit(snake,model.getTaille());
+            this.currentFruit.validFruit(model.getJ1().getSnake(),model.getJ1().getTaille());
             System.out.println(currentFruit);
 
         }
@@ -143,65 +137,64 @@ class Gameplay extends JPanel{
         // Dessine le score
         g.setColor(lightGreen);
         g.setFont(new Font("Monospaced", Font.BOLD, 18));
-        g.drawString("Scores: "+model.getScore().getActualScore(),740,20);
+        g.drawString("Scores: "+model.getJ1().getScore(),740,20);
 
         // Dessine la taile du serpent
-        g.drawString("Taille: "+model.getTaille(),740,40);
+        g.drawString("Taille: "+model.getJ1().getTaille(),740,40);
 
 
         // le snake regarde à droite de base
-        rightHead = new ImageIcon("img/snake/basicGreenHeadRight.png");
+        rightHead = model.getJ1().getRightHead();
         rightHead.paintIcon(this,g,snake[0][0],snake[0][1]);
 
-        for(int i = 0; i < model.getTaille(); i++){
+        for(int i = 0; i < model.getJ1().getTaille(); i++){
             // si la tete va vers la droite
-            if(i==0 && right){
-                rightHead = new ImageIcon("img/snake/basicGreenHeadRight.png");
+            if(i==0 && model.getJ1().isRight()){
+                rightHead = model.getJ1().getRightHead();
                 rightHead.paintIcon(this,g,snake[i][0],snake[i][1]);
             }
             // si la tete va vers la gauche
-            if(i==0 && left){
-                leftHead = new ImageIcon("img/snake/basicGreenHeadLeft.png");
+            if(i==0 && model.getJ1().isLeft()){
+                leftHead = model.getJ1().getLeftHead();
                 leftHead.paintIcon(this,g,snake[i][0],snake[i][1]);
             }
             // si la tete va vers le bas
-            if(i==0 && down){
-                downHead = new ImageIcon("img/snake/basicGreenHeadDown.png");
+            if(i==0 && model.getJ1().isDown()){
+                downHead = model.getJ1().getDownHead();
                 downHead.paintIcon(this,g,snake[i][0],snake[i][1]);
             }
             // si la tete va vers le haut
-            if(i==0 && up){
-                upHead = new ImageIcon("img/snake/basicGreenHeadUp.png");
+            if(i==0 && model.getJ1().isUp()){
+                upHead = model.getJ1().getUpHead();
                 upHead.paintIcon(this,g,snake[i][0],snake[i][1]);
             }
             // si c'est un corp
             if(i != 0){
-                body = new ImageIcon("img/snake/basicGreenBody.png");
+                body = model.getJ1().getBody();
                 body.paintIcon(this,g,snake[i][0],snake[i][1]);
             }
         }
         // on affecte l'image à food
-        foodImg = new ImageIcon("img/snake/body.png");
 
         // si le fruit se trouve aux même endroit que la tete du snake
         if((currentFruit.getPosX() == snake[0][0]) && (currentFruit.getPosY() == snake[0][1])){
-            model.getScore().setActualScore(model.getScore().getActualScore()+10);
+            model.getJ1().setScore( model.getJ1().getScore()+10);
             // augmente la vitesse
-            currentFruit.effect(this.model);
+            currentFruit.effect(model.getJ1());
             this.currentFruit = model.choisirFruit();
-            this.currentFruit.validFruit(snake,model.getTaille());
+            this.currentFruit.validFruit(model.getJ1().getSnake(),model.getJ1().getTaille());
         }
         this.currentFruit.getImgFruit().paintIcon(this,g,currentFruit.getPosX(),currentFruit.getPosY());
         // affiche le fruit à l'endroit voulu
-        if(dead){
+        if(model.getJ1().isDead()){
             g.setColor(blue);
             g.fillRect(120,235,500,250);
             g.setColor(lightGreen);
             g.setFont(new Font("Monospaced", Font.BOLD, 50));
             g.drawString("GAME OVER ",230,300);
-            g.drawString("Scores: "+model.getScore().getActualScore(),230,350);
+            g.drawString("Scores: "+model.getJ1().getScore(),230,350);
             // Dessine la taile du serpent
-            g.drawString("Taille: "+model.getTaille(),230,400);
+            g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
         }
         if(pause){
             g.setColor(blue);
@@ -209,7 +202,7 @@ class Gameplay extends JPanel{
             g.setColor(lightGreen);
             g.setFont(new Font("Monospaced", Font.BOLD, 50));
             // Dessine la taile du serpent
-            g.drawString("Taille: "+model.getTaille(),230,400);
+            g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
         }
 
 
@@ -228,48 +221,18 @@ class Gameplay extends JPanel{
         }
     }
 
-    public boolean isDead() {
-        return dead;
-    }
     //les getters
     public JFrame getFen() { return fen; }
 
     public Timer getTimer() { return timer; }
 
-    public boolean isRight() { return right; }
-
-    public boolean isLeft() { return left; }
-
-    public boolean isUp() { return up; }
-
-    public boolean isDown() { return down; }
-
     public int[][] getSnake() { return snake; }
 
     public int getBegin() { return begin; }
 
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
 
     public void setBegin(int begin) {
         this.begin = begin;
-    }
-
-    public void setDead(boolean dead) {
-        this.dead = dead;
     }
 
     public void setSnake(int[][] snake) {

@@ -159,10 +159,15 @@ public class ControlBouton implements ActionListener, ChangeListener {
             fenMenu.getPanDifficulty().setVisible(false);
             fenMenu.setBackPlay();
         }
+        // choix skin serpent
+        if (a.getSource().equals(fenMenu.getCbSerpent())){
+            model.getJ1().setSkin(( (JComboBox) a.getSource()).getSelectedItem().toString());
+        }
         // choix map
         if (a.getSource().equals(fenMenu.getCbMap())){
             model.setMap(( (JComboBox) a.getSource()).getSelectedItem().toString());
         }
+
     }
     public void showScore() throws IOException {
         model.getScore().initListScore();

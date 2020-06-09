@@ -172,23 +172,23 @@ public class Fruit {
         imgFruit = new ImageIcon(imgFruit.getImage().getScaledInstance(20, 20, BufferedImage.SCALE_SMOOTH));
 	}
 
-	public void effect(Model model){
+	public void effect(Snake snake){
 		switch(typeFruit){
 			default:
 				break;
 			case "peche":
 				break;
 			case "pomme":
-				model.setTaille(model.getTaille()+1);
+				snake.setTaille(snake.getTaille()+1);
 				break;
 			case "banane" :
-				model.setTaille(model.getTaille()+3);
+				snake.setTaille(snake.getTaille()+2);
 				break;
 			case "raisin":
-				model.getScore().setActualScore(model.getScore().getActualScore()+50);
+				snake.setScore(snake.getScore()+50);
 				break;
 			case "mure":
-				model.setDelay(model.getDelay()+50);
+				snake.setDelay(snake.getDelay()+25);
 				break;
 			case "framboise":
 				break;
@@ -199,10 +199,10 @@ public class Fruit {
 			case "cerise":
 				break;
 			case "asperge" :
-				model.setDelay(model.getDelay()-15);
+				snake.setDelay(snake.getDelay()-25);
 				break;
 			case "chou-fleur":
-				model.setTaille(model.getTaille()-3);
+				snake.setTaille(snake.getTaille()-2);
 				break;
 			case "carotte":
 				break;
@@ -211,7 +211,7 @@ public class Fruit {
 			case "piment":
 				break;
 			case "radis":
-				model.getScore().setActualScore(model.getScore().getActualScore()-50);
+				snake.setScore(snake.getScore()-50);
 				break;
 			case "aubergine":
 				break;

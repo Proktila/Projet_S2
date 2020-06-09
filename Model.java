@@ -12,20 +12,20 @@ class Model {
     private int volumeBruits = VOL_INIT;
 
     private Score score;
+    private Snake j1;
 
-    private int delay = 100;
-    private int taille = 3;
-    private int scoreS = 0;
+    private String chemin = "img/snake/";
 
     public Model(){
         score = new Score();
+        j1 = new Snake(this);
 
     }
     public Fruit choisirFruit(){
         String difficulte = this.difficulty;
         String mode = this.mode;
         Fruit fruit = new Fruit();
-        int randFruit = (int)(Math.random()*((100)+1));
+        int randFruit = (int)(Math.random()*((100)));
         if (difficulte == "easy" && mode == "traditionnel"){
             if (randFruit<10) {
                 fruit = new Fruit("peche");
@@ -442,19 +442,15 @@ class Model {
 
     public int getVolumeBruits() { return volumeBruits; }
 
-    public int getDelay() { return delay; }
-
-    public int getTaille() { return taille; }
-
-    public void setTaille(int taille) { this.taille = taille; }
-
     public void setMode(String mode) { this.mode = mode; }
 
     public void setVolumeMusique(int volumeMusique) { this.volumeMusique = volumeMusique; }
 
     public void setVolumeBruits(int volumeBruits) { this.volumeBruits = volumeBruits; }
 
-    public void setDelay(int delay) { this.delay = delay; }
-
     public void setMap(String map) { this.map = map; }
+
+    public String getChemin() { return chemin; }
+
+    public Snake getJ1() { return j1; }
 }
