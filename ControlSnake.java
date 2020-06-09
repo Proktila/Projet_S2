@@ -21,9 +21,7 @@ public class ControlSnake implements KeyListener, ActionListener {
     Gameplay gameplay;
     Model model;
 
-
     Timer timer;
-
 
     public ControlSnake(FenetreSnake fenetreSnake, Model model){
         this.model = model;
@@ -35,9 +33,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         gameplay.setControlSnake(this);
         this.timer = new Timer(model.getDelay(), this);
         timer.start();
-
     }
-
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -110,7 +106,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             // remise a zero lorsqu'on appuie sur espace et que l'on est mort
             model.setDelay(100);
             gameplay.setBegin(0);
-            model.setScoreS(0);
+            model.getScore().setActualScore(0);
             model.setTaille(3);
             gameplay.setDead(false);
             gameplay.setRight(false);
@@ -120,16 +116,9 @@ public class ControlSnake implements KeyListener, ActionListener {
             gameplay.repaint();
         }else if(e.getKeyCode() == KeyEvent.VK_SPACE && !gameplay.isDead()){
             // ferme le jeu et ouvre le menu
-            String[][] tScore = gameplay.getFenetreMenu().getData();
-            try {
-                addScoreInTableMenu();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            gameplay.getFenetreMenu().setData(tScore);
             model.setDelay(100);
             gameplay.setBegin(0);
-            model.setScoreS(0);
+            model.getScore().setActualScore(0);
             model.setTaille(3);
             gameplay.setDead(false);
             gameplay.setRight(false);
@@ -248,7 +237,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             e.printStackTrace();
         }
         //récup score
-        model.getScore().setActualScore(String.valueOf(model.getScoreS()));
+        model.getScore().setActualScore(model.getScore().getActualScore());
         //effectue la selection pour laffichage
         model.getScore().initListScore();
         model.getScore().addScore();
