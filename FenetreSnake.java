@@ -146,7 +146,7 @@ class Gameplay extends JPanel{
         // Dessine le score
         g.setColor(lightGreen);
         g.setFont(new Font("Monospaced", Font.BOLD, 18));
-        g.drawString("Scores: "+model.getScoreS(),740,20);
+        g.drawString("Scores: "+model.getScore().getActualScore(),740,20);
 
         // Dessine la taile du serpent
         g.drawString("Taille: "+model.getTaille(),740,40);
@@ -188,7 +188,7 @@ class Gameplay extends JPanel{
 
         // si le fruit se trouve aux même endroit que la tete du snake
         if((currentFruit.getPosX() == snake[0][0]) && (currentFruit.getPosY() == snake[0][1])){
-            model.setScoreS(model.getScoreS()+10);
+            model.getScore().setActualScore(model.getScore().getActualScore()+10);
             // augmente la vitesse
             currentFruit.effect(this.model);
             this.currentFruit = model.choisirFruit();
@@ -202,7 +202,7 @@ class Gameplay extends JPanel{
             g.setColor(lightGreen);
             g.setFont(new Font("Monospaced", Font.BOLD, 50));
             g.drawString("GAME OVER ",230,300);
-            g.drawString("Scores: "+model.getScoreS(),230,350);
+            g.drawString("Scores: "+model.getScore().getActualScore(),230,350);
             // Dessine la taile du serpent
             g.drawString("Taille: "+model.getTaille(),230,400);
         }
