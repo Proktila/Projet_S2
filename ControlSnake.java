@@ -239,10 +239,8 @@ public class ControlSnake implements KeyListener, ActionListener {
         } catch (PseudoOutOfBoundsException | SansPseudoException e) {
             e.printStackTrace();
         }
-        //récup score
-        model.getScore().setActualScore(model.getScore().getActualScore());
-        //effectue la selection pour laffichage
-        model.getScore().initListScore();
+        //récup score, seudo, mode, dfficulté
+        model.getScore().initList();
         model.getScore().addScore();
         model.getScore().addScoreInFich();
     }
