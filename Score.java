@@ -4,85 +4,43 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Score {
-    private String bestScore;
+    //attributs
+    //score, pseudo, difficulté et mode
     private int actualScore;
     private String actualPseudo;
-    private String bestDifficulty;
     private String actualDifficulty;
     private String actualMode;
-    private Path fichierScore = Paths.get("src/score.txt");
+
+    //liste des attributs
     private  List<String> listScore;
     private  List<String> listPseudo;
     private  List<String> listMode;
     private  List<String> listDifficulty;
+    //liste d'entier contenant les scores pour les trier
     private List<Integer> listData;
 
-    public Score(){
-    }
-    public String getActualPseudo(){
-        return actualPseudo;
-    }
+    //fichiers contenant les données (garde historique des scores)
+    private Path fichierScore = Paths.get("src/score.txt");
+    private Path fichierPseudo = Paths.get("src/pseudo.txt");
+    private Path fichierMode = Paths.get("src/mode.txt");
+    private Path fichierDiff = Paths.get("src/difficulte.txt");
 
-    public void setActualPseudo(String actualPseudo) throws PseudoOutOfBoundsException, SansPseudoException{
-        if(actualPseudo.length()>15) {
-            throw new PseudoOutOfBoundsException(actualPseudo);
-        }
-        else if(actualPseudo.length()==0) {
-            throw new SansPseudoException();
-        }else {
-            this.actualPseudo = actualPseudo;
-        }
-    }
+    //constructeur vide
+    public Score(){}
 
-    public String getBestDifficulty() { return bestDifficulty; }
-
-    public void setBestDifficulty(String bestDifficulty) { this.bestDifficulty = bestDifficulty; }
-
-    public String getBestScore() {
-        return bestScore;
+    //initialisation des listes
+    public void initList(){
+        listScore = new java.util.LinkedList<>();
+        listPseudo = new java.util.LinkedList<>();
+        listMode = new java.util.LinkedList<>();
+        listDifficulty = new java.util.LinkedList<>();
+        listData = new java.util.LinkedList<>();
     }
 
-    public void setBestScore(String bestScore) {
-        this.bestScore = bestScore;
-    }
-
-    public int getActualScore() {
-        return actualScore;
-    }
-
-    public void setActualScore(int actualScore) {
-        this.actualScore = actualScore;
-    }
-
-    public String getActualDifficulty() {
-        return actualDifficulty;
-    }
-
-    public void setActualDifficulty(String actualDifficulty) {
-        this.actualDifficulty = actualDifficulty;
-    }
-
-    public String getActualMode() {
-        return actualMode;
-    }
-
-    public void setActualMode(String actualMode) {
-        this.actualMode = actualMode;
-    }
-
-
-    public void initListScore(){
-        listScore = new java.util.ArrayList<>();
-        listPseudo = new java.util.ArrayList<>();
-        listMode = new java.util.ArrayList<>();
-        listDifficulty = new java.util.ArrayList<>();
-        listData = new java.util.ArrayList<>();
-    }
-
+    //ajout du score, mode, difficulté, pseudo dans la liste correspondante
     public void addScore() {
         getListMode().add(getActualMode());
         getListDifficulty().add(getActualDifficulty());
@@ -90,62 +48,74 @@ public class Score {
         getListScore().add(String.valueOf(getActualScore()));
     }
 
+    //ajout des valeurs des scores,modes, difficultés et pseudo dans les fichiers textes correspondants
     public void addScoreInFich() throws IOException {
-        Files.write(getFichierScore(), getListMode(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
-        Files.write(getFichierScore(), getListDifficulty(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
-        Files.write(getFichierScore(), getListPseudo(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+        Files.write(getFichierMode(), getListMode(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+        Files.write(getFichierDiff(), getListDifficulty(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+        Files.write(getFichierPseudo(), getListPseudo(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
         Files.write(getFichierScore(), getListScore(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
     }
 
-    public List<Integer> getListData() {
-        return listData;
+    //repère de l'indice du score dans la liste trié pour pouvoir trier le pseudo, la difficulté et le mode
+    //en fonction de cet indice
+    public int indiceScore(Score score){
+        int indScore;
+        for (indScore = 0; indScore < score.getListScore().size(); indScore++) {
+            //si la valeur à l'indice dans la liste des scores trié est la même que la valeur du score actuel (le score
+            //qui vient d'être réalisé)
+            if (score.getListScore().get(indScore).equals(String.valueOf(score.getActualScore()))) {
+                //alors je retourne cet indice
+                return  indScore;
+            }
+        }
+        return 0;
     }
 
-    public void setListData(List<Integer> listData) {
-        this.listData = listData;
+    //tri des scores dans la liste d'entier
+    public void triScore(){
+        getListScore().clear();
+        for (Integer myInt :getListData()) {
+            //injection de ces entiers dans la liste des scores en format String
+            getListScore().add(String.valueOf(myInt));
+        }
     }
 
-    public Path getFichierScore() {
-        return fichierScore;
+    /**************************************************getter et setter************************************************/
+
+    //ajout de 2 exception sur le pseudo
+    public void setActualPseudo(String actualPseudo) throws PseudoOutOfBoundsException, SansPseudoException{
+        //le pseudo ne doit pas dépasser 15 caractères
+        if(actualPseudo.length()>15) {
+            throw new PseudoOutOfBoundsException(actualPseudo);
+        }
+        //le pseudo ne doit pas être vide
+        else if(actualPseudo.length()==0) {
+            throw new SansPseudoException();
+        }else {
+            this.actualPseudo = actualPseudo;
+        }
     }
 
-    public void setFichierScore(Path fichierScore) {
-        this.fichierScore = fichierScore;
-    }
+    public String getActualPseudo(){ return actualPseudo; }
+    public int getActualScore() { return actualScore; }
+    public void setActualScore(int actualScore) { this.actualScore = actualScore; }
+    public String getActualDifficulty() { return actualDifficulty; }
+    public void setActualDifficulty(String actualDifficulty) { this.actualDifficulty = actualDifficulty;}
+    public String getActualMode() { return actualMode; }
+    public void setActualMode(String actualMode) { this.actualMode = actualMode; }
+    public Path getFichierPseudo() { return fichierPseudo; }
+    public Path getFichierMode() { return fichierMode; }
+    public Path getFichierDiff() { return fichierDiff; }
+    public List<Integer> getListData() { return listData; }
+    public Path getFichierScore() { return fichierScore; }
+    public List<String> getListScore() { return listScore; }
+    public List<String> getListPseudo() { return listPseudo; }
+    public List<String> getListMode() { return listMode; }
+    public List<String> getListDifficulty() { return listDifficulty; }
 
-    public List<String> getListScore() {
-        return listScore;
-    }
-
-    public void setListScore(List<String> listScore) {
-        this.listScore = listScore;
-    }
-
-    public List<String> getListPseudo() {
-        return listPseudo;
-    }
-
-    public void setListPseudo(List<String> listPseudo) {
-        this.listPseudo = listPseudo;
-    }
-
-    public List<String> getListMode() {
-        return listMode;
-    }
-
-    public void setListMode(List<String> listMode) {
-        this.listMode = listMode;
-    }
-
-    public List<String> getListDifficulty() {
-        return listDifficulty;
-    }
-
-    public void setListDifficulty(List<String> listDifficulty) {
-        this.listDifficulty = listDifficulty;
-    }
 }
 
+/**Excpetion si le pseudo dépasse 15 caractères**/
 class PseudoOutOfBoundsException extends Exception{
     PseudoOutOfBoundsException(String pseudo) {
         super(
@@ -157,6 +127,7 @@ class PseudoOutOfBoundsException extends Exception{
     }
 }
 
+/**Exception si le pseudo est vide**/
 class SansPseudoException extends Exception{
     SansPseudoException (){
         super(
