@@ -169,50 +169,71 @@ public class ControlBouton implements ActionListener, ChangeListener {
         }
 
     }
-    public void showScore() throws IOException {
-        model.getScore().initListScore();
-        BufferedReader readerScore;
-        readerScore = new BufferedReader(new FileReader("src/score.txt"));
-        String line;
-        int nbline = 0;
-
-        while ((line = readerScore.readLine()) != null) {
-            nbline++;
-            // Récupération données dans le fichier texte
-            if (nbline == 1) {
-                model.getScore().getListMode().add(line);
-                System.out.println(line);
-               }
-            if (nbline == 2) {
-                model.getScore().getListDifficulty().add(line);
-                System.out.println(line);
-                }
-            if (nbline == 3) {
-                model.getScore().getListPseudo().add(line);
-                System.out.println(line);
-            }
-            if (nbline == 4) {
-                model.getScore().getListData().add(Integer.valueOf(line));
-                model.getScore().getListScore().add(line);
-                nbline = 0;
-            }
-
-
-            for (int i = 0; i < model.getScore().getListData().size(); i++) {
-                fenMenu.getData()[i][0] = model.getScore().getListMode().get(i);
-                fenMenu.getData()[i][1] = model.getScore().getListDifficulty().get(i);
-                fenMenu.getData()[i][2] = model.getScore().getListPseudo().get(i);
-                fenMenu.getData()[i][3] = model.getScore().getListScore().get(i);
-            }
+    //méthode qui affiche les scores dans le tableau
+    public void showScore() throws IOException{
+        Score score = model.getScore();
+        //initialisation des listes
+        model.getScore().initList();
+        //initialisation des 4 fichiers à lire
+        BufferedReader readerScore = new BufferedReader(new FileReader("src/score.txt"));
+        BufferedReader readerPseudo = new BufferedReader(new FileReader("src/pseudo.txt"));
+        BufferedReader readerMode = new BufferedReader(new FileReader("src/mode.txt"));
+        BufferedReader readerDiff = new BufferedReader(new FileReader("src/difficulte.txt"));
+        String linePseudo;
+        String lineScore;
+        String lineMode;
+        String lineDiff;
+        //tant que la ligne dans les fichiers texte n'est pas null
+        while (((lineScore = readerScore.readLine()) != null) && (linePseudo = readerPseudo.readLine()) != null
+                && ((lineMode = readerMode.readLine()) != null) && (lineDiff = readerDiff.readLine()) != null ) {
+            //on ajoute la ligne des scores dans la liste des Scores
+            score.getListScore().add(lineScore);
+            score.setActualScore(Integer.parseInt(lineScore));
+            //on ajoute le score à la liste d'entier
+            score.getListData().add(Integer.valueOf(lineScore));
+            //on trie cette liste par ordre décroissant
+            score.getListData().sort(Collections.reverseOrder());
+            //on vide la liste de Score en String pour ajouter les scores triés provenant de la listeData
+            score.triScore();
+            //on ajoute les lignes des fichiers dans les listes associées
+            score.getListPseudo().add(linePseudo);
+            score.getListMode().add(lineMode);
+            score.getListDifficulty().add(lineDiff);
+            //on trie les listes : mode, dofficulté et pseudo à partir de la liste des scores
+            triData(score, linePseudo, lineMode, lineDiff);
         }
+        //fermeture des fichiers
         readerScore.close();
+        readerPseudo.close();
+        readerMode.close();
+        readerDiff.close();
     }
 
-    public FenetreSnake getFenSnake() {
-        return fenSnake;
-    }
-
-    public void setFenSnake(FenetreSnake fenSnake) {
-        this.fenSnake = fenSnake;
+    //méthode qui ajoute au bon endroit le mode, difficulté, pseudo en fonction de la position des scores
+    public void triData(Score score, String linePseudo, String lineMode, String lineDiff){
+        //on retire la derniere valeur de la liste puis on ajoute la derniere valeur à l'indice correspondant
+        //à la position du score
+        score.getListPseudo().remove(score.getListPseudo().size() - 1);
+        score.getListPseudo().add(score.indiceScore(score), linePseudo);
+        score.getListMode().remove(score.getListMode().size() - 1);
+        score.getListMode().add(score.indiceScore(score), lineMode);
+        score.getListDifficulty().remove(score.getListDifficulty().size() - 1);
+        score.getListDifficulty().add(score.indiceScore(score), lineDiff);
+        //on affiche les données dans le tableau des scores
+        for (int i = 0; i < score.getListScore().size(); i++) {
+            //si la taille de la liste des scores dépasse la taille du tableau
+            if(score.getListScore().size() >= 51){
+                //on retire la dernière valeur
+                //si le nouveau score est inferieur à cette valeur elle n'apparaitra pas dans le tableau
+                score.getListScore().remove(50);
+            }
+            //affichage des données
+            fenMenu.getData()[i][0] = score.getListMode().get(i);
+            fenMenu.getData()[i][1] = score.getListDifficulty().get(i);
+            fenMenu.getData()[i][2] = score.getListPseudo().get(i);
+            fenMenu.getData()[i][3] = score.getListScore().get(i);
+        }
+        //on remet le score à 0
+        score.setActualScore(0);
     }
 }
