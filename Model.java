@@ -453,4 +453,6 @@ class Model {
     public String getChemin() { return chemin; }
 
     public Snake getJ1() { return j1; }
+
+    public void setJ1(Snake j1) { this.j1 = j1; }
 }

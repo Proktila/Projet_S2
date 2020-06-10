@@ -186,6 +186,7 @@ public class ControlBouton implements ActionListener, ChangeListener {
         //tant que la ligne dans les fichiers texte n'est pas null
         while (((lineScore = readerScore.readLine()) != null) && (linePseudo = readerPseudo.readLine()) != null
                 && ((lineMode = readerMode.readLine()) != null) && (lineDiff = readerDiff.readLine()) != null ) {
+
             //on ajoute la ligne des scores dans la liste des Scores
             score.getListScore().add(lineScore);
             score.setActualScore(Integer.parseInt(lineScore));
@@ -233,7 +234,5 @@ public class ControlBouton implements ActionListener, ChangeListener {
             fenMenu.getData()[i][2] = score.getListPseudo().get(i);
             fenMenu.getData()[i][3] = score.getListScore().get(i);
         }
-        //on remet le score à 0
-        score.setActualScore(0);
     }
 }

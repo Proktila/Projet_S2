@@ -245,7 +245,7 @@ public class Fruit {
      */
 	public int randomX(){
 		int random = (int)(Math.random()*((700)+1));
-		while(random%20 !=0){
+		while(random%20 != 0){
 			random = (int)(Math.random()*((700)+1));
 		}
 		return random;

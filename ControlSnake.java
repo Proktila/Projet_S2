@@ -97,6 +97,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         }
         if(e.getKeyCode() == KeyEvent.VK_SPACE && model.getJ1().isDead()) {
 
+
             model.getScore().setActualScore(model.getJ1().getScore());
 
             String[][] tScore = gameplay.getFenetreMenu().getData();
@@ -117,21 +118,17 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.getJ1().setUp(false);
             model.getJ1().setDown(false);
             gameplay.repaint();
+            gameplay.revalidate();
         }else if(e.getKeyCode() == KeyEvent.VK_SPACE && !model.getJ1().isDead()){
             // ferme le jeu et ouvre le menu
-            model.getJ1().setDelay(100);
+            this.timer.stop();
             gameplay.setBegin(0);
             model.getScore().setActualScore(0);
-            model.getJ1().setTaille(3);
-            model.getJ1().setDead(false);
-            model.getJ1().setRight(false);
-            model.getJ1().setLeft(false);
-            model.getJ1().setUp(false);
-            model.getJ1().setDown(false);
             gameplay.repaint();
             gameplay.getFen().dispose();
             gameplay.getFenetreMenu().setVisible(true);
             gameplay.getFenetreMenu().changerMenuPrincipal();
+            model.setJ1(new Snake(model));
         }
     }
 
@@ -142,10 +139,14 @@ public class ControlSnake implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         this.timer.start();
-        int[][] snake = gameplay.getSnake();
+        int[][] snake = model.getJ1().getSnake();
         // si on va a droite
         if(model.getJ1().isRight() && !model.getJ1().isDead() && !gameplay.isPause()){
             for (int i = model.getJ1().getTaille()-1; i >=0;i--){
+                if (snake[0][0] >= 700) {
+                    model.getJ1().setDead(true);
+                    break;
+                }
                 // met le corp à la même hauteur que la tête
                 snake[i+1][1] = snake[i][1];
                 if(i == 0){
@@ -155,68 +156,65 @@ public class ControlSnake implements KeyListener, ActionListener {
                     // avance le corp autant que la tête
                     snake[i][0] = snake[i-1][0];
                 }
-                if (snake[i][0] > 700) {
-                    model.getJ1().setDead(true);
-                    break;
-                }
             }
-            gameplay.setSnake(snake);
+            model.getJ1().setSnake(snake);
+            this.timer.setDelay(model.getJ1().getDelay());
             // rappelle la méthode paint()
             gameplay.repaint();
-            this.timer.setDelay(model.getJ1().getDelay());
         }
         if(model.getJ1().isLeft() && !model.getJ1().isDead() && !gameplay.isPause()){
             for (int i = model.getJ1().getTaille()-1; i >=0;i--){
+                if (snake[i][0] <= 0) {
+                    model.getJ1().setDead(true);
+                    break;
+                }
                 snake[i+1][1] = snake[i][1];
                 if(i == 0){
                     snake[i][0] = snake[i][0] - 20;
                 }else{
                     snake[i][0] = snake[i-1][0];
                 }
-                if (snake[i][0] < 0) {
-                    model.getJ1().setDead(true);
-                    break;
-                }
             }
-            gameplay.setSnake(snake);
-            gameplay.repaint();
+            model.getJ1().setSnake(snake);
             this.timer.setDelay(model.getJ1().getDelay());
-            //gameplay.requestFocus();
-            //gameplay.revalidate();
+            // rappelle la méthode paint()
+            gameplay.repaint();
         }
         if(model.getJ1().isDown() && !model.getJ1().isDead() && !gameplay.isPause()){
             for (int i = model.getJ1().getTaille()-1; i >=0;i--){
+                if (snake[i][1] > 660) {
+                    model.getJ1().setDead(true);
+                    break;
+                }
                 snake[i+1][0] = snake[i][0];
                 if(i == 0){
                     snake[i][1] = snake[i][1] + 20;
                 }else{
                     snake[i][1] = snake[i-1][1];
                 }
-                if (snake[i][1] > 660) {
-                    model.getJ1().setDead(true);
-                    break;
-                }
             }
-            gameplay.setSnake(snake);
-            gameplay.repaint();
+            model.getJ1().setSnake(snake);
             this.timer.setDelay(model.getJ1().getDelay());
+            // rappelle la méthode paint()
+            gameplay.repaint();
         }
         if(model.getJ1().isUp() && !model.getJ1().isDead() && !gameplay.isPause()){
             for (int i = model.getJ1().getTaille()-1; i >=0;i--){
+                if (snake[i][1] < 0) {
+                    model.getJ1().setDead(true);
+                    break;
+                }
                 snake[i+1][0] = snake[i][0];
                 if(i == 0){
                     snake[i][1] = snake[i][1] - 20;
                 }else{
                     snake[i][1] = snake[i-1][1];
                 }
-                if (snake[i][1] < 0) {
-                    model.getJ1().setDead(true);
-                    break;
-                }
             }
-            gameplay.setSnake(snake);
-            gameplay.repaint();
+            model.getJ1().setSnake(snake);
             this.timer.setDelay(model.getJ1().getDelay());
+            // rappelle la méthode paint()
+            gameplay.repaint();
         }
         for(int i = 0;i < model.getJ1().getTaille();i++){
             // si le snake se mord son corp
@@ -227,9 +225,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         }
         if(e.getSource().equals(gameplay.getPauseBut())){
             gameplay.setPause(!gameplay.isPause());
-
         }
-
     }
 
     public void addScoreInTableMenu() throws IOException {
@@ -239,6 +235,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         } catch (PseudoOutOfBoundsException | SansPseudoException e) {
             e.printStackTrace();
         }
+        model.getScore().setActualScore(model.getScore().getActualScore());
         //récup score, seudo, mode, dfficulté
         model.getScore().initList();
         model.getScore().addScore();

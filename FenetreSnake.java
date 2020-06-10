@@ -39,7 +39,6 @@ class Gameplay extends JPanel{
     Tableau à double entré ou la 1ere entrée est la position d'une partie du snake par ex snake[0] = tete
     et la deuxième entré est soit la valeur x soit y ex snake[0][0] = posx de la tete
      */
-    private int[][] snake = new int[720][2];
 
     // Les différentes partie du serpent
     private ImageIcon rightHead;
@@ -106,9 +105,11 @@ class Gameplay extends JPanel{
         this.pauseBut.addActionListener(controlSnake);
     }
 
+    
     @Override
     protected void paintComponent(Graphics g){
 
+        int[][] snake = model.getJ1().getSnake();
         super.paintComponent(g);
         if(begin == 0){
             // positionne le snake au commencement
@@ -208,6 +209,7 @@ class Gameplay extends JPanel{
 
 
         g.dispose();
+        model.getJ1().setSnake(snake);
 
     }
 
@@ -227,7 +229,6 @@ class Gameplay extends JPanel{
 
     public Timer getTimer() { return timer; }
 
-    public int[][] getSnake() { return snake; }
 
     public int getBegin() { return begin; }
 
@@ -236,9 +237,6 @@ class Gameplay extends JPanel{
         this.begin = begin;
     }
 
-    public void setSnake(int[][] snake) {
-        this.snake = snake;
-    }
 
     public FenetreMenu getFenetreMenu() {
         return fenetreMenu;
