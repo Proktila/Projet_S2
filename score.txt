@@ -26,3 +26,11 @@ Traditionnel
 Facile
 Pseudo
 0
+Traditionnel
+Facile
+Pseudo
+80
+Traditionnel
+Facile
+Pseudo
+120

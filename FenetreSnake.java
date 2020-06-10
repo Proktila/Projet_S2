@@ -179,6 +179,7 @@ class Gameplay extends JPanel{
         // si le fruit se trouve aux même endroit que la tete du snake
         if((currentFruit.getPosX() == snake[0][0]) && (currentFruit.getPosY() == snake[0][1])){
             model.getJ1().setScore( model.getJ1().getScore()+10);
+            model.getJ1().setTaille(model.getJ1().getTaille()+ 1);
             // augmente la vitesse
             currentFruit.effect(model.getJ1());
             this.currentFruit = model.choisirFruit();
