@@ -290,7 +290,7 @@ class FenetreMenu extends JFrame {
         //largeur des cellulles du tableau
         tableau.getColumnModel().getColumn(0).setPreferredWidth(200);
         tableau.getColumnModel().getColumn(1).setPreferredWidth(250);
-        tableau.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tableau.getColumnModel().getColumn(2).setPreferredWidth(250);
         tableau.getColumnModel().getColumn(3).setPreferredWidth(150);
 
         // image coupe
