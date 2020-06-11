@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Model {
 
     private String difficulty;
@@ -15,6 +18,10 @@ class Model {
     private Snake j1;
 
     private String chemin = "img/snake/";
+
+    private List<Wall> listeWall=new ArrayList<Wall>();
+    private List<Fruit> listeFruit=new ArrayList<Fruit>();
+    private java.util.List<Fruit> toAdd=new ArrayList<Fruit>();
 
     public Model(){
         score = new Score();
@@ -455,4 +462,10 @@ class Model {
     public Snake getJ1() { return j1; }
 
     public void setJ1(Snake j1) { this.j1 = j1; }
+
+    public List<Wall> getListeWall() { return listeWall; }
+
+    public List<Fruit> getListeFruit() { return listeFruit; }
+
+    public List<Fruit> getToAdd() { return toAdd; }
 }

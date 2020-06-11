@@ -109,6 +109,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             gameplay.getFenetreMenu().setData(tScore);
             // remise a zero lorsqu'on appuie sur espace et que l'on est mort
             model.getJ1().setDelay(100);
+            gameplay.initWall();
             gameplay.setBegin(0);
             model.getJ1().setScore(0);
             model.getJ1().setTaille(3);
@@ -128,7 +129,10 @@ public class ControlSnake implements KeyListener, ActionListener {
             gameplay.getFen().dispose();
             gameplay.getFenetreMenu().setVisible(true);
             gameplay.getFenetreMenu().changerMenuPrincipal();
-            model.setJ1(new Snake(model));
+            Snake s = new Snake(model);
+            s.skins(model.getJ1().getSkin());
+            model.setJ1(s);
+            model.getListeWall().clear();
         }
     }
 
@@ -140,6 +144,7 @@ public class ControlSnake implements KeyListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         this.timer.start();
         int[][] snake = model.getJ1().getSnake();
+
         // si on va a droite
         if(model.getJ1().isRight() && !model.getJ1().isDead() && !gameplay.isPause()){
             for (int i = model.getJ1().getTaille()-1; i >=0;i--){
@@ -164,7 +169,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         }
         if(model.getJ1().isLeft() && !model.getJ1().isDead() && !gameplay.isPause()){
             for (int i = model.getJ1().getTaille()-1; i >=0;i--){
-                if (snake[i][0] <= 0) {
+                if (snake[0][0] <= 0) {
                     model.getJ1().setDead(true);
                     break;
                 }
@@ -182,7 +187,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         }
         if(model.getJ1().isDown() && !model.getJ1().isDead() && !gameplay.isPause()){
             for (int i = model.getJ1().getTaille()-1; i >=0;i--){
-                if (snake[i][1] > 660) {
+                if (snake[0][1] >= 660) {
                     model.getJ1().setDead(true);
                     break;
                 }
@@ -200,7 +205,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         }
         if(model.getJ1().isUp() && !model.getJ1().isDead() && !gameplay.isPause()){
             for (int i = model.getJ1().getTaille()-1; i >=0;i--){
-                if (snake[i][1] < 0) {
+                if (snake[0][1] <= 0) {
                     model.getJ1().setDead(true);
                     break;
                 }
@@ -219,6 +224,12 @@ public class ControlSnake implements KeyListener, ActionListener {
         for(int i = 0;i < model.getJ1().getTaille();i++){
             // si le snake se mord son corp
             if((snake[0][0] == snake[i][0]) && (snake[0][1] == snake[i][1]) && (i != 0)){
+                model.getJ1().setDead(true);
+                break;
+            }
+        }
+        for(Wall w : model.getListeWall()){
+            if(snake[0][0] == w.getX() && snake[0][1] == w.getY()){
                 model.getJ1().setDead(true);
                 break;
             }

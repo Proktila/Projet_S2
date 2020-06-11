@@ -1,51 +1,65 @@
-import java.awt.Color;
-import javax.swing.*;
+
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
-public class Wall extends JComponent {
-    private static final long serialVersionUID = 1L;
+public class Wall{
+    private int x;
+    private int y;
+    private ImageIcon wall;
 
-    private int posX;
-    private int posY;
-    private int s = 50; // Taille du côté d'une case (une case est un carré)
-    private String skin;
-
-    public Wall(int posXW, int posYW, String skinW){
-        this.posX = posXW;
-        this.posY = posYW;
-        this.skin = skinW;
+    public Wall(Model model,Snake snake,Fruit fruit){
+        this.wall = new ImageIcon("img/snake/blackWall.png");
+        int x,y;
+        do {
+            x = randomX();
+            y = randomY();
+        }while(wallIsNotValid(x,y,snake,fruit));
+        this.x = x;
+        this.y = y;
+        model.getListeWall().add(this);
     }
 
-    public Wall(int posXW, int posYW){
-        this.posX = posXW;
-        this.posY = posYW;
+    public Wall(Model model,int x, int y){
+        this.wall = new ImageIcon("img/snake/blackWall.png");
+        this.x = x;
+        this.y = y;
+        model.getListeWall().add(this);
     }
 
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-
-        Rectangle rect = new Rectangle(this.posX, this.posY, this.s, this.s);
-
-        g2.setColor(Color.BLACK);
-
-        g2.fill(rect);
-
-        System.out.println("paintComponent successfully ran");
+    public int randomX(){
+        int random = (int)(Math.random()*((700)+1));
+        while(random%20 != 0){
+            random = (int)(Math.random()*((700)+1));
+        }
+        return random;
+    }
+    public int randomY(){
+        int random = (int) (Math.random() * ((660) + 1));
+        while(random % 20 != 0){
+            random = (int) (Math.random() * ((660) + 1));
+        }
+        return random;
     }
 
-
-    public int getPosX(){
-        return this.posX;
+    public boolean wallIsNotValid( int x, int y,Snake snake,Fruit fruit){
+        for(int i = 0; i < snake.getTaille();i++){
+            if(((x == snake.getSnake()[i][0]) && (y == snake.getSnake()[i][1])) ||
+                    ((x == snake.getSnake()[i][0]+20) && (y == snake.getSnake()[i][1])) ||
+                    ((x == snake.getSnake()[i][0]) && (y == snake.getSnake()[i][1]+20))||
+                    ((x == snake.getSnake()[i][0]-20) && (y == snake.getSnake()[i][1]))||
+                    ((x == snake.getSnake()[i][0]) && (y == snake.getSnake()[i][1]-20))){
+                if(x == fruit.getPosX() && y == fruit.getPosY()){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    public int getPosY(){
-        return this.posY;
-    }
+    public int getX() { return x; }
 
-    public String getSkin(){
-        return this.skin;
-    }
+    public int getY() { return y; }
+
+    public ImageIcon getWall() { return wall; }
 }

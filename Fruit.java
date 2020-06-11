@@ -15,6 +15,7 @@ public class Fruit {
 	private String effet;
 	private int posX;
 	private int posY;
+	private boolean bonus;
 	
 	public Fruit(){}
 
@@ -31,6 +32,7 @@ public class Fruit {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
+			this.bonus=true;
 		}
 
 		else if (typeFruit == "framboise") {
@@ -39,7 +41,8 @@ public class Fruit {
             	effet = "eraseWall";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=true;
 	    }
 
 		else if (typeFruit == "pasteque") {
@@ -48,7 +51,8 @@ public class Fruit {
             	effet = "+3fruits";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=true;
 	    }
 
 		else if (typeFruit == "mure") {
@@ -57,7 +61,8 @@ public class Fruit {
             	effet = "slow";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=true;
 	    }
 
 		else if (typeFruit == "peche") {
@@ -67,6 +72,7 @@ public class Fruit {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
+			this.bonus=true;
 	    }
 
 		else if (typeFruit == "raisin") {
@@ -75,7 +81,8 @@ public class Fruit {
             	effet = "+10Score";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }	
+	        }
+			this.bonus=true;
 		}
 
 		else if (typeFruit == "pomme") {
@@ -84,7 +91,8 @@ public class Fruit {
             	effet = "taille+1";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=true;
 	    }
 
 		else if (typeFruit == "asperge") {
@@ -93,7 +101,8 @@ public class Fruit {
             	effet = "speed+20";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=false;
 	    }
 
 	    else if (typeFruit == "ananas") {
@@ -102,7 +111,8 @@ public class Fruit {
             	effet = "chrono+10";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=true;
 	    }
 
 	    else if (typeFruit == "cerise") {
@@ -111,7 +121,8 @@ public class Fruit {
             	effet = "player!Move";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=true;
 	    }
 
 		else if (typeFruit == "carotte") {
@@ -120,7 +131,8 @@ public class Fruit {
             	effet = "addWall";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        } 	
+	        }
+			this.bonus=false;
 		}
 
 		else if (typeFruit == "piment") {
@@ -129,7 +141,8 @@ public class Fruit {
             	effet = "dead";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=false;
 	    }
 
 		else if (typeFruit == "poivron") {
@@ -138,7 +151,8 @@ public class Fruit {
             	effet = "apparition de 3 elements malus";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=false;
 	    }
 
 		else if (typeFruit == "radis") {
@@ -147,7 +161,8 @@ public class Fruit {
             	effet = "-10score";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=false;
 	    }
 
 		else if (typeFruit == "chou-fleur") {
@@ -156,7 +171,8 @@ public class Fruit {
             	effet = "taille-3";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=false;
 	    }
 
 	    else if (typeFruit == "aubergine") {
@@ -165,14 +181,15 @@ public class Fruit {
             	effet = "diminue le chrono de XX secondes";
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        }			
+	        }
+			this.bonus=false;
 	    }
 
 		imgFruit = new ImageIcon(bImgFruit);
         imgFruit = new ImageIcon(imgFruit.getImage().getScaledInstance(20, 20, BufferedImage.SCALE_SMOOTH));
 	}
 
-	public void effect(Snake snake){
+	public void effect(Snake snake,Model model){
 		switch(typeFruit){
 			default:
 				break;
@@ -191,8 +208,17 @@ public class Fruit {
 				snake.setDelay(snake.getDelay()+25);
 				break;
 			case "framboise":
+				model.getListeWall().remove(model.getListeWall().size()-1);
 				break;
 			case "pasteque":
+				for(int i=0; i<2; i++){
+					Fruit f;
+					do{
+						f=model.choisirFruit();
+					}while(!f.bonus);
+					f.validFruit(model.getJ1(),model);
+					model.getToAdd().add(f);
+				}
 				break;
 			case "ananas":
 				break;
@@ -205,8 +231,17 @@ public class Fruit {
 				snake.setTaille(snake.getTaille()-2);
 				break;
 			case "carotte":
+				model.getListeWall().add(new Wall(model,model.getJ1(),model.getListeFruit().get(0)));
 				break;
 			case "poivron":
+				for(int i=0; i<2; i++){
+					Fruit f;
+					do{
+						f=model.choisirFruit();
+					}while(f.bonus);
+					f.validFruit(model.getJ1(),model);
+					model.getToAdd().add(f);
+				}
 				break;
 			case "piment":
 				break;
@@ -230,12 +265,12 @@ public class Fruit {
 	}
 
 
-	public void validFruit(int[][] tab,int taille){
+	public void validFruit(Snake snake,Model model){
 		int x,y;
 		do {
 			x = randomX();
 			y = randomY();
-		}while(fruitIsOnSnake(x,y,tab,taille));
+		}while(fruitIsOnSnake(x,y,snake,model));
 		this.posX=x;
 		this.posY=y;
 	}
@@ -262,9 +297,14 @@ public class Fruit {
 		return random;
 	}
 	// renvoie true si le fruit se trouve sur une partie du serpent
-	public boolean fruitIsOnSnake(int x, int y,int[][] snake, int taille ){
-		for(int i = 0; i < taille;i++){
-			if((x == snake[i][0]) && (y == snake[i][1])){
+	public boolean fruitIsOnSnake(int x, int y,Snake snake,Model model){
+		for(int i = 0; i < snake.getTaille();i++){
+			if((x == snake.getSnake()[i][0]) && (y == snake.getSnake()[i][1])){
+				return true;
+			}
+		}
+		for(Wall w : model.getListeWall()){
+			if((x == w.getX()) && (y == w.getY())){
 				return true;
 			}
 		}
