@@ -6,16 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.sql.SQLOutput;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+
 
 public class ControlSnake implements KeyListener, ActionListener {
 
@@ -158,18 +149,18 @@ public class ControlSnake implements KeyListener, ActionListener {
         if(e.getKeyCode() == KeyEvent.VK_SPACE && (model.getJ1().isDead() || (model.getMode() == "duo" && model.getJ2().isDead()))) {
 
             model.getScore().setActualScore(model.getJ2().getScore());
-
             String[][] tScore = gameplay.getFenetreMenu().getData();
-            try {
-                addScoreInTableMenu();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            if(model.getMode() != "duo") {
+                try {
+                    addScoreInTableMenu();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                gameplay.getFenetreMenu().setData(tScore);
             }
-            gameplay.getFenetreMenu().setData(tScore);
             // remise a zero lorsqu'on appuie sur espace et que l'on est mort
             reset(model.getJ1());
             reset(model.getJ2());
-
         }
     }
 
@@ -251,7 +242,6 @@ public class ControlSnake implements KeyListener, ActionListener {
         } catch (PseudoOutOfBoundsException | SansPseudoException e) {
             e.printStackTrace();
         }
-        model.getScore().setActualScore(model.getScore().getActualScore());
         //récup score, seudo, mode, dfficulté
         model.getScore().initList();
         model.getScore().addScore();
