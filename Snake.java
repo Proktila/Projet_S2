@@ -10,7 +10,7 @@ public class Snake {
     private ImageIcon upHead;
     private ImageIcon body;
 
-    private String skin = "basic";
+    private String skin = "basique";
 
     private boolean right = false;
     private boolean left = false;
@@ -65,7 +65,7 @@ public class Snake {
 
         switch (skin) {
 
-            case "basic" :
+            case "basique" :
                 this.setBasicSkin();
                 break;
 
