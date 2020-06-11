@@ -141,12 +141,11 @@ class FenetreMenu extends JFrame {
 
     private JPanel pantitre2;
 
-
-
-    TableModel table;
-    Tableau render;
+    private TableModel table;
+    private Tableau render;
 
     private SnakeButton bRetour;
+    private JButton bClear;
 
     /**FIN MENU SCORE**/
 
@@ -272,6 +271,7 @@ class FenetreMenu extends JFrame {
         setupTitle(lscore);
         //initialisation du bouton retour
         bRetour = new SnakeButton("retour");
+        bClear = new SnakeButton("vider le tableau");
 
         // contenu des cellules
         //tableau d'objet à 2 dimension
@@ -804,10 +804,16 @@ class FenetreMenu extends JFrame {
         panTable.add(pan);
         panTable.add(panImgMedailleDroite2);
 
+        //panel bouton vide tableau
+        JPanel panBouttonClear = new JPanel();
+        panBouttonClear.setBackground(BG_COLOR);
+        panBouttonClear.add(bClear);
+
         // pan tableau2
         JPanel pantable2 = new JPanel();
         pantable2.setBackground(green);
         pantable2.add(panTable);
+        pantable2.add(panBouttonClear);
 
         // pan boutton
         JPanel panBoutton = new JPanel();
@@ -850,6 +856,7 @@ class FenetreMenu extends JFrame {
         this.boutonParametres.addActionListener(controlBut);
         // Score
         this.bRetour.addActionListener(controlBut);
+        this.bClear.addActionListener(controlBut);
         // Skin
         this.skinSerpent.addActionListener(controlBut);
         this.skinMap.addActionListener(controlBut);
@@ -945,6 +952,9 @@ class FenetreMenu extends JFrame {
     public SnakeButton getBackDifficulty() { return backDifficulty; }
 
     /**FIN getter des boutons pour menu jouer**/
+
+    /**boutton pour vider le tableau des scores**/
+    public JButton getbClear() { return bClear; }
 
     /**DEBUT getter des Panel pour menu skin**/
 
