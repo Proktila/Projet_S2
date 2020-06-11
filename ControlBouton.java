@@ -56,6 +56,14 @@ public class ControlBouton implements ActionListener, ChangeListener {
             }
             fenMenu.changerMenuScore();
         }
+        if(a.getSource().equals(fenMenu.getbClear())){
+            try {
+                videData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            fenMenu.changerMenuScore();
+        }
         // menu principal vers menu jouer
         if (a.getSource().equals(fenMenu.getBoutonJouer())) {
             fenMenu.changerMenuJouer();
@@ -178,21 +186,18 @@ public class ControlBouton implements ActionListener, ChangeListener {
     }
     //méthode qui affiche les scores dans le tableau
     public void showScore() throws IOException{
+        //initialisation et création des fichiers pour lire les scores, modes, difficultés et pseudo
+        model.getScore().initFich();
+        model.getScore().initReaderFich();
+        model.getScore().readFich();
         Score score = model.getScore();
         //initialisation des listes
         model.getScore().initList();
         //initialisation des 4 fichiers à lire
-        BufferedReader readerScore = new BufferedReader(new FileReader("src/score.txt"));
-        BufferedReader readerPseudo = new BufferedReader(new FileReader("src/pseudo.txt"));
-        BufferedReader readerMode = new BufferedReader(new FileReader("src/mode.txt"));
-        BufferedReader readerDiff = new BufferedReader(new FileReader("src/difficulte.txt"));
-        String linePseudo;
-        String lineScore;
-        String lineMode;
-        String lineDiff;
+        String linePseudo;String lineScore;String lineMode;String lineDiff;
         //tant que la ligne dans les fichiers texte n'est pas null
-        while (((lineScore = readerScore.readLine()) != null) && (linePseudo = readerPseudo.readLine()) != null
-                && ((lineMode = readerMode.readLine()) != null) && (lineDiff = readerDiff.readLine()) != null ) {
+        while (((lineScore = score.getReaderScore().readLine()) != null) && (linePseudo = score.getReaderPseudo().readLine()) != null
+                && ((lineMode = score.getReaderMode().readLine()) != null) && (lineDiff = score.getReaderDiff().readLine()) != null ) {
 
             //on ajoute la ligne des scores dans la liste des Scores
             score.getListScore().add(lineScore);
@@ -211,10 +216,10 @@ public class ControlBouton implements ActionListener, ChangeListener {
             triData(score, linePseudo, lineMode, lineDiff);
         }
         //fermeture des fichiers
-        readerScore.close();
-        readerPseudo.close();
-        readerMode.close();
-        readerDiff.close();
+        score.getReaderScore().close();
+        score.getReaderPseudo().close();
+        score.getReaderMode().close();
+        score.getReaderDiff().close();
     }
 
     //méthode qui ajoute au bon endroit le mode, difficulté, pseudo en fonction de la position des scores
@@ -240,6 +245,20 @@ public class ControlBouton implements ActionListener, ChangeListener {
             fenMenu.getData()[i][1] = score.getListDifficulty().get(i);
             fenMenu.getData()[i][2] = score.getListPseudo().get(i);
             fenMenu.getData()[i][3] = score.getListScore().get(i);
+        }
+    }
+    //methode qui va vider les scores (bouton vider)
+    public void videData() throws IOException {
+        //vide les listes et fichiers
+        model.getScore().videScore();
+        model.getScore().videFich();
+        //affichage du tableau vide
+        for (int i = 0; i < fenMenu.getData().length; i++) {
+            //vide les données
+            fenMenu.getData()[i][0] = "";
+            fenMenu.getData()[i][1] = "";
+            fenMenu.getData()[i][2] = "";
+            fenMenu.getData()[i][3] = "";
         }
     }
 }
