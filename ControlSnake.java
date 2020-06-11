@@ -112,6 +112,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             }
             gameplay.getFenetreMenu().setData(tScore);
             // remise a zero lorsqu'on appuie sur espace et que l'on est mort
+            deathSoundPlayed = false;
             model.getJ1().setDelay(100);
             gameplay.initWall();
             gameplay.setBegin(0);

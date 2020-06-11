@@ -1,3 +1,6 @@
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 // Pour les composants graphiques que l'on
 // ajoutera dans la méthode creerWidget
@@ -9,6 +12,7 @@ import java.awt.*;
 // Pour la JFrame
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 class FenetreMenu extends JFrame {
 
@@ -206,6 +210,19 @@ class FenetreMenu extends JFrame {
         initParametre();
         initCredits();
         initJouer();
+
+        // music
+        try {
+            model.setMusicClip(Sound.playMusic("sound/music.wav", model.getVolumeMusique()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+        // fin music
+
         backCredits = new SnakeButton("retour");
     }
     public void initMenuPrincipal(){

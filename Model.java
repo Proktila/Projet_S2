@@ -1,3 +1,4 @@
+import javax.sound.sampled.Clip;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ class Model {
     private Snake j1;
 
     private String chemin = "img/snake/";
+    Clip musicClip;
 
     private List<Wall> listeWall=new ArrayList<Wall>();
     private List<Fruit> listeFruit=new ArrayList<Fruit>();
@@ -468,4 +470,7 @@ class Model {
     public List<Fruit> getListeFruit() { return listeFruit; }
 
     public List<Fruit> getToAdd() { return toAdd; }
+
+    public Clip getMusicClip() { return musicClip; }
+    public void setMusicClip(Clip musicClip) { this.musicClip = musicClip; }
 }

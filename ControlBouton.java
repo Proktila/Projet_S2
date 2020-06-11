@@ -29,6 +29,7 @@ public class ControlBouton implements ActionListener, ChangeListener {
         if(!source.getValueIsAdjusting()){
             if(e.getSource().equals(fenMenu.getSlVolumeMusique())){
                 model.setVolumeMusique(source.getValue());
+                Sound.setVolume(model.getMusicClip(), model.getVolumeMusique());
             }else if(e.getSource().equals(fenMenu.getSlVolumeBruits())){
                 model.setVolumeBruits(source.getValue());
             }
