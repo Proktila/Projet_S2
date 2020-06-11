@@ -14,7 +14,7 @@ public class Wall{
         do {
             x = randomX();
             y = randomY();
-        }while(wallIsNotValid(x,y,snake,fruit));
+        }while(wallIsNotValid(x,y,snake,fruit) || (model.getMode() == "duo" && wallIsNotValid(x,y,model.getJ2(),fruit)));
         this.x = x;
         this.y = y;
         model.getListeWall().add(this);
@@ -48,7 +48,8 @@ public class Wall{
                     ((x == snake.getSnake()[i][0]+20) && (y == snake.getSnake()[i][1])) ||
                     ((x == snake.getSnake()[i][0]) && (y == snake.getSnake()[i][1]+20))||
                     ((x == snake.getSnake()[i][0]-20) && (y == snake.getSnake()[i][1]))||
-                    ((x == snake.getSnake()[i][0]) && (y == snake.getSnake()[i][1]-20))){
+                    ((x == snake.getSnake()[i][0]) && (y == snake.getSnake()[i][1]-20))||
+                    ((x == snake.getSnake()[i][0]) && (y == snake.getSnake()[i][1]))){
                 if(x == fruit.getPosX() && y == fruit.getPosY()){
                     return true;
                 }
