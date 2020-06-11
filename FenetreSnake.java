@@ -38,6 +38,8 @@ class Gameplay extends JPanel{
     private Color blue = new Color(47, 81, 103);
     private Color green = new Color(50, 99, 23);
     private Color lightGreen = new Color(99, 205, 42);
+    private Color lightBlue = new Color(85,220,238);
+
 
     /*
     Tableau à double entré ou la 1ere entrée est la position d'une partie du snake par ex snake[0] = tete
@@ -53,7 +55,6 @@ class Gameplay extends JPanel{
 
     // Un timer pour la vitesse
     private Timer timer;
-
 
     // variable qui sert à positionner le serpent au début
     private int begin = 0;
@@ -176,13 +177,10 @@ class Gameplay extends JPanel{
         g.setColor(setMapColor(model.getMap()));
         g.fillRect(0,0,720,720);
 
-        // Dessine le score
-        g.setColor(lightGreen);
-        g.setFont(new Font("Monospaced", Font.BOLD, 18));
-        g.drawString("Score: "+model.getJ1().getScore(),740,60);
-
-        // Dessine la taile du serpent
-        g.drawString("Taille: "+model.getJ1().getTaille(),740,80);
+        if(model.getMode() != "duo") {
+            // Dessine effet et type
+            showInfoFruit(g, 160);
+        }
 
         showSnake(snake,g,model.getJ1());
 
@@ -215,7 +213,7 @@ class Gameplay extends JPanel{
             g.fillRect(120,235,500,250);
             g.setColor(lightGreen);
             g.setFont(new Font("Monospaced", Font.BOLD, 50));
-            // Dessine la taile du serpent
+            // Dessine la taille du serpent
             g.drawString("PAUSE",300,300);
             g.setFont(new Font("Monospaced", Font.BOLD, 25));
             g.drawString("Rappuyer sur le bouton pause",165,400);
@@ -243,11 +241,15 @@ class Gameplay extends JPanel{
             snake[1][1]=20;
             snake[0][1]=20;
         }
+        g.setColor(lightGreen);
+        g.setFont(new Font("Monospaced", Font.BOLD, 18));
         g.drawString("J1",740,40);
+        showScoreIndiv(g);
         g.drawString("J2",740,120);
         g.drawString("Taille: "+model.getJ2().getTaille(),740,140);
         g.drawString("Score: "+model.getJ2().getScore(),740,160);
 
+        showInfoFruit(g, 200);
         showSnake(snake,g,model.getJ2());
         eatSnake(snake,g,model.getJ2());
     }
@@ -403,6 +405,48 @@ class Gameplay extends JPanel{
         }
     }
 
+    public void showInfoFruitStyle(Graphics g, int k, int i){
+        g.setColor(lightBlue);
+        g.drawString("Type Fruit/Légume: ", 740, k);
+        g.setColor(new Color(153, 241, 188));
+        g.drawString("" + model.getListeFruit().get(i).getTypeFruit(), 740, k+20);
+        g.setColor(lightBlue);
+        g.drawString("Effet: ", 740, k+60);
+        g.setColor(new Color(225, 245, 228));
+        g.drawString("" + model.getListeFruit().get(i).getEffet(), 740, k+80);
+    }
+
+    public void showInfoFruit(Graphics g, int k){
+        if (model.getListeFruit().size() == 1) {
+            showScoreIndiv(g);
+            showInfoFruitStyle(g, k, model.getListeFruit().size() - 1);
+        } else {
+            for (int i = 0; i < model.getListeFruit().size(); i++) {
+                if (i == 0) {
+                    showScoreIndiv(g);
+                    showInfoFruitStyle(g, k, 0);
+                }
+                if (i == 1) {
+                    showScoreIndiv(g);
+                    showInfoFruitStyle(g, k+140, 1);
+                }
+                if (i == 2) {
+                    showScoreIndiv(g);
+                    showInfoFruitStyle(g, k+280, 2);
+                }
+            }
+        }
+    }
+
+    public void showScoreIndiv(Graphics g){
+        // Dessine le score
+        g.setColor(lightGreen);
+        g.setFont(new Font("Monospaced", Font.BOLD, 18));
+        g.drawString("Score: " + model.getJ1().getScore(), 740, 60);
+        // Dessine la taille du serpent
+        g.drawString("Taille: " + model.getJ1().getTaille(), 740, 80);
+
+    }
     public SnakeButton getHomeBut() { return homeBut; }
 }
 
