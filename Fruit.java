@@ -208,7 +208,9 @@ public class Fruit {
 				snake.setDelay(snake.getDelay()+25);
 				break;
 			case "framboise":
-				model.getListeWall().remove(model.getListeWall().size()-1);
+				if(model.getListeWall().size() != 0){
+					model.getListeWall().remove(model.getListeWall().size()-1);
+				}
 				break;
 			case "pasteque":
 				for(int i=0; i<2; i++){
@@ -314,4 +316,8 @@ public class Fruit {
 	public int getPosX() { return posX; }
 
 	public int getPosY() { return posY; }
+
+	public void setPosX(int posX) { this.posX = posX; }
+
+	public void setPosY(int posY) { this.posY = posY; }
 }
