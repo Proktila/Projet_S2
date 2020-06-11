@@ -38,7 +38,7 @@ public class Fruit {
 		else if (typeFruit == "framboise") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/framb.png"));
-            	effet = "eraseWall";
+            	effet = "enleve un mur";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -58,7 +58,7 @@ public class Fruit {
 		else if (typeFruit == "mure") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/mure.png"));
-            	effet = "slow";
+            	effet = "ralentissement";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -68,7 +68,7 @@ public class Fruit {
 		else if (typeFruit == "peche") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/peche.png"));
-            	effet = "neutralisation des murs pendant 5 secondes";
+            	effet = "murs immobiles 5sec";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -78,7 +78,7 @@ public class Fruit {
 		else if (typeFruit == "raisin") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/raisin.png"));
-            	effet = "+10Score";
+            	effet = "+60Score";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -98,7 +98,7 @@ public class Fruit {
 		else if (typeFruit == "asperge") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/asperges.png"));
-            	effet = "speed+20";
+            	effet = "vitesse+20";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -118,7 +118,7 @@ public class Fruit {
 	    else if (typeFruit == "cerise") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/cerises.png"));
-            	effet = "player!Move";
+            	effet = "joueur immobile";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -128,7 +128,7 @@ public class Fruit {
 		else if (typeFruit == "carotte") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/carotte.png"));
-            	effet = "addWall";
+            	effet = "ajout d'un mur";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -138,7 +138,7 @@ public class Fruit {
 		else if (typeFruit == "piment") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/piment.png"));
-            	effet = "dead";
+            	effet = "mort";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -148,7 +148,7 @@ public class Fruit {
 		else if (typeFruit == "poivron") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/poivron.png"));
-            	effet = "apparition de 3 elements malus";
+            	effet = "3 légumes malus";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -158,7 +158,7 @@ public class Fruit {
 		else if (typeFruit == "radis") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/radis.png"));
-            	effet = "-10score";
+            	effet = "-40score";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -168,7 +168,7 @@ public class Fruit {
 		else if (typeFruit == "chou-fleur") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/choufleur.png"));
-            	effet = "taille-3";
+            	effet = "taille-2";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -178,7 +178,7 @@ public class Fruit {
 	    else if (typeFruit == "aubergine") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/aubergine.png"));
-            	effet = "diminue le chrono de XX secondes";
+            	effet = "diminution chrono";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -320,4 +320,12 @@ public class Fruit {
 	public void setPosX(int posX) { this.posX = posX; }
 
 	public void setPosY(int posY) { this.posY = posY; }
+
+	public String getTypeFruit() {
+		return typeFruit;
+	}
+
+	public String getEffet() {
+		return effet;
+	}
 }
