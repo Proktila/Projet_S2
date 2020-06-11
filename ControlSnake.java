@@ -22,12 +22,14 @@ public class ControlSnake implements KeyListener, ActionListener {
     FenetreSnake fenetreSnake;
     Gameplay gameplay;
     Model model;
+    boolean deathSoundPlayed;
 
     Timer timer;
 
     public ControlSnake(FenetreSnake fenetreSnake, Model model){
         this.model = model;
         this.fenetreSnake = fenetreSnake;
+        this.deathSoundPlayed = false;
         gameplay = fenetreSnake.getGameplay();
         gameplay.setFocusable(true);
         gameplay.setFocusTraversalKeysEnabled(false);
@@ -241,9 +243,10 @@ public class ControlSnake implements KeyListener, ActionListener {
         }
 
         // bruit mort
-        if(model.getJ1().isDead()){
+        if(model.getJ1().isDead() && !deathSoundPlayed){
             try {
                 Sound.playSound("sound/death.wav", model.getVolumeBruits());
+                deathSoundPlayed = true;
             } catch (IOException ex) {
                 ex.printStackTrace();
             } catch (UnsupportedAudioFileException ex) {
@@ -252,6 +255,7 @@ public class ControlSnake implements KeyListener, ActionListener {
                 ex.printStackTrace();
             }
         }
+        // bruit mort
     }
 
     public void addScoreInTableMenu() throws IOException {
