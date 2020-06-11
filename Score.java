@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,11 +22,29 @@ public class Score {
     //liste d'entier contenant les scores pour les trier
     private List<Integer> listData;
 
-    //fichiers contenant les données (garde historique des scores)
-    private Path fichierScore = Paths.get("src/score.txt");
-    private Path fichierPseudo = Paths.get("src/pseudo.txt");
-    private Path fichierMode = Paths.get("src/mode.txt");
-    private Path fichierDiff = Paths.get("src/difficulte.txt");
+    //chemins contenant les données (garde historique des scores)
+    private Path fichierScore = Paths.get("score/score.txt");
+    private Path fichierPseudo = Paths.get("score/pseudo.txt");
+    private Path fichierMode = Paths.get("score/mode.txt");
+    private Path fichierDiff = Paths.get("score/difficulte.txt");
+
+    //vairables pour lires les fichiers de lecture
+    private BufferedReader readerScore;
+    private BufferedReader readerPseudo;
+    private BufferedReader readerMode;
+    private BufferedReader readerDiff;
+
+    //variables pour lire les fichiers
+    private FileReader fileReaderScore;
+    private FileReader fileReaderPseudo;
+    private FileReader fileReaderMode;
+    private FileReader fileReaderDiff;
+
+    //variables pour création des fichiers
+    private File fileScore;
+    private File filePseudo;
+    private File fileMode;
+    private File fileDiff;
 
     //constructeur vide
     public Score(){}
@@ -80,6 +98,52 @@ public class Score {
         }
     }
 
+    //méthodes qui initialise les fichiers (qui seront à lire)
+    public void initFich() throws IOException {
+        fileScore = new File("score/score.txt");
+        filePseudo = new File("score/pseudo.txt");
+        fileMode = new File("score/mode.txt");
+        fileDiff = new File("score/difficulte.txt");
+        //création de ces fichiers
+        fileScore.createNewFile();
+        filePseudo.createNewFile();
+        fileMode.createNewFile();
+        fileDiff.createNewFile();
+    }
+
+    //méthode qui initialise les fichiers textes de lecture
+    public void initReaderFich() throws FileNotFoundException {
+        fileReaderScore = new FileReader("score/score.txt");
+        fileReaderPseudo = new FileReader("score/pseudo.txt");
+        fileReaderMode = new FileReader("score/mode.txt");
+        fileReaderDiff = new FileReader("score/difficulte.txt");
+    }
+
+    //méthode qui lie initialise la lecture des fichiers à lire
+    public void readFich() {
+        readerScore = new BufferedReader(getFileReaderScore());
+        readerPseudo = new BufferedReader(getFileReaderPseudo());
+        readerMode = new BufferedReader(getFileReaderMode());
+        readerDiff = new BufferedReader(getFileReaderDiff());
+    }
+
+    //méthode qui vide les listes
+    public void videScore(){
+        getListMode().clear();
+        getListDifficulty().clear();
+        getListPseudo().clear();
+        getListScore().clear();
+        getListData().clear();
+    }
+
+    //méthode qui vide les fichiers textes
+    public void videFich() throws IOException {
+        FileWriter newFichScore = new FileWriter(getFileScore(),false);
+        FileWriter newFichPseudo = new FileWriter(getFilePseudo(),false);
+        FileWriter newFichMode = new FileWriter(getFileMode(),false);
+        FileWriter newFichDiff = new FileWriter(getFileDiff(),false);
+    }
+
     /**************************************************getter et setter************************************************/
 
     //ajout de 2 exception sur le pseudo
@@ -112,6 +176,19 @@ public class Score {
     public List<String> getListPseudo() { return listPseudo; }
     public List<String> getListMode() { return listMode; }
     public List<String> getListDifficulty() { return listDifficulty; }
+    public BufferedReader getReaderScore() { return readerScore; }
+    public BufferedReader getReaderPseudo() { return readerPseudo; }
+    public BufferedReader getReaderMode() { return readerMode; }
+    public BufferedReader getReaderDiff() { return readerDiff; }
+    public File getFileScore() { return fileScore; }
+    public File getFilePseudo() { return filePseudo; }
+    public File getFileMode() { return fileMode; }
+    public File getFileDiff() { return fileDiff; }
+    public FileReader getFileReaderScore() { return fileReaderScore; }
+    public FileReader getFileReaderPseudo() { return fileReaderPseudo; }
+    public FileReader getFileReaderMode() { return fileReaderMode; }
+    public FileReader getFileReaderDiff() { return fileReaderDiff; }
+
 
 }
 
