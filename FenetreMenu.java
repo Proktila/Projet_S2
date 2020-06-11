@@ -54,19 +54,6 @@ class FenetreMenu extends JFrame {
     private JLabel lserpentGauche;
     private JLabel lserpentDroite;
 
-
-    //je met ca en comentaire pour l'instant
-    /**ControlBoutonMenuPrincipal cbJouer;
-    ControlBoutonMenuPrincipal cbSkins;
-    ControlBoutonMenuPrincipal cbScores;
-    ControlBoutonMenuPrincipal cbParametres;
-    ControlBoutonMenuPrincipal cbCredits;**/
-
-    //savoir si on fait une classe de control
-    // pour chaque bouton ou si on mets tout les traitements dans
-    // la mm classe
-
-
     /**FIN MENU PRICIPAL**/
 
 
@@ -88,7 +75,7 @@ class FenetreMenu extends JFrame {
     // SKIN SERPENT
     private JPanel skinSerpentButtonPanel;
     private JComboBox cbSerpent;
-    private Object[] listeSerpent = new Object[]{"basic", "nyan", "Element 3", "Element 4", "Element 5"};
+    private Object[] listeSerpent = new Object[]{"basique", "nyan", "Element 3", "Element 4", "Element 5"};
 
     // SKIN MAP
     private JPanel skinMapButtonPanel;
@@ -180,6 +167,9 @@ class FenetreMenu extends JFrame {
 
         this.model = model;
         this.setLayout(null);
+
+        Image icone =Toolkit.getDefaultToolkit().getImage("img/icone.png");
+        this.setIconImage(icone);
 
         this.initAttribut();
 
