@@ -6,7 +6,7 @@ class Model {
 
     private String difficulty;
     private String mode;
-    private String map = "";
+    private String theme = "";
 
     private final int VOL_MIN = 0;
     private final int VOL_MAX = 100;
@@ -23,6 +23,7 @@ class Model {
     Clip musicClip;
 
     private List<Wall> listeWall=new ArrayList<Wall>();
+    private List<Objet> listeObjetsLaby=new ArrayList<Objet>();
     private List<Fruit> listeFruit=new ArrayList<Fruit>();
     private java.util.List<Fruit> toAdd=new ArrayList<Fruit>();
 
@@ -441,7 +442,7 @@ class Model {
 
     public String getMode() { return mode; }
 
-    public String getMap() { return map; }
+    public String getTheme() { return theme; }
 
     public int getVOL_MIN() { return VOL_MIN; }
 
@@ -459,7 +460,7 @@ class Model {
 
     public void setVolumeBruits(int volumeBruits) { this.volumeBruits = volumeBruits; }
 
-    public void setMap(String map) { this.map = map; }
+    public void setTheme(String theme) { this.theme = theme; }
 
     public String getChemin() { return chemin; }
 
@@ -468,6 +469,8 @@ class Model {
     public void setJ1(Snake j1) { this.j1 = j1; }
 
     public List<Wall> getListeWall() { return listeWall; }
+
+    public List<Objet> getListeObjetsLaby() { return listeObjetsLaby; }
 
     public List<Fruit> getListeFruit() { return listeFruit; }
 

@@ -2,10 +2,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -119,7 +115,7 @@ class Gameplay extends JPanel{
         if(model.getMode() != "labyrinthe"){
             initWall();
         }else{
-            // créer les murs manuellement
+            createLaby(MapTools.readGrid(MapTools.getRandomMap(model.getDifficulty())));
         }
     }
 
@@ -141,6 +137,23 @@ class Gameplay extends JPanel{
             new Wall(model,model.getJ1(),this.firstFruit);
         }
     }
+
+    /**
+     * remplie les listes listeWall et listeObjetsLaby du model a partir de grid
+     * @param grid tableau 36*36 content les objets du labyrinthe
+     */
+    private void createLaby(String[][] grid) {
+        for (int x = 0; x<grid.length; x++) {
+            for (int y = 0; y<grid.length; y++) {
+                String cell = grid[y][x];
+                // System.out.println(cell + " [X:" + x + " Y:" + y +"]");
+                if (cell.equals("X")) model.getListeWall().add(new Wall(model, x*20, y*20)); // ajout mur
+                if (cell.equals("K")) model.getListeObjetsLaby().add(new Objet("key", x*20, y*20));  // ajout key objet
+                if (cell.equals("C")) model.getListeObjetsLaby().add(new Objet("coin", x*20, y*20));  // ajout coin objet
+            }
+        }
+    }
+
     public void initFruit(){
         this.firstFruit = model.choisirFruit();
         this.firstFruit.validFruit(model.getJ1(),model);
@@ -174,7 +187,7 @@ class Gameplay extends JPanel{
         g.fillRect(720,0,280,720);
 
         // Dessine le milieu du jeu
-        g.setColor(setMapColor(model.getMap()));
+        g.setColor(setThemeColor(model.getTheme()));
         g.fillRect(0,0,720,720);
 
         if(model.getMode() != "duo") {
@@ -193,6 +206,12 @@ class Gameplay extends JPanel{
         for( Wall w : model.getListeWall()){
             w.getWall().paintIcon(this,g,w.getX(),w.getY());
         }
+        if(model.getMode() == "labyrinthe"){
+            for(Objet obj : model.getListeObjetsLaby()){
+                obj.getImg().paintIcon(this,g,obj.getX(),obj.getY());
+            }
+        }
+
         switch (model.getMode()){
             case "traditionnel":
                 deadTraditionnel(g);
@@ -254,7 +273,7 @@ class Gameplay extends JPanel{
         eatSnake(snake,g,model.getJ2());
     }
 
-    private Color setMapColor(String map) {
+    private Color setThemeColor(String map) {
         switch (map) {
             case "Rouge":
                 return Color.RED;

@@ -13,8 +13,8 @@ public class Objet {
     private ImageIcon img;
 
     private String effet;
-    private int posX;
-    private int posY;
+    private int x;
+    private int y;
     private boolean bonus;
 
     public Objet(){}
@@ -24,11 +24,11 @@ public class Objet {
         this.setFruit();
     }
 
-    public Objet(String type, int posX, int posY){
+    public Objet(String type, int x, int y){
         this.type = type;
         this.setFruit();
-        this.posX = posX;
-        this.posY = posY;
+        this.x = x;
+        this.y = y;
     }
 
     public void setFruit(){
@@ -85,9 +85,9 @@ public class Objet {
         return false;
     }
 
-    public int getPosX() { return posX; }
-    public int getPosY() { return posY; }
+    public int getX() { return x; }
+    public int getY() { return y; }
 
-    public void setPosX(int posX) { this.posX = posX; }
-    public void setPosY(int posY) { this.posY = posY; }
+    public void setX(int x) { this.x = x; }
+    public void setY(int y) { this.y = y; }
 }
