@@ -1,13 +1,9 @@
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Collections;
 
 public class ControlBouton implements ActionListener, ChangeListener {
@@ -180,7 +176,7 @@ public class ControlBouton implements ActionListener, ChangeListener {
         }
         // choix map
         if (a.getSource().equals(fenMenu.getCbMap())){
-            model.setMap(( (JComboBox) a.getSource()).getSelectedItem().toString());
+            model.setTheme(( (JComboBox) a.getSource()).getSelectedItem().toString());
         }
 
     }
