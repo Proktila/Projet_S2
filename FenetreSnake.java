@@ -1,9 +1,12 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FenetreSnake extends JFrame {
@@ -219,6 +222,18 @@ class Gameplay extends JPanel{
                     newFruit.validFruit(model.getJ1(),model);
                     model.getToAdd().add(newFruit);
                 }
+
+                // Bruit manger
+                try {
+                    Sound.playSound("sound/eat.wav", model.getVolumeBruits());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (UnsupportedAudioFileException ex) {
+                    ex.printStackTrace();
+                } catch (LineUnavailableException ex) {
+                    ex.printStackTrace();
+                }
+                // fin bruit manger
             }
         }
         model.getListeFruit().addAll(model.getToAdd());

@@ -1,3 +1,5 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -236,6 +238,19 @@ public class ControlSnake implements KeyListener, ActionListener {
         }
         if(e.getSource().equals(gameplay.getPauseBut())){
             gameplay.setPause(!gameplay.isPause());
+        }
+
+        // bruit mort
+        if(model.getJ1().isDead()){
+            try {
+                Sound.playSound("sound/death.wav", model.getVolumeBruits());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (UnsupportedAudioFileException ex) {
+                ex.printStackTrace();
+            } catch (LineUnavailableException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
