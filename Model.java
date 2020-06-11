@@ -10,7 +10,7 @@ class Model {
 
     private final int VOL_MIN = 0;
     private final int VOL_MAX = 100;
-    private final int VOL_INIT = 75;
+    private final int VOL_INIT = 40;
 
     private int volumeMusique = VOL_INIT;
     private int volumeBruits = VOL_INIT;

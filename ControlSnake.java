@@ -170,21 +170,6 @@ public class ControlSnake implements KeyListener, ActionListener {
             reset(model.getJ1());
             reset(model.getJ2());
 
-        }else if(e.getKeyCode() == KeyEvent.VK_SPACE && !model.getJ1().isDead()){
-
-            System.out.println("test");
-            // ferme le jeu et ouvre le menu
-            this.timer.stop();
-            gameplay.setBegin(0);
-            model.getScore().setActualScore(0);
-            gameplay.repaint();
-            gameplay.getFen().dispose();
-            gameplay.getFenetreMenu().setVisible(true);
-            gameplay.getFenetreMenu().changerMenuPrincipal();
-            Snake s = new Snake(model);
-            s.skins(model.getJ1().getSkin());
-            model.setJ1(s);
-            model.getListeWall().clear();
         }
     }
 
@@ -202,6 +187,20 @@ public class ControlSnake implements KeyListener, ActionListener {
 
         if(e.getSource().equals(gameplay.getPauseBut())){
             gameplay.setPause(!gameplay.isPause());
+        }
+        if(e.getSource().equals(gameplay.getHomeBut())){
+            this.timer.stop();
+            gameplay.setBegin(0);
+            model.getScore().setActualScore(0);
+            gameplay.repaint();
+            gameplay.getFen().dispose();
+            gameplay.getFenetreMenu().setVisible(true);
+            gameplay.getFenetreMenu().changerMenuPrincipal();
+            Snake s = new Snake(model);
+            s.skins(model.getJ1().getSkin());
+            model.setJ1(s);
+            model.getListeWall().clear();
+            model.getListeFruit().clear();
         }
 
         // bruit mort

@@ -66,6 +66,7 @@ class Gameplay extends JPanel{
 
     private boolean pause=false;
     private SnakeButton pauseBut;
+    private SnakeButton homeBut;
 
     private Fruit firstFruit = new Fruit();
 
@@ -84,6 +85,7 @@ class Gameplay extends JPanel{
         panelButton.setLayout(null);
         panelButton.setBackground(blue);
         panelButton.setBounds(0,0,280,720);
+        // bouton pause
         SnakeButton pauseBut = new SnakeButton("");
         pauseBut.setIcon(new ImageIcon("img/btn/pause.png"));
         pauseBut.setRolloverIcon(new ImageIcon("img/btn/pause.png"));
@@ -92,6 +94,15 @@ class Gameplay extends JPanel{
         pauseBut.setFocusable(false);
         this.pauseBut=pauseBut;
         panelButton.add(pauseBut);
+        // bouton vers menu
+        SnakeButton homeBut = new SnakeButton("");
+        homeBut.setIcon(new ImageIcon("img/btn/home.png"));
+        homeBut.setRolloverIcon(new ImageIcon("img/btn/home.png"));
+        homeBut.setPressedIcon(new ImageIcon("img/btn/home.png"));
+        homeBut.setBounds(30,150,200,100);
+        homeBut.setFocusable(false);
+        this.homeBut=homeBut;
+        panelButton.add(homeBut);
         JPanel panelButtonGameplay = new JPanel();
         panelButtonGameplay.setLayout(null);
         panelButtonGameplay.setBounds(0,0,1280,720);
@@ -138,6 +149,7 @@ class Gameplay extends JPanel{
     public void setControlSnake(ControlSnake controlSnake){
         this.addKeyListener(controlSnake);
         this.pauseBut.addActionListener(controlSnake);
+        this.homeBut.addActionListener(controlSnake);
     }
 
     
@@ -204,7 +216,9 @@ class Gameplay extends JPanel{
             g.setColor(lightGreen);
             g.setFont(new Font("Monospaced", Font.BOLD, 50));
             // Dessine la taile du serpent
-            g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
+            g.drawString("PAUSE",300,300);
+            g.setFont(new Font("Monospaced", Font.BOLD, 25));
+            g.drawString("Rappuyer sur le bouton pause",165,400);
         }
         g.dispose();
     }
@@ -389,5 +403,6 @@ class Gameplay extends JPanel{
         }
     }
 
+    public SnakeButton getHomeBut() { return homeBut; }
 }
 
