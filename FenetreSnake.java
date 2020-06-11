@@ -155,8 +155,6 @@ class Gameplay extends JPanel{
             snake[1][1]=20;
             snake[0][1]=20;
 
-
-
         }
         // Dessine les deux bandes bleu sur les côtés
         g.setColor(blue);
@@ -169,104 +167,25 @@ class Gameplay extends JPanel{
         // Dessine le score
         g.setColor(lightGreen);
         g.setFont(new Font("Monospaced", Font.BOLD, 18));
-        g.drawString("Scores: "+model.getJ1().getScore(),740,20);
+        g.drawString("Score: "+model.getJ1().getScore(),740,60);
 
         // Dessine la taile du serpent
-        g.drawString("Taille: "+model.getJ1().getTaille(),740,40);
+        g.drawString("Taille: "+model.getJ1().getTaille(),740,80);
 
+        showSnake(snake,g,model.getJ1());
 
-        // le snake regarde à droite de base
-        rightHead = model.getJ1().getRightHead();
-        rightHead.paintIcon(this,g,snake[0][0],snake[0][1]);
+        if(model.getMode() == "duo"){
+            createDuo(g);
+        }
 
-        for(int i = 0; i < model.getJ1().getTaille(); i++){
-            // si la tete va vers la droite
-            if(i==0 && model.getJ1().isRight()){
-                rightHead = model.getJ1().getRightHead();
-                rightHead.paintIcon(this,g,snake[i][0],snake[i][1]);
-            }
-            // si la tete va vers la gauche
-            if(i==0 && model.getJ1().isLeft()){
-                leftHead = model.getJ1().getLeftHead();
-                leftHead.paintIcon(this,g,snake[i][0],snake[i][1]);
-            }
-            // si la tete va vers le bas
-            if(i==0 && model.getJ1().isDown()){
-                downHead = model.getJ1().getDownHead();
-                downHead.paintIcon(this,g,snake[i][0],snake[i][1]);
-            }
-            // si la tete va vers le haut
-            if(i==0 && model.getJ1().isUp()){
-                upHead = model.getJ1().getUpHead();
-                upHead.paintIcon(this,g,snake[i][0],snake[i][1]);
-            }
-            // si c'est un corp
-            if(i != 0){
-                body = model.getJ1().getBody();
-                body.paintIcon(this,g,snake[i][0],snake[i][1]);
-            }
-        }
-        // on affecte l'image à food
-        java.util.List<Fruit> toRemove=new ArrayList<Fruit>();
-        // si le serpent mange le fruit
-        for(Fruit f : model.getListeFruit()){
-            if((f.getPosX() == snake[0][0]) && (f.getPosY() == snake[0][1])){
-                model.getJ1().setScore( model.getJ1().getScore()+10);
-                model.getJ1().setTaille(model.getJ1().getTaille()+ 1);
-                // augmente la vitesse
-                f.effect(model.getJ1(),model);
-                toRemove.add(f);
-                if(model.getListeFruit().size() == 1 ){
-                    Fruit newFruit;
-                    newFruit = model.choisirFruit();
-                    newFruit.validFruit(model.getJ1(),model);
-                    model.getToAdd().add(newFruit);
-                }
+        eatSnake(snake,g,model.getJ1());
 
-                // Bruit manger
-                try {
-                    Sound.playSound("sound/eat.wav", model.getVolumeBruits());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (UnsupportedAudioFileException ex) {
-                    ex.printStackTrace();
-                } catch (LineUnavailableException ex) {
-                    ex.printStackTrace();
-                }
-                // fin bruit manger
-            }
+        for( Wall w : model.getListeWall()){
+            w.getWall().paintIcon(this,g,w.getX(),w.getY());
         }
-        model.getListeFruit().addAll(model.getToAdd());
-        model.getListeFruit().removeAll(toRemove);
-        model.getToAdd().clear();
-        toRemove.clear();
-        for(Fruit f : model.getListeFruit()){
-            // affiche le fruit à l'endroit voulu
-            f.getImgFruit().paintIcon(this,g,f.getPosX(),f.getPosY());
-        }
-        if(model.getJ1().isDead()){
-            g.setColor(blue);
-            g.fillRect(120,235,500,250);
-            g.setColor(lightGreen);
-            g.setFont(new Font("Monospaced", Font.BOLD, 50));
-            g.drawString("GAME OVER ",230,300);
-            g.drawString("Scores: "+model.getJ1().getScore(),230,350);
-            // Dessine la taile du serpent
-            g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
-        }
-        if(pause){
-            g.setColor(blue);
-            g.fillRect(120,235,500,250);
-            g.setColor(lightGreen);
-            g.setFont(new Font("Monospaced", Font.BOLD, 50));
-            // Dessine la taile du serpent
-            g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
-        }
-        model.getJ1().setSnake(snake);
-
         switch (model.getMode()){
             case "traditionnel":
-                createTraditionnel(g);
+                deadTraditionnel(g);
                 break;
             case "labyrinthe":
                 createLaby(g);
@@ -275,11 +194,17 @@ class Gameplay extends JPanel{
                 createChrono(g);
                 break;
             case "duo":
-                createDuo(g);
+                deadDuo(g);
                 break;
         }
-        for( Wall w : model.getListeWall()){
-            w.getWall().paintIcon(this,g,w.getX(),w.getY());
+
+        if(pause){
+            g.setColor(blue);
+            g.fillRect(120,235,500,250);
+            g.setColor(lightGreen);
+            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            // Dessine la taile du serpent
+            g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
         }
         g.dispose();
     }
@@ -294,7 +219,23 @@ class Gameplay extends JPanel{
         // a coder
     }
     private void createDuo(Graphics g){
-        // a coder
+        int[][] snake = model.getJ2().getSnake();
+        if(begin == 0){
+            snake[2][0]=700;
+            snake[1][0]=680;
+            snake[0][0]=660;
+
+            snake[2][1]=20;
+            snake[1][1]=20;
+            snake[0][1]=20;
+        }
+        g.drawString("J1",740,40);
+        g.drawString("J2",740,120);
+        g.drawString("Taille: "+model.getJ2().getTaille(),740,140);
+        g.drawString("Score: "+model.getJ2().getScore(),740,160);
+
+        showSnake(snake,g,model.getJ2());
+        eatSnake(snake,g,model.getJ2());
     }
 
     private Color setMapColor(String map) {
@@ -325,6 +266,128 @@ class Gameplay extends JPanel{
     public void setPause(boolean pause) { this.pause = pause; }
 
     public boolean isPause() { return pause; }
+
+    public void showSnake(int[][] snake,Graphics g,Snake s){
+
+        if(s == model.getJ2()){
+            leftHead = s.getLeftHead();
+            leftHead.paintIcon(this,g,snake[0][0],snake[0][1]);
+        }else{
+            rightHead = s.getRightHead();
+            rightHead.paintIcon(this,g,snake[0][0],snake[0][1]);
+        }
+
+        for(int i = 0; i < s.getTaille(); i++){
+            // si la tete va vers la droite
+            if(i==0 && s.isRight()){
+                rightHead = s.getRightHead();
+                rightHead.paintIcon(this,g,snake[i][0],snake[i][1]);
+            }
+            // si la tete va vers la gauche
+            if(i==0 && s.isLeft()){
+                leftHead = s.getLeftHead();
+                leftHead.paintIcon(this,g,snake[i][0],snake[i][1]);
+            }
+            // si la tete va vers le bas
+            if(i==0 && s.isDown()){
+                downHead = s.getDownHead();
+                downHead.paintIcon(this,g,snake[i][0],snake[i][1]);
+            }
+            // si la tete va vers le haut
+            if(i==0 && s.isUp()){
+                upHead = s.getUpHead();
+                upHead.paintIcon(this,g,snake[i][0],snake[i][1]);
+            }
+            // si c'est un corp
+            if(i != 0){
+                body = s.getBody();
+                body.paintIcon(this,g,snake[i][0],snake[i][1]);
+            }
+        }
+    }
+
+    public void eatSnake(int[][] snake,Graphics g, Snake s){
+        java.util.List<Fruit> toRemove=new ArrayList<Fruit>();
+        // si le serpent mange le fruit
+        for(Fruit f : model.getListeFruit()){
+            if((f.getPosX() == snake[0][0]) && (f.getPosY() == snake[0][1])){
+                s.setScore( s.getScore()+10);
+                s.setTaille(s.getTaille()+ 1);
+                // augmente la vitesse
+                f.effect(s,model);
+                toRemove.add(f);
+                if(model.getListeFruit().size() == 1 ){
+                    Fruit newFruit;
+                    newFruit = model.choisirFruit();
+                    newFruit.validFruit(s,model);
+                    model.getToAdd().add(newFruit);
+                }
+
+                // Bruit manger
+                try {
+                    Sound.playSound("sound/eat.wav", model.getVolumeBruits());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (UnsupportedAudioFileException ex) {
+                    ex.printStackTrace();
+                } catch (LineUnavailableException ex) {
+                    ex.printStackTrace();
+                }
+                // fin bruit manger
+            }
+        }
+        model.getListeFruit().addAll(model.getToAdd());
+        model.getListeFruit().removeAll(toRemove);
+        model.getToAdd().clear();
+        toRemove.clear();
+        for(Fruit f : model.getListeFruit()){
+            // affiche le fruit à l'endroit voulu
+            f.getImgFruit().paintIcon(this,g,f.getPosX(),f.getPosY());
+        }
+        s.setSnake(snake);
+
+    }
+
+    public void deadTraditionnel(Graphics g){
+        if(model.getJ1().isDead()){
+            g.setColor(blue);
+            g.fillRect(120,225,500,250);
+            g.setColor(lightGreen);
+            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            g.drawString("GAME OVER ",230,300);
+            g.drawString("Scores: "+model.getJ1().getScore(),230,350);
+            // Dessine la taile du serpent
+            g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
+            g.setFont(new Font("Monospaced", Font.BOLD, 24));
+            g.drawString("Appuyer sur espace pour rejouer",150,450);
+        }
+    }
+
+    public void deadDuo(Graphics g){
+        if(model.getJ1().isDead() || model.getJ2().isDead()){
+            Snake best;
+            String s;
+            if(model.getJ1().getScore() > model.getJ2().getScore()){
+                best = model.getJ1();
+                s ="J1";
+            }else{
+                best = model.getJ2();
+                s = "J2";
+            }
+            g.setColor(blue);
+            g.fillRect(120,225,500,275);
+            g.setColor(lightGreen);
+            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            g.drawString("GAME OVER ",230,300);
+            g.setFont(new Font("Monospaced", Font.BOLD, 38));
+            g.drawString(s + " a gagné",250,350);
+            // Dessine la taile du serpent
+            g.drawString("avec ",325,400);
+            g.drawString(best.getScore() + " points",280,430);
+            g.setFont(new Font("Monospaced", Font.BOLD, 24));
+            g.drawString("Appuyer sur espace pour rejouer",150,475);
+        }
+    }
 
 }
 

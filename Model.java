@@ -17,6 +17,7 @@ class Model {
 
     private Score score;
     private Snake j1;
+    private Snake j2;
 
     private String chemin = "img/snake/";
     Clip musicClip;
@@ -28,6 +29,7 @@ class Model {
     public Model(){
         score = new Score();
         j1 = new Snake(this);
+        j2 = new Snake(this);
 
     }
     public Fruit choisirFruit(){
@@ -305,7 +307,7 @@ class Model {
             }
         }
 
-        if (difficulte == "easy" && (mode == "multijoueurs")){
+        if (difficulte == "easy" && (mode == "duo")){
             if (randFruit<8) {
                 fruit = new Fruit("peche");
             }
@@ -350,7 +352,7 @@ class Model {
             }
         }
 
-        if (difficulte == "normal" && mode == "multijoueurs") {
+        if (difficulte == "normal" && mode == "duo") {
             if (randFruit < 6) {
                 fruit = new Fruit("peche");
             } else if (randFruit > 5 && randFruit < 14) {
@@ -382,7 +384,7 @@ class Model {
             }
         }
 
-        if (difficulte == "hard" && mode == "multijoueurs"){
+        if (difficulte == "hard" && mode == "duo"){
             if (randFruit<2) {
                 fruit = new Fruit("peche");
             }
@@ -473,4 +475,6 @@ class Model {
 
     public Clip getMusicClip() { return musicClip; }
     public void setMusicClip(Clip musicClip) { this.musicClip = musicClip; }
+
+    public Snake getJ2() { return j2; }
 }
