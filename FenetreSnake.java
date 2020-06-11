@@ -202,6 +202,7 @@ class Gameplay extends JPanel{
         }
 
         eatSnake(snake,g,model.getJ1());
+        if(model.getMode() == "labyrinthe") collectCoin(snake,g,model.getJ1());
 
         for( Wall w : model.getListeWall()){
             w.getWall().paintIcon(this,g,w.getX(),w.getY());
@@ -217,7 +218,7 @@ class Gameplay extends JPanel{
                 deadTraditionnel(g);
                 break;
             case "labyrinthe":
-                createLaby(g);
+                deadLaby(g);
                 break;
             case "chrono":
                 createChrono(g);
@@ -383,6 +384,32 @@ class Gameplay extends JPanel{
 
     }
 
+    public void collectCoin(int[][] snake,Graphics g, Snake s) {
+        java.util.List<Objet> toRemove=new ArrayList<Objet>();
+        // si le serpent mange le Objet
+        for(Objet obj : model.getListeObjetsLaby()){
+            if((obj.getX() == snake[0][0]) && (obj.getY() == snake[0][1])){
+                obj.effect(s,model);
+                toRemove.add(obj);
+
+                // Bruit objet
+                try {
+                    Sound.playSound("sound/coin.wav", model.getVolumeBruits());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (UnsupportedAudioFileException ex) {
+                    ex.printStackTrace();
+                } catch (LineUnavailableException ex) {
+                    ex.printStackTrace();
+                }
+                // fin bruit objet
+            }
+        }
+        model.getListeObjetsLaby().removeAll(toRemove);
+        toRemove.clear();
+        s.setSnake(snake);
+    }
+
     public void deadTraditionnel(Graphics g){
         if(model.getJ1().isDead()){
             g.setColor(blue);
@@ -396,6 +423,22 @@ class Gameplay extends JPanel{
             g.setFont(new Font("Monospaced", Font.BOLD, 24));
             g.drawString("Appuyer sur espace pour rejouer",150,450);
         }
+    }
+    public void deadLaby(Graphics g){
+        if(model.getJ1().isDead() && model.getJ1().isWinLaby()){
+            g.setColor(blue);
+            g.fillRect(120,225,500,250);
+            g.setColor(lightGreen);
+            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            g.drawString("Win! ",230,300);
+            g.drawString("Scores: "+model.getJ1().getScore(),230,350);
+            // Dessine la taile du serpent
+            g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
+            g.setFont(new Font("Monospaced", Font.BOLD, 24));
+            g.drawString("Appuyer sur espace pour rejouer",150,450);
+            model.getJ1().setWinLaby(false);
+        }
+        else if(model.getJ1().isDead()) deadTraditionnel(g);
     }
 
     public void deadDuo(Graphics g){

@@ -60,6 +60,7 @@ public class Objet {
                 break;
             case "key":
                 snake.setDead(true);
+                snake.setWinLaby(true);
                 break;
             case "coin":
                 snake.setScore(snake.getScore() + 50);

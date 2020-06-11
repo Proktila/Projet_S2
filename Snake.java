@@ -18,6 +18,7 @@ public class Snake {
     private boolean down = false;
 
     private boolean dead = false;
+    private boolean winLaby = false;
 
     private int delay = 100;
     private int taille = 3;
@@ -102,6 +103,10 @@ public class Snake {
     public boolean isDead() { return dead; }
 
     public void setDead(boolean dead) { this.dead = dead; }
+
+    public boolean isWinLaby() { return winLaby; }
+
+    public void setWinLaby(boolean winLaby) { this.winLaby = winLaby; }
 
     public int getDelay() { return delay; }
 

@@ -251,7 +251,7 @@ public class ControlSnake implements KeyListener, ActionListener {
     public void reset(Snake snake){
         deathSoundPlayed = false;
         snake.setDelay(100);
-        gameplay.initWall();
+        if(model.getMode() != "labyrinthe") gameplay.initWall();
         gameplay.setBegin(0);
         snake.setScore(0);
         snake.setTaille(3);
