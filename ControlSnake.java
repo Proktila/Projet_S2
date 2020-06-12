@@ -192,6 +192,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.setJ1(s);
             model.getListeWall().clear();
             model.getListeFruit().clear();
+            model.getListeObjetsLaby().clear();
         }
 
         // bruit mort

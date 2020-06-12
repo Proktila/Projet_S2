@@ -146,10 +146,9 @@ class Gameplay extends JPanel{
         for (int x = 0; x<grid.length; x++) {
             for (int y = 0; y<grid.length; y++) {
                 String cell = grid[y][x];
-                // System.out.println(cell + " [X:" + x + " Y:" + y +"]");
                 if (cell.equals("X")) model.getListeWall().add(new Wall(model, x*20, y*20)); // ajout mur
-                if (cell.equals("K")) model.getListeObjetsLaby().add(new Objet("key", x*20, y*20));  // ajout key objet
-                if (cell.equals("C")) model.getListeObjetsLaby().add(new Objet("coin", x*20, y*20));  // ajout coin objet
+                if (cell.equals("K")) model.getListeObjetsLaby().add(new Objet("key", x*20, y*20));  // ajout cle
+                if (cell.equals("C")) model.getListeObjetsLaby().add(new Objet("coin", x*20, y*20));  // ajout piece
             }
         }
     }
@@ -201,9 +200,11 @@ class Gameplay extends JPanel{
             createDuo(g);
         }
 
+        // collisions avec un fruit ou un objet du labyrinthe
         eatSnake(snake,g,model.getJ1());
         if(model.getMode() == "labyrinthe") collectCoin(snake,g,model.getJ1());
 
+        // affichage des murs et objets du labyrinthe
         for( Wall w : model.getListeWall()){
             w.getWall().paintIcon(this,g,w.getX(),w.getY());
         }
