@@ -312,7 +312,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         }
         if(s.isDown() && !s.isDead() && !gameplay.isPause()){
             for (int i = s.getTaille()-1; i >=0;i--){
-                if (snake[0][1] >= 660) {
+                if (snake[0][1] >= 700) {
                     s.setDead(true);
                     break;
                 }

@@ -12,7 +12,7 @@ public class FenetreSnake extends JFrame {
 
     public FenetreSnake(FenetreMenu fenetreMenu,Model model) {
         gameplay = new Gameplay(this,fenetreMenu,model);
-        setSize(1280, 750);
+        setSize(1280, 759);
         setLocation(100,0);
         setResizable(false);
         setVisible(true);
