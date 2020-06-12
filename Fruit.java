@@ -4,6 +4,8 @@ import java.awt.image.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.lang.Math;
+import java.util.TimerTask;
+import java.util.Timer;
 
 
 public class Fruit {
@@ -16,12 +18,17 @@ public class Fruit {
 	private int posX;
 	private int posY;
 	private boolean bonus;
+	private Timer timer;
+	private int time;
+	private Model model;
 	
 	public Fruit(){}
 
-	public Fruit(String type){
+	public Fruit(String type,Model model){
+		this.model = model;
 		this.typeFruit = type;
 		this.setFruit();
+		this.setTimer();
 	}
 
 	public void setFruit(){
@@ -333,4 +340,28 @@ public class Fruit {
 	public String getEffet() {
 		return effet;
 	}
+
+	public void setTimer(){
+		this.timer = new Timer();
+		this.time = 10;
+		Fruit f = this;
+
+		timer.schedule(new TimerTask() {
+			public void run(){
+				if(time == 0){
+					model.getListeFruit().remove(f);
+					System.out.println(model.getListeFruit());
+					Fruit newFruit;
+					newFruit = model.choisirFruit();
+					newFruit.validFruit(model.getJ1(),model);
+					model.getToAdd().add(newFruit);
+					cancel();
+				}
+				time--;
+			}
+		}, 1000, 1000);
+
+	}
+
+
 }
