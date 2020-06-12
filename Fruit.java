@@ -253,6 +253,11 @@ public class Fruit {
 				}
 				break;
 			case "piment":
+				if(model.getJ1().getSnake()[0][0] == this.posX && model.getJ1().getSnake()[0][1] == this.posY ){
+					model.getJ1().setDead(true);
+				}else if(model.getJ2().getSnake()[0][0] == this.posX && model.getJ2().getSnake()[0][1] == this.posY){
+					model.getJ2().setDead(true);
+				}
 				break;
 			case "radis":
 				snake.setScore(snake.getScore()-50);
@@ -350,11 +355,12 @@ public class Fruit {
 			public void run(){
 				if(time == 0){
 					model.getListeFruit().remove(f);
-					System.out.println(model.getListeFruit());
-					Fruit newFruit;
-					newFruit = model.choisirFruit();
-					newFruit.validFruit(model.getJ1(),model);
-					model.getToAdd().add(newFruit);
+					if(model.getListeFruit().size() == 0 ){
+						Fruit newFruit;
+						newFruit = model.choisirFruit();
+						newFruit.validFruit(model.getJ1(),model);
+						model.getToAdd().add(newFruit);
+					}
 					cancel();
 				}
 				time--;
