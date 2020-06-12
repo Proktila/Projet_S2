@@ -432,6 +432,7 @@ class Gameplay extends JPanel{
             g.drawString("Appuyer sur espace pour rejouer",150,450);
         }
     }
+
     public void deadLaby(Graphics g){
         if(model.getJ1().isDead() && model.getJ1().isWinLaby()){
             g.setColor(blue);
