@@ -19,6 +19,7 @@ public class Snake {
 
     private boolean dead = false;
     private boolean winLaby = false;
+    private boolean paralysed = false;
 
     private int delay = 100;
     private int taille = 3;
@@ -140,4 +141,8 @@ public class Snake {
         this.skin = skin;
         this.skins(this.skin);
     }
+
+    public boolean isParalysed() { return paralysed; }
+
+    public void setParalysed(boolean paralysed) { this.paralysed = paralysed; }
 }

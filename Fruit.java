@@ -4,6 +4,8 @@ import java.awt.image.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.lang.Math;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimerTask;
 import java.util.Timer;
 
@@ -21,6 +23,9 @@ public class Fruit {
 	private Timer timer;
 	private int time;
 	private Model model;
+	private Timer timerEffect;
+	private int timeEffect;
+	private List<Wall> listeWallTampon = new ArrayList<Wall>();
 	
 	public Fruit(){}
 
@@ -201,6 +206,19 @@ public class Fruit {
 			default:
 				break;
 			case "peche":
+				this.listeWallTampon.addAll(model.getListeWall());
+				model.getListeWall().clear();
+				this.timerEffect = new Timer();
+				this.timeEffect = 5;
+				timerEffect.schedule(new TimerTask() {
+					public void run(){
+						if(timeEffect == 0){
+							model.getListeWall().addAll(listeWallTampon);
+							cancel();
+						}
+						timeEffect--;
+					}
+				}, 1000, 1000);
 				break;
 			case "pomme":
 				snake.setTaille(snake.getTaille()+1);
@@ -212,7 +230,19 @@ public class Fruit {
 				snake.setScore(snake.getScore()+50);
 				break;
 			case "mure":
-				snake.setDelay(snake.getDelay()+25);
+				snake.setDelay(snake.getDelay()+75);
+				this.timerEffect = new Timer();
+				this.timeEffect = 5;
+
+				timerEffect.schedule(new TimerTask() {
+					public void run(){
+						if(timeEffect == 0){
+							snake.setDelay(snake.getDelay()-75);
+							cancel();
+						}
+						timeEffect--;
+					}
+				}, 1000, 1000);
 				break;
 			case "framboise":
 				if(model.getListeWall().size() != 0){
@@ -232,9 +262,43 @@ public class Fruit {
 			case "ananas":
 				break;
 			case "cerise":
+				if(snake == model.getJ1()){
+					model.getJ2().setParalysed(true);
+				}else{
+					model.getJ1().setParalysed(true);
+				}
+
+				this.timerEffect = new Timer();
+				this.timeEffect = 5;
+
+				timerEffect.schedule(new TimerTask() {
+					public void run(){
+						if(timeEffect == 0){
+							if(snake == model.getJ1()){
+								model.getJ2().setParalysed(false);
+							}else{
+								model.getJ1().setParalysed(false);
+							}
+							cancel();
+						}
+						timeEffect--;
+					}
+				}, 1000, 1000);
 				break;
 			case "asperge" :
-				snake.setDelay(snake.getDelay()-25);
+				snake.setDelay(snake.getDelay()-50);
+				this.timerEffect = new Timer();
+				this.timeEffect = 5;
+
+				timerEffect.schedule(new TimerTask() {
+					public void run(){
+						if(timeEffect == 0){
+							snake.setDelay(snake.getDelay()+50);
+							cancel();
+						}
+						timeEffect--;
+					}
+				}, 1000, 1000);
 				break;
 			case "chou-fleur":
 				snake.setTaille(snake.getTaille()-2);
@@ -348,7 +412,7 @@ public class Fruit {
 
 	public void setTimer(){
 		this.timer = new Timer();
-		this.time = 10;
+		this.time = 5;
 		Fruit f = this;
 
 		timer.schedule(new TimerTask() {

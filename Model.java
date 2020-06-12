@@ -331,7 +331,7 @@ class Model {
                 fruit = new Fruit("framboise",this);
             }
             else if (randFruit>63 && randFruit<70) {
-                fruit = new Fruit("ananas",this);
+                fruit = new Fruit("cerise",this);
             }
             else if (randFruit>69 && randFruit<75) {
                 fruit = new Fruit("chou-fleur",this);

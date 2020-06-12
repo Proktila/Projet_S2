@@ -274,7 +274,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         int[][] snake = s.getSnake();
 
         // si on va a droite
-        if(s.isRight() && !s.isDead() && !gameplay.isPause()){
+        if(s.isRight() && !s.isDead() && !gameplay.isPause() && !s.isParalysed() ){
             for (int i = s.getTaille()-1; i >=0;i--){
                 if (snake[0][0] >= 700) {
                     s.setDead(true);
@@ -295,7 +295,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             // rappelle la méthode paint()
             gameplay.repaint();
         }
-        if(s.isLeft() && !s.isDead() && !gameplay.isPause()){
+        if(s.isLeft() && !s.isDead() && !gameplay.isPause() && !s.isParalysed()){
             for (int i = s.getTaille()-1; i >=0;i--){
                 if (snake[0][0] <= 0) {
                     s.setDead(true);
@@ -313,7 +313,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             // rappelle la méthode paint()
             gameplay.repaint();
         }
-        if(s.isDown() && !s.isDead() && !gameplay.isPause()){
+        if(s.isDown() && !s.isDead() && !gameplay.isPause() && !s.isParalysed()){
             for (int i = s.getTaille()-1; i >=0;i--){
                 if (snake[0][1] >= 700) {
                     s.setDead(true);
@@ -331,7 +331,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             // rappelle la méthode paint()
             gameplay.repaint();
         }
-        if(s.isUp() && !s.isDead() && !gameplay.isPause()){
+        if(s.isUp() && !s.isDead() && !gameplay.isPause() && !s.isParalysed()){
             for (int i = s.getTaille()-1; i >=0;i--){
                 if (snake[0][1] <= 0) {
                     s.setDead(true);
