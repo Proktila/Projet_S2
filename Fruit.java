@@ -310,6 +310,11 @@ public class Fruit {
 				return true;
 			}
 		}
+		for(Objet obj : model.getListeObjetsLaby()){
+			if((x == obj.getX()) && (y == obj.getY())){
+				return true;
+			}
+		}
 		return false;
 	}
 
