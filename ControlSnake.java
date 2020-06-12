@@ -252,7 +252,7 @@ public class ControlSnake implements KeyListener, ActionListener {
     public void reset(Snake snake){
         deathSoundPlayed = false;
         snake.setDelay(100);
-        if(model.getMode() == "labyrinthe") gameplay.createLaby(MapTools.readGrid(MapTools.getRandomMap(model.getDifficulty())));
+        if(model.getMode() == "labyrinthe") gameplay.createLaby(gameplay.getGrid());
         else gameplay.initWall();
         gameplay.setBegin(0);
         snake.setScore(0);
@@ -264,6 +264,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         snake.setDown(false);
         gameplay.repaint();
         gameplay.revalidate();
+        gameplay.initSnake();
     }
 
     public void avance(Snake s){

@@ -68,6 +68,7 @@ class Gameplay extends JPanel{
     private Fruit firstFruit = new Fruit();
 
     private String chemin = "img/snake/";
+    private String[][] grid;
 
     public Gameplay(JFrame fen,FenetreMenu fenetreMenu,Model model) {
         this.model= model;
@@ -114,8 +115,14 @@ class Gameplay extends JPanel{
         if(model.getMode() != "labyrinthe"){
             initWall();
         }else{
-            createLaby(MapTools.readGrid(MapTools.getRandomMap(model.getDifficulty())));
+            grid = MapTools.readGrid(MapTools.getRandomMap(model.getDifficulty()));
+            createLaby(grid);
         }
+        initSnake();
+        initFruit();
+    }
+
+    public void initSnake() {
         if(begin == 0){
             // positionne le snake au commencement
             int[][] snake = model.getJ1().getSnake();
@@ -126,9 +133,7 @@ class Gameplay extends JPanel{
             snake[2][1]=20;
             snake[1][1]=20;
             snake[0][1]=20;
-
         }
-        initFruit();
     }
 
     public void initWall() {
@@ -513,5 +518,6 @@ class Gameplay extends JPanel{
 
     }
     public SnakeButton getHomeBut() { return homeBut; }
+    public String[][] getGrid() { return grid; }
 }
 
