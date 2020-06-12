@@ -48,7 +48,7 @@ public class Fruit {
 		else if (typeFruit == "pasteque") {
 			try {
             	bImgFruit = ImageIO.read(new File("img/fruits/pasteque.png"));
-            	effet = "+3fruits";
+            	effet = "3 fruits bonus";
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
