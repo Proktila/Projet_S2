@@ -148,7 +148,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         }
         if(e.getKeyCode() == KeyEvent.VK_SPACE && (model.getJ1().isDead() || (model.getMode() == "duo" && model.getJ2().isDead()))) {
 
-            model.getScore().setActualScore(model.getJ2().getScore());
+            model.getScore().setActualScore(model.getJ1().getScore());
             String[][] tScore = gameplay.getFenetreMenu().getData();
             if(model.getMode() != "duo") {
                 try {

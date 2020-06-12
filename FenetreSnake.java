@@ -142,7 +142,7 @@ class Gameplay extends JPanel{
      * remplie les listes listeWall et listeObjetsLaby du model a partir de grid
      * @param grid tableau 36*36 content les objets du labyrinthe
      */
-    private void createLaby(String[][] grid) {
+    public void createLaby(String[][] grid) {
         for (int x = 0; x<grid.length; x++) {
             for (int y = 0; y<grid.length; y++) {
                 String cell = grid[y][x];
