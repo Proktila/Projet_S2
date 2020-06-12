@@ -12,7 +12,7 @@ public class FenetreSnake extends JFrame {
 
     public FenetreSnake(FenetreMenu fenetreMenu,Model model) {
         gameplay = new Gameplay(this,fenetreMenu,model);
-        setSize(1280, 720);
+        setSize(1280, 750);
         setLocation(100,0);
         setResizable(false);
         setVisible(true);
@@ -111,12 +111,24 @@ class Gameplay extends JPanel{
         panelButtonGameplay.setFocusTraversalKeysEnabled(false);
         fen.setContentPane(panelButtonGameplay);
 
-        initFruit();
         if(model.getMode() != "labyrinthe"){
             initWall();
         }else{
             createLaby(MapTools.readGrid(MapTools.getRandomMap(model.getDifficulty())));
         }
+        if(begin == 0){
+            // positionne le snake au commencement
+            int[][] snake = model.getJ1().getSnake();
+            snake[2][0]=0;
+            snake[1][0]=20;
+            snake[0][0]=40;
+
+            snake[2][1]=20;
+            snake[1][1]=20;
+            snake[0][1]=20;
+
+        }
+        initFruit();
     }
 
     public void initWall() {
@@ -170,17 +182,7 @@ class Gameplay extends JPanel{
     protected void paintComponent(Graphics g){
         int[][] snake = model.getJ1().getSnake();
         super.paintComponent(g);
-        if(begin == 0){
-            // positionne le snake au commencement
-            snake[2][0]=0;
-            snake[1][0]=20;
-            snake[0][0]=40;
 
-            snake[2][1]=20;
-            snake[1][1]=20;
-            snake[0][1]=20;
-
-        }
         // Dessine les deux bandes bleu sur les côtés
         g.setColor(blue);
         g.fillRect(720,0,280,720);
