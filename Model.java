@@ -15,12 +15,15 @@ class Model {
     private int volumeMusique = VOL_INIT;
     private int volumeBruits = VOL_INIT;
 
+    private int multiplicateur;
     private Score score;
     private Snake j1;
     private Snake j2;
 
     private String chemin = "img/snake/";
     Clip musicClip;
+
+    private Chrono chrono;
 
     private List<Wall> listeWall=new ArrayList<Wall>();
     private List<Objet> listeObjetsLaby=new ArrayList<Objet>();
@@ -38,7 +41,7 @@ class Model {
         String mode = this.mode;
         Fruit fruit = new Fruit();
         int randFruit = (int)(Math.random()*((100)));
-        if (difficulte == "easy" && mode == "traditionnel"){
+        if (difficulte == "easy" && (mode == "traditionnel" || mode == "labyrinthe")){
             if (randFruit<10) {
                 fruit = new Fruit("peche",this);
             }
@@ -80,7 +83,7 @@ class Model {
             }
         }
 
-        if (difficulte == "normal" && mode == "traditionnel"){
+        if (difficulte == "normal" && (mode == "traditionnel" || mode == "labyrinthe")){
             if (randFruit<6) {
                 fruit = new Fruit("peche",this);
             }
@@ -122,7 +125,7 @@ class Model {
             }
         }
 
-        if (difficulte == "hard" && mode == "traditionnel"){
+        if (difficulte == "hard" && (mode == "traditionnel" || mode == "labyrinthe")){
             if (randFruit<4) {
                 fruit = new Fruit("peche",this);
             }
@@ -164,7 +167,7 @@ class Model {
             }
         }
 
-        if (difficulte == "easy" && (mode == "chrono" || mode == "labyrinthe")){
+        if (difficulte == "easy" && mode == "chrono"){
             if (randFruit<8) {
                 fruit = new Fruit("peche",this);
             }
@@ -212,7 +215,7 @@ class Model {
             }
         }
 
-        if (difficulte == "normal" && (mode == "chrono" || mode == "labyrinthe")){
+        if (difficulte == "normal" && mode == "chrono"){
             if (randFruit<4) {
                 fruit = new Fruit("peche",this);
             }
@@ -260,7 +263,7 @@ class Model {
             }
         }
 
-        if (difficulte == "hard" && (mode == "chrono" || mode == "labyrinthe")){
+        if (difficulte == "hard" && mode == "chrono"){
             if (randFruit<4) {
                 fruit = new Fruit("peche",this);
             }
@@ -480,4 +483,26 @@ class Model {
     public void setMusicClip(Clip musicClip) { this.musicClip = musicClip; }
 
     public Snake getJ2() { return j2; }
+
+    public void setChrono(Chrono chrono) { this.chrono = chrono; }
+
+    public Chrono getChrono() { return chrono; }
+
+    public void setChronoDifficulty(){
+        switch(difficulty){
+            case "easy":
+                setChrono(new Chrono(90));
+                break;
+            case "normal":
+                setChrono(new Chrono(60));
+                break;
+            case "hard":
+                setChrono(new Chrono(30));
+                break;
+        }
+    }
+
+    public int getMultiplicateur() { return multiplicateur; }
+
+    public void setMultiplicateur(int multiplicateur) { this.multiplicateur = multiplicateur; }
 }

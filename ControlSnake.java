@@ -14,6 +14,7 @@ public class ControlSnake implements KeyListener, ActionListener {
     Gameplay gameplay;
     Model model;
     boolean deathSoundPlayed;
+    private int first = 0;
 
     Timer timer;
 
@@ -36,6 +37,15 @@ public class ControlSnake implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
+        if(first == 0){
+            model.setChronoDifficulty();
+            first = 1;
+        }
+        if(model.getChrono().getTime() <= 0){
+            model.getJ1().setDead(true);
+            gameplay.repaint();
+        }
         // j1
         if(e.getKeyCode() == KeyEvent.VK_D){
             // des qu'on bouge begin augmentera et ne repositionnera plus le serpent
@@ -147,6 +157,8 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.getJ2().setLeft(false);
         }
         if(e.getKeyCode() == KeyEvent.VK_SPACE && (model.getJ1().isDead() || (model.getMode() == "duo" && model.getJ2().isDead()))) {
+
+            first = 0;
 
             model.getScore().setActualScore(model.getJ1().getScore());
             String[][] tScore = gameplay.getFenetreMenu().getData();

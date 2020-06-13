@@ -202,6 +202,7 @@ public class Fruit {
 	}
 
 	public void effect(Snake snake,Model model){
+		int delay = snake.getDelay();
 		switch(typeFruit){
 			default:
 				break;
@@ -230,14 +231,14 @@ public class Fruit {
 				snake.setScore(snake.getScore()+50);
 				break;
 			case "mure":
-				snake.setDelay(snake.getDelay()+75);
+				snake.setDelay(delay+50);
 				this.timerEffect = new Timer();
 				this.timeEffect = 5;
 
 				timerEffect.schedule(new TimerTask() {
 					public void run(){
 						if(timeEffect == 0){
-							snake.setDelay(snake.getDelay()-75);
+							snake.setDelay(delay-50);
 							cancel();
 						}
 						timeEffect--;
@@ -260,6 +261,7 @@ public class Fruit {
 				}
 				break;
 			case "ananas":
+					model.getChrono().setTime(model.getChrono().getTime()+15);
 				break;
 			case "cerise":
 				if(snake == model.getJ1()){
@@ -286,14 +288,14 @@ public class Fruit {
 				}, 1000, 1000);
 				break;
 			case "asperge" :
-				snake.setDelay(snake.getDelay()-50);
+				snake.setDelay(delay-50);
 				this.timerEffect = new Timer();
 				this.timeEffect = 5;
 
 				timerEffect.schedule(new TimerTask() {
 					public void run(){
 						if(timeEffect == 0){
-							snake.setDelay(snake.getDelay()+50);
+							snake.setDelay(delay+50);
 							cancel();
 						}
 						timeEffect--;
@@ -327,6 +329,7 @@ public class Fruit {
 				snake.setScore(snake.getScore()-50);
 				break;
 			case "aubergine":
+				model.getChrono().setTime(model.getChrono().getTime()-15);
 				break;
 		}
 	}

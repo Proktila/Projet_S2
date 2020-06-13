@@ -122,18 +122,21 @@ public class ControlBouton implements ActionListener, ChangeListener {
             fenMenu.getPanPlay().setVisible(false);
             fenMenu.addDifficulty();
             model.setDifficulty("easy");
+            model.setMultiplicateur(1);
             model.getScore().setActualDifficulty(fenMenu.getButEasy().getText());
         }
         if(a.getSource().equals(fenMenu.getButNormal())){
             fenMenu.getPanPlay().setVisible(false);
             fenMenu.addDifficulty();
             model.setDifficulty("normal");
+            model.setMultiplicateur(2);
             model.getScore().setActualDifficulty(fenMenu.getButNormal().getText());
         }
         if(a.getSource().equals(fenMenu.getButHard())){
             fenMenu.getPanPlay().setVisible(false);
             fenMenu.addDifficulty();
             model.setDifficulty("hard");
+            model.setMultiplicateur(3);
             model.getScore().setActualMode(fenMenu.getButTrad().getText());
             model.getScore().setActualDifficulty(fenMenu.getButHard().getText());
         }

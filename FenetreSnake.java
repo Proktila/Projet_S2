@@ -67,7 +67,6 @@ class Gameplay extends JPanel{
 
     private Fruit firstFruit = new Fruit();
 
-    private String chemin = "img/snake/";
     private String[][] grid;
 
     public Gameplay(JFrame fen,FenetreMenu fenetreMenu,Model model) {
@@ -120,7 +119,11 @@ class Gameplay extends JPanel{
         }
         initSnake();
         initFruit();
+        if (model.getMode() == "chrono"){
+            model.setChronoDifficulty();
+        }
     }
+
 
     public void initSnake() {
         if(begin == 0){
@@ -229,7 +232,7 @@ class Gameplay extends JPanel{
                 deadLaby(g);
                 break;
             case "chrono":
-                createChrono(g);
+                deadChrono(g);
                 break;
             case "duo":
                 deadDuo(g);
@@ -249,15 +252,6 @@ class Gameplay extends JPanel{
         g.dispose();
     }
 
-    private void createTraditionnel(Graphics g){
-        // jeu de base rien à coder en plus
-    }
-    private void createLaby(Graphics g){
-        // a coder
-    }
-    private void createChrono(Graphics g){
-        // a coder
-    }
     private void createDuo(Graphics g){
         int[][] snake = model.getJ2().getSnake();
         if(begin == 0){
@@ -355,7 +349,7 @@ class Gameplay extends JPanel{
         // si le serpent mange le fruit
         for(Fruit f : model.getListeFruit()){
             if((f.getPosX() == snake[0][0]) && (f.getPosY() == snake[0][1])){
-                s.setScore( s.getScore()+10);
+                s.setScore( s.getScore() + (10 * model.getMultiplicateur()));
                 s.setTaille(s.getTaille()+ 1);
                 // augmente la vitesse
                 f.effect(s,model);
@@ -425,6 +419,21 @@ class Gameplay extends JPanel{
             g.setColor(lightGreen);
             g.setFont(new Font("Monospaced", Font.BOLD, 50));
             g.drawString("GAME OVER ",230,300);
+            g.drawString("Scores: "+model.getJ1().getScore(),230,350);
+            // Dessine la taile du serpent
+            g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
+            g.setFont(new Font("Monospaced", Font.BOLD, 24));
+            g.drawString("Appuyer sur espace pour rejouer",150,450);
+        }
+    }
+
+    public void deadChrono(Graphics g){
+        if(model.getJ1().isDead()){
+            g.setColor(blue);
+            g.fillRect(120,225,500,250);
+            g.setColor(lightGreen);
+            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            g.drawString("TIME OVER",230,300);
             g.drawString("Scores: "+model.getJ1().getScore(),230,350);
             // Dessine la taile du serpent
             g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
@@ -513,6 +522,9 @@ class Gameplay extends JPanel{
         // Dessine le score
         g.setColor(lightGreen);
         g.setFont(new Font("Monospaced", Font.BOLD, 18));
+        if(model.getMode() == "chrono"){
+            g.drawString("Temps " + model.getChrono().getTime(), 740, 40);
+        }
         g.drawString("Score: " + model.getJ1().getScore(), 740, 60);
         // Dessine la taille du serpent
         g.drawString("Taille: " + model.getJ1().getTaille(), 740, 80);
@@ -520,5 +532,7 @@ class Gameplay extends JPanel{
     }
     public SnakeButton getHomeBut() { return homeBut; }
     public String[][] getGrid() { return grid; }
+
+
 }
 
