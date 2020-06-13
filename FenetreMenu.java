@@ -1,65 +1,37 @@
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-// Pour les composants graphiques que l'on
-// ajoutera dans la méthode creerWidget
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.table.*;
 import java.awt.*;
-// Pour la JFrame
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 class FenetreMenu extends JFrame {
+    private final Color GREEN = new Color(50,99,23);
+    private final Color LIGHT_GREEN = new Color(99, 205, 42);
+    private final Color BLUE = new Color(47, 81, 103);
+    private final Font TITLE_FONT = new Font("Monospaced", Font.BOLD, 50);
+    private final Font BTN_FONT = new Font("Monospaced", Font.BOLD, 18);
 
-
-    /**DEBUT COMMUN POUR TOUS**/
-    //TEST
-    private final Color BG_COLOR = new Color(50,99,23);
-    private final Color FG_COLOR = new Color(99, 205, 42);
-    private final Font TEXT_FONT = new Font("Monospaced", Font.BOLD, 50);
     private final Model model;
 
-    //COLOR
-    private Color blue = new Color(47, 81, 103);
-    private Color green = new Color(50,99,23);
-    private Color lightGreen = new Color(99, 205, 42);
-    //FIN COLOR
-
-    //FONT
-    private Font fTitre= new Font("Monospaced", Font.BOLD, 50);
-    private Font fBtn= new Font("Monospaced", Font.BOLD, 18);
-    //FIN FONT
-    /**FIN COMMUN POUR TOUS**/
-
-
-    /**DEBUT MENU PRINCIPAL**/
+    // menu principal
     private JLabel lMenuPrincipal;
-
-    //j'ai remplacer mybuttonproj par JButton pour l'instant
     private SnakeButton boutonJouer;
     private SnakeButton boutonSkins;
-    private SnakeButton  boutonScores;
-    private SnakeButton  boutonParametres;
-    private SnakeButton  boutonCredits;
+    private SnakeButton boutonScores;
+    private SnakeButton boutonParametres;
+    private SnakeButton boutonCredits;
 
     ImageIcon imageGauche;
     ImageIcon imageDroite;
 
     private JLabel lserpentGauche;
     private JLabel lserpentDroite;
-    /**FIN MENU PRICIPAL**/
 
-
-    /**DEBUT MENU SKIN**/
+    // menu skin
     JPanel titreP;
     Container con;
 
-    //SKIN
     JLabel lSkin;
     private SnakeButton skinSerpent;
     private SnakeButton skinMap;
@@ -68,25 +40,20 @@ class FenetreMenu extends JFrame {
     private SnakeButton backFromSkinChild;
     private JPanel skinButtonPanel;
 
-
-    // SKIN SERPENT
     private JPanel skinSerpentButtonPanel;
     private JComboBox cbSerpent;
     private Object[] listeSerpent = new Object[]{"basique", "nyan", "Element 3", "Element 4", "Element 5"};
 
-    // SKIN MAP
     private JPanel skinMapButtonPanel;
     private JComboBox cbMap;
     private Object[] listeMap = new Object[]{"Rouge", "Bleu", "Element 3", "Element 4", "Element 5"};
 
-    // SKIN PSEUDO
     private JPanel skinPseudoButtonPanel;
     private JTextField tfPseudo;
     private JLabel lPseudo;
-    /**FIN MENU SKIN**/
 
 
-    /**DEBUT MENU PARAMETRES**/
+    // menu parametre
     private JLabel lParam;
     JPanel panTitleParam;
     JLabel lImgTitreDroite;
@@ -95,14 +62,9 @@ class FenetreMenu extends JFrame {
     private JSlider slVolumeBruits;
     private JRadioButton rbFrench;
     private JRadioButton rbEnglish;
-    /**FIN MENU JOUER**/
-
     protected SnakeButton backParam;
-    /**FIN MENU PARAMETRES**/
 
-
-    /**DEBUT MENU SCORE**/
-    private String[][] data;
+    // score
     private String[] title;
     private JTable tableau;
 
@@ -128,9 +90,8 @@ class FenetreMenu extends JFrame {
 
     private SnakeButton bRetour;
     private JButton bClear;
-    /**FIN MENU SCORE**/
 
-    /**MENU JOUER**/
+    // joueur
     private SnakeButton backPlay;
     private SnakeButton butEasy;
     private SnakeButton butNormal;
@@ -141,18 +102,17 @@ class FenetreMenu extends JFrame {
     private SnakeButton butDuo;
     private SnakeButton backDifficulty;
     private JLabel lPlay;
+    private String[][] data;
 
     private JPanel panPlay;
     private JPanel panDifficulty;
-    /** Credits **/
+
+    // Credits
     private SnakeButton backCredits;
     private JPanel panelCredits;
     private JLabel lCredits;
-    /** Credits **/
 
-    /**CONSTRUCTEUR de fenetre**/
     public FenetreMenu(Model model) {
-
         con = getContentPane();
 
         this.model = model;
@@ -162,26 +122,23 @@ class FenetreMenu extends JFrame {
         this.setIconImage(icone);
 
         this.initAttribut();
+        this.addMainMenu();
 
-        this.creerWidgetMenuPrincipal();
-
-        this.getContentPane().setBackground(green);
-        //this.setLocation(100, 0);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // gestion de la fermeture
+        this.setTitle("Sn'hack");
+        this.getContentPane().setBackground(GREEN);
         this.setLocation(100,0);
-        this.setTitle("Snake");
         this.setSize(1280, 720);
         this.setResizable(false);
 
         this.setVisible(true); // affiche fenetre
 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    /**DEBUT methodes pour tous les menus**/
-
-    /**methode à commenter**/
-    /**@param **/
+    /**
+     * Initialise tout les objets de chaque menu
+     * Lancement de la musique du jeu
+     */
     public void initAttribut() {
         initMenuPrincipal();
         initSkin();
@@ -190,24 +147,22 @@ class FenetreMenu extends JFrame {
         initCredits();
         initJouer();
 
-        // music
         try {
             model.setMusicClip(Sound.playMusic("sound/music.wav", model.getVolumeMusique()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+            creerDialogErr(e.getMessage());
         }
-        // fin music
 
         backCredits = new SnakeButton(model.textFromLang("retour", "back"));
     }
+
+    /**
+     * Initialisation des objets du menu principal
+     */
     public void initMenuPrincipal(){
         lMenuPrincipal = new JLabel(model.textFromLang("Menu principal", "Main menu"));
         setupTitle(lMenuPrincipal);
-        creerTitre(lMenuPrincipal,null,null);
+        createTitle(lMenuPrincipal,null,null);
 
         imageGauche = new ImageIcon("img/menuPrinc/serpent1.png");
         imageDroite = new ImageIcon("img/menuPrinc/serpent2.png");
@@ -223,8 +178,10 @@ class FenetreMenu extends JFrame {
         boutonCredits = new SnakeButton("Credits");
     }
 
+    /**
+     * Initialisation des objets du menu jouer
+     */
     public void initJouer() {
-
         butEasy = new SnakeButton(model.textFromLang("Facile", "Easy"));
         butNormal = new SnakeButton("Normal");
         butHard = new SnakeButton(model.textFromLang("Difficile", "Hard"));
@@ -236,13 +193,21 @@ class FenetreMenu extends JFrame {
         backDifficulty = new SnakeButton(model.textFromLang("Retour", "Back"));
         lPlay = new JLabel(model.textFromLang("Jouer", "Play"));
         setupTitle(lPlay);
-        creerTitre(lPlay,null,null);
+        createTitle(lPlay,null,null);
     }
+
+    /**
+     * Initialisation des objets du menu credits
+     */
     public void initCredits(){
         lCredits = new JLabel("Credits");
         setupTitle(lCredits);
-        creerTitre(lCredits,null,null);
+        createTitle(lCredits,null,null);
     }
+
+    /**
+     * Initialisation des objets du menu score
+     */
     public void initScore(){
         //JLabel titre
         lscore = new JLabel(model.textFromLang("Tableau des scores", "Scoreboard"));
@@ -276,8 +241,8 @@ class FenetreMenu extends JFrame {
         tableau.setDefaultRenderer(Object.class, render);
 
         // styles des titres des colonnes du tableau
-        tableau.getTableHeader().setBackground(lightGreen);
-        tableau.getTableHeader().setForeground(blue);
+        tableau.getTableHeader().setBackground(LIGHT_GREEN);
+        tableau.getTableHeader().setForeground(BLUE);
         tableau.getTableHeader().setFont(new Font("Monospaced", Font.BOLD, 30));
 
         // espacement entre les celulles du tableau
@@ -313,6 +278,9 @@ class FenetreMenu extends JFrame {
         lMedaille3Gauche =  new JLabel(imgMedaille3);
     }
 
+    /**
+     * Initialisation des objets du menu apparence
+     */
     public void initSkin(){
         lSkin = new JLabel(model.textFromLang("Apparence", "Skin"));
         setupTitle(lSkin);
@@ -339,9 +307,9 @@ class FenetreMenu extends JFrame {
 
         // SKIN PSEUDO
         tfPseudo = new JTextField(25);
-        tfPseudo.setFont(fBtn);
-        tfPseudo.setForeground(lightGreen);
-        tfPseudo.setBackground(blue);
+        tfPseudo.setFont(BTN_FONT);
+        tfPseudo.setForeground(LIGHT_GREEN);
+        tfPseudo.setBackground(BLUE);
         tfPseudo.setText("Pseudo");
         tfPseudo.setPreferredSize(new Dimension(300,91));
 
@@ -349,6 +317,9 @@ class FenetreMenu extends JFrame {
         lPseudo.add(tfPseudo);
     }
 
+    /**
+     * Initialisation des objets du menu parametre
+     */
     public void initParametre(){
         slVolumeMusique = new JSlider(JSlider.HORIZONTAL,model.getVOL_MIN(), model.getVOL_MAX(), model.getVOL_INIT());
         slVolumeBruits = new JSlider(JSlider.HORIZONTAL, model.getVOL_MIN(), model.getVOL_MAX(), model.getVOL_INIT());
@@ -370,7 +341,7 @@ class FenetreMenu extends JFrame {
 
         lParam = new JLabel(model.textFromLang("Parametres", "Settings"));
         setupTitle(lParam);
-        creerTitre(lParam, lImgTitreDroite, lImgTitreGauche);
+        createTitle(lParam, lImgTitreDroite, lImgTitreGauche);
 
         rbFrench = new JRadioButton(new ImageIcon("img/langFR.png"), true);
         rbEnglish = new JRadioButton(new ImageIcon("img/langEN.png"), false);
@@ -381,30 +352,11 @@ class FenetreMenu extends JFrame {
         backParam = new SnakeButton(model.textFromLang("Retour", "Back"));
     }
 
-
-    /**Créer la banderole au dessus du menu**/
-    /**@param **/
-    public void creerTitre(JLabel titre,  JLabel img, JLabel img2) {
-        titreP = new JPanel();
-        titreP.setLayout(new GridBagLayout());
-        titreP.setBounds(0,25,1280,125);
-        titreP.setBackground(blue);
-        if(img != null){
-            titreP.add(img);
-            titreP.add(Box.createHorizontalStrut(50));
-        }
-        titreP.add(titre);
-        if(img2 != null){
-            titreP.add(Box.createHorizontalStrut(50));
-            titreP.add(img2);
-        }
-        con.add(titreP);
-    }
-    /**FIN methodes pour tous les menus**/
-
-    /**DEBUT Methodes menu principale : Marion**/
-    public void creerWidgetMenuPrincipal(){
-        creerTitre(lMenuPrincipal,null,null);
+    /**
+     * Creer le menu principal
+     */
+    public void addMainMenu(){
+        createTitle(lMenuPrincipal,null,null);
 
         pantitre2 = setupContent();
         JPanel content = new JPanel();
@@ -419,18 +371,10 @@ class FenetreMenu extends JFrame {
         pantitre2.add(content);
         setContentPane(pantitre2);
     }
-    /**FIN methodes menu principale**/
 
-    /**DEBUT methodes menu skin : Arthur**/
-
-    /**methode à commenter**/
-    /**@param **/
-    public void applyStyle(JComponent obj) {
-        obj.setBackground(BG_COLOR);
-        obj.setFont(fBtn);
-        obj.setForeground(FG_COLOR);
-    }
-
+    /**
+     * Creer le menu credits
+     */
     public void addCredit(){
         JLabel taText1 = new JLabel("Le jeu à été concu par");
         JLabel taText2 = new JLabel("Julien, Lisa, Marion, Theo, Nathan, Arthur");
@@ -442,7 +386,7 @@ class FenetreMenu extends JFrame {
         panelCredits = setupContent();
 
         JPanel content = new JPanel();
-        content.setBackground(blue);
+        content.setBackground(BLUE);
         content.setBounds(340,200,600,425);
 
         applyStyle(taText1);
@@ -467,9 +411,11 @@ class FenetreMenu extends JFrame {
 
         panelCredits.add(content);
         setContentPane(panelCredits);
-
     }
 
+    /**
+     * Creer le menu joueur
+     */
     public void addPlay() {
         panPlay = setupContent();
         JPanel content = new JPanel();
@@ -484,6 +430,9 @@ class FenetreMenu extends JFrame {
         setContentPane(panPlay);
     }
 
+    /**
+     * Creer le menu de choix de difficulte
+     */
     public void addDifficulty(){
         panDifficulty = setupContent();
         JPanel content = new JPanel();
@@ -499,54 +448,10 @@ class FenetreMenu extends JFrame {
         setContentPane(panDifficulty);
     }
 
-
-    /**methode à commenter**/
-    /**@param **/
-    public void setupTitle(JLabel l){
-        l.setHorizontalAlignment(SwingConstants.LEFT);
-        l.setFont(new Font("Monospaced", Font.BOLD, 50));
-        l.setForeground(lightGreen);
-        l.setOpaque(true);
-        l.setBackground(blue);
-    }
-
-    /**methode à commenter**/
-    /**@param **/
-    public void setupCb(JComboBox cb){
-        cb.setPreferredSize(new Dimension(300,91));
-        cb.setBackground(blue);
-        cb.setForeground(lightGreen);
-        cb.setFont(fBtn);
-    }
-
-    /**methode à commenter**/
-    /**@param **/
-    public void setupPanelBtn(JPanel p,int row){
-        p.setLayout(new GridLayout(row,1,5,5));
-        p.setBackground(null);
-        p.setBounds(490,160,300,475);
-    }
-
-    public JPanel setupContent(){
-        JPanel c = new JPanel();
-        c.setLayout(null);
-        c.setBackground(green);
-        c.add(titreP);
-        return c;
-    }
-
-    public void setBackSkin(){
-        skinButtonPanel.setVisible(true);
-        skinButtonPanel.add(titreP);
-        setContentPane(skinButtonPanel);
-    }
-    public void setBackPlay(){
-        panPlay.setVisible(true);
-        panPlay.add(titreP);
-        setContentPane(panPlay);
-    }
-
-    public void creerParametresVue() {
+    /**
+     * Creer le menu parametre
+     */
+    public void addParamMenu() {
         panTitleParam = setupContent();
 
         JLabel lSon = new JLabel(model.textFromLang("Parametres son", "Sound settings"));
@@ -565,15 +470,15 @@ class FenetreMenu extends JFrame {
         applyStyle(lLangue);
         applyStyle(rbFrench);
         applyStyle(rbEnglish);
-        lSon.setFont(fBtn);
-        lLangue.setFont(fBtn);
+        lSon.setFont(BTN_FONT);
+        lLangue.setFont(BTN_FONT);
 
         // applique une dimension de 400px par 25px au JSlider et donne la couleur du background
         Dimension slDimensions = new Dimension(400,25);
         slVolumeMusique.setPreferredSize(slDimensions);
         slVolumeBruits.setPreferredSize(slDimensions);
-        slVolumeMusique.setBackground(BG_COLOR);
-        slVolumeBruits.setBackground(BG_COLOR);
+        slVolumeMusique.setBackground(GREEN);
+        slVolumeBruits.setBackground(GREEN);
 
         JPanel panSonTitre = new JPanel(new GridLayout(1,1));
         panSonTitre.add(lSon);
@@ -595,7 +500,7 @@ class FenetreMenu extends JFrame {
         panButtonCenter.add(backParam);
 
         JPanel panParametre = new JPanel();
-        panParametre.setBackground(BG_COLOR);
+        panParametre.setBackground(GREEN);
         panParametre.setBounds(240,150,800,525);
         panParametre.setLayout(new BoxLayout(panParametre, BoxLayout.Y_AXIS));
         panParametre.add(panSonTitre);
@@ -616,8 +521,9 @@ class FenetreMenu extends JFrame {
         setContentPane(panTitleParam);
     }
 
-    /**methode à commenter**/
-    /**@param **/
+    /**
+     * Creer le menu apparence
+     */
     public void addSkin(){
         skinButtonPanel = setupContent();
         JPanel content = new JPanel();
@@ -630,8 +536,9 @@ class FenetreMenu extends JFrame {
         setContentPane(skinButtonPanel);
     }
 
-    /**methode à commenter**/
-    /**@param **/
+    /**
+     * Creer le menu du choix de l'apparence du serpent
+     */
     public void addSkinSerpent(){
         skinSerpentButtonPanel = setupContent();
         JPanel content = new JPanel();
@@ -643,8 +550,9 @@ class FenetreMenu extends JFrame {
         setContentPane(skinSerpentButtonPanel);
     }
 
-    /**methode à commenter**/
-    /**@param **/
+    /**
+     * Creer le menu du choix de l'apparence du plateau
+     */
     public void addSkinMap(){
         skinMapButtonPanel = setupContent();
         JPanel content = new JPanel();
@@ -657,8 +565,9 @@ class FenetreMenu extends JFrame {
         setContentPane(skinMapButtonPanel);
     }
 
-    /**methode à commenter**/
-    /**@param **/
+    /**
+     * Creer le menu du choix du pseudo du serpent
+     */
     public void addSkinPseudo(){
         skinPseudoButtonPanel = setupContent();
         JPanel content = new JPanel();
@@ -671,30 +580,21 @@ class FenetreMenu extends JFrame {
         skinPseudoButtonPanel.add(content);
         setContentPane(skinPseudoButtonPanel);
     }
-    /**FIN methodes menu skin**/
 
-
-
-    /**DEBUT methodes menu score : Lisa**/
-    // je cree une image(x2)
-    // je cree un label dans l'image(x2)
-    // je cree un label pour cette image(x2)
-    // je cree un panel avec cette image(x2)
-    // je creer un panel avec ces 2 panels d'image et le titre
-    // ce panel va dans un autre panel
-    // ce panel est ajouter dans un panel (avec contenu page)
-    // ce panel est ajouter dans un panel final
-
-    /**méthode création du titre**/
-    /**@param titre titre et JLabel de 2 images**/
-    public void creerTitreScore(JLabel titre, JLabel img, JLabel img2){
+    /**
+     * Creer le titre du menu score
+     * @param titre
+     * @param img icon de droite
+     * @param img2 icon de gauche
+     */
+    public void createTitleScoreMenu(JLabel titre, JLabel img, JLabel img2){
         //panCoupe
         JPanel panImgDroite = new JPanel();
-        panImgDroite.setBackground(blue);
+        panImgDroite.setBackground(BLUE);
         panImgDroite.add(img);
 
         JPanel panImgGauche = new JPanel();
-        panImgGauche.setBackground(blue);
+        panImgGauche.setBackground(BLUE);
         panImgGauche.add(img2);
 
         // panel coupe + titre
@@ -706,24 +606,25 @@ class FenetreMenu extends JFrame {
 
         // pan titre2
         pantitre2 = new JPanel();
-        pantitre2.setBackground(green);
+        pantitre2.setBackground(GREEN);
         pantitre2.add(pantitre);
 
         this.setContentPane(pantitre2);
     }
 
-
-    /**création du contenu de la page score**/
-    /**@param titre titre qui est ajouter à la page**/
-    public void creerInterface(JPanel titre) {
+    /**
+     * Interface menu score
+     * @param titre Jpanel du titre
+     */
+    public void createInterface(JPanel titre) {
         // panel tableau (tableau + titres colonnes)
         JPanel pan = new JPanel();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
         pan.add(tableau.getTableHeader());
         JScrollPane scrollPane = new JScrollPane(tableau, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setLayout(new ScrollPaneLayout());
-        scrollPane.setBackground(BG_COLOR);
-        scrollPane.setBorder(BorderFactory.createLineBorder(BG_COLOR));
+        scrollPane.setBackground(GREEN);
+        scrollPane.setBorder(BorderFactory.createLineBorder(GREEN));
         pan.add(scrollPane);
         pan.setPreferredSize(new Dimension(700, 250));
         //création Jpanel avec tous les label des médailles de droite
@@ -731,7 +632,7 @@ class FenetreMenu extends JFrame {
         panImgMedailleDroite.setLayout(new BoxLayout(panImgMedailleDroite, BoxLayout.Y_AXIS));
         //création d'une box area pour ajuster la position des médailles
         panImgMedailleDroite.add(Box.createRigidArea(new Dimension(0, 25)));
-        panImgMedailleDroite.setBackground(green);
+        panImgMedailleDroite.setBackground(GREEN);
         panImgMedailleDroite.add(lMedaille1Droite);
         panImgMedailleDroite.add(lMedaille2Droite);
         panImgMedailleDroite.add(lMedaille3Droite);
@@ -741,43 +642,43 @@ class FenetreMenu extends JFrame {
         //création d'une box area pour ajuster la position des médailles
         panImgMedailleGauche.setLayout(new BoxLayout(panImgMedailleGauche, BoxLayout.Y_AXIS));
         panImgMedailleGauche.add(Box.createRigidArea(new Dimension(0, 25)));
-        panImgMedailleGauche.setBackground(green);
+        panImgMedailleGauche.setBackground(GREEN);
         panImgMedailleGauche.add(lMedaille1Gauche);
         panImgMedailleGauche.add(lMedaille2Gauche);
         panImgMedailleGauche.add(lMedaille3Gauche);
 
         //panel supplémentaire regroupant le panel qui contient les médaille de droite
         JPanel panImgMedailleDroite2 = new JPanel();
-        panImgMedailleDroite2.setBackground(green);
+        panImgMedailleDroite2.setBackground(GREEN);
         panImgMedailleDroite2.add(panImgMedailleDroite);
 
         //panel supplémentaire regroupant le panel qui contient les médaille de gauche
         JPanel panImgMedailleGauche2 = new JPanel();
-        panImgMedailleGauche2.setBackground(green);
+        panImgMedailleGauche2.setBackground(GREEN);
         panImgMedailleGauche2.add(panImgMedailleGauche);
 
         // panel médaille + tableau
         JPanel panTable = new JPanel();
         panTable.setLayout(new BoxLayout(panTable, BoxLayout.X_AXIS));
-        panTable.setBackground(green);
+        panTable.setBackground(GREEN);
         panTable.add(panImgMedailleGauche2);
         panTable.add(pan);
         panTable.add(panImgMedailleDroite2);
 
         //panel bouton vide tableau
         JPanel panBouttonClear = new JPanel();
-        panBouttonClear.setBackground(BG_COLOR);
+        panBouttonClear.setBackground(GREEN);
         panBouttonClear.add(bClear);
 
         // pan tableau2
         JPanel pantable2 = new JPanel();
-        pantable2.setBackground(green);
+        pantable2.setBackground(GREEN);
         pantable2.add(panTable);
         pantable2.add(panBouttonClear);
 
         // pan boutton
         JPanel panBoutton = new JPanel();
-        panBoutton.setBackground(green);
+        panBoutton.setBackground(GREEN);
         panBoutton.add(Box.createRigidArea(new Dimension(0, 200)));
         panBoutton.add(bRetour);
 
@@ -796,15 +697,183 @@ class FenetreMenu extends JFrame {
 
         //la panel final est affiché
         JPanel panFinal = new JPanel();
-        panFinal.setBackground(green);
+        panFinal.setBackground(GREEN);
         panFinal.add(panEnsemble);
 
         this.setContentPane(panFinal);
     }
-    /**FIN methodes menu score**/
 
-    /**DEBUT methodes controller**/
-    /**ajout tous les bouttons quand vues faites**/
+    /**
+     * Creer la banderole de titre au dessus du menu
+     * @param titre titre du menu
+     * @param img icon de gauche
+     * @param img2 icon de droite
+     */
+    public void createTitle(JLabel titre, JLabel img, JLabel img2) {
+        titreP = new JPanel();
+        titreP.setLayout(new GridBagLayout());
+        titreP.setBounds(0,25,1280,125);
+        titreP.setBackground(BLUE);
+        if(img != null){
+            titreP.add(img);
+            titreP.add(Box.createHorizontalStrut(50));
+        }
+        titreP.add(titre);
+        if(img2 != null){
+            titreP.add(Box.createHorizontalStrut(50));
+            titreP.add(img2);
+        }
+        con.add(titreP);
+    }
+
+    /**
+     * Applique le style d'un combobox
+     * @param cb combobox a editer
+     */
+    public void setupCb(JComboBox cb){
+        cb.setPreferredSize(new Dimension(300,91));
+        cb.setBackground(BLUE);
+        cb.setForeground(LIGHT_GREEN);
+        cb.setFont(BTN_FONT);
+    }
+
+    /**
+     * Creer un Jpanel grille
+     * @param p Jpanl a editer
+     * @param row nombre de lignes
+     */
+    public void setupPanelBtn(JPanel p,int row){
+        p.setLayout(new GridLayout(row,1,5,5));
+        p.setBackground(null);
+        p.setBounds(490,160,300,475);
+    }
+
+    /**
+     * Reaffiche le menu skin depuis un de ses enfants
+     */
+    public void setBackSkin(){
+        skinButtonPanel.setVisible(true);
+        skinButtonPanel.add(titreP);
+        setContentPane(skinButtonPanel);
+    }
+
+    /**
+     * Reaffiche le menu skin depuis un de ses enfants
+     */
+    public void setBackPlay(){
+        panPlay.setVisible(true);
+        panPlay.add(titreP);
+        setContentPane(panPlay);
+    }
+
+    /**
+     * Applique le style du titre au label
+     * @param l label a editer
+     */
+    public void setupTitle(JLabel l){
+        l.setHorizontalAlignment(SwingConstants.LEFT);
+        l.setFont(TITLE_FONT);
+        l.setForeground(LIGHT_GREEN);
+        l.setBackground(BLUE);
+        l.setOpaque(true);
+    }
+
+
+    /**
+     * Applique le style des objets du menu param
+     * @param obj objet a editer
+     */
+    public void applyStyle(JComponent obj) {
+        obj.setBackground(GREEN);
+        obj.setFont(BTN_FONT);
+        obj.setForeground(LIGHT_GREEN);
+    }
+
+    /**
+     * Creer un JPanel avec un style par defaut
+     * @return JPanel
+     */
+    public JPanel setupContent(){
+        JPanel c = new JPanel();
+        c.setLayout(null);
+        c.setBackground(GREEN);
+        c.add(titreP);
+        return c;
+    }
+
+    /**
+     * Reinitialise le container
+     */
+    public void setupContainer(){
+        this.getContentPane().removeAll();
+        this.repaint();
+        this.revalidate();
+    }
+
+    /**
+     * Affiche le menu joueur
+     */
+    public void changerMenuJouer(){
+        setupContainer();
+        this.createTitle(lPlay,null,null);
+        this.addPlay();
+        setVisible(true);
+    }
+
+    /**
+     * Affiche le menu parametre
+     */
+    public void changerMenuParam(){
+        setupContainer();
+        this.createTitle(lParam,lImgTitreDroite,lImgTitreGauche);
+        this.addParamMenu();
+        setVisible(true);
+    }
+
+    /**
+     * Affiche le menu credit
+     */
+    public void changerMenuCredit(){
+        setupContainer();
+        this.createTitle(lCredits,null,null);
+        this.addCredit();
+        setVisible(true);
+    }
+
+    /**
+     * Affiche le menu score
+     */
+    public void changerMenuScore(){
+        setupContainer();
+        this.createTitleScoreMenu(lscore,  imgCoupeGauche, imgCoupeDroite);
+        this.createInterface(pantitre2);
+        this.setVisible(true);
+    }
+
+    /**
+     * Affiche le menu apparence
+     */
+    public void changerMenuSkin(){
+        setupContainer();
+        this.createTitle(lSkin, null,null);
+        this.addSkin();
+        setVisible(true);
+    }
+
+    /**
+     * Affiche le menu principal
+     */
+    public void changerMenuPrincipal(){
+        setupContainer();
+        this.createTitle(lMenuPrincipal, imgCoupeGauche, imgCoupeDroite);
+        this.addMainMenu();
+        this.setVisible(true);
+    }
+
+    /**
+     * MVC, lie les objets avec la classe contenant les listeners
+     * @param controlBut classe contenant les listeners
+     */
     public void setControlButton(ControlBouton controlBut){
         // Menu
         this.boutonJouer.addActionListener(controlBut);
@@ -842,158 +911,67 @@ class FenetreMenu extends JFrame {
         this.butDuo.addActionListener(controlBut);
         this.backDifficulty.addActionListener(controlBut);
     }
-    /**FIN methodes controller*/
 
-
-    /**Méthode pour afficher les messages d'erreur
-     * @param messageErr pour intialiser un message spécifique**/
+    /**
+     * Affiche un message d'erreur
+     * @param messageErr message
+     */
     public void creerDialogErr(String messageErr) {
         //création OptionPane, le message est de type erreur
         JOptionPane messErr = new JOptionPane();
         messErr.showMessageDialog(this,messageErr, "Erreur", JOptionPane.ERROR_MESSAGE);
     }
 
-    /**getter des boutton pour changer les menus**/
+    public Model getModel() { return model; }
+
     public SnakeButton getBoutonScores() {
         return boutonScores;
     }
-
     public SnakeButton getBoutonSkins() {
         return boutonSkins;
     }
-
     public SnakeButton getBoutonJouer() { return boutonJouer; }
-
     public SnakeButton getBoutonParametres() { return boutonParametres; }
-
     public SnakeButton getBoutonCredits() { return boutonCredits; }
 
-    /**DEBUT getter des bouttons pour menu skin**/
     public SnakeButton getSkinSerpent() { return skinSerpent; }
-
     public SnakeButton getSkinMap() { return skinMap; }
-
     public SnakeButton getSkinPseudo() { return skinPseudo; }
 
     public SnakeButton getBackFromSkinChild() { return backFromSkinChild; }
-
-
-    /**FIN getter bouttons pour menu SKIN**/
-
-    /**DEBUT getter des bouttons back des menu**/
-
     public SnakeButton getBackFromSkin() { return backFromSkin; }
-
     public SnakeButton getBackCredits() { return backCredits; }
-
     public SnakeButton getBackParam() { return backParam; }
-
+    public SnakeButton getBackDifficulty() { return backDifficulty; }
     public SnakeButton getBackPlay() { return backPlay; }
 
-    /**FIN getter des bouttons back des menu**/
-
-    /**DEBUT getter des bouttons pour menu jouer**/
     public SnakeButton getButEasy() { return butEasy; }
-
     public SnakeButton getButNormal() {return butNormal; }
-
     public SnakeButton getButHard() { return butHard; }
-
     public SnakeButton getButTrad() { return butTrad; }
-
     public SnakeButton getButLaby() { return butLaby; }
-
     public SnakeButton getButChrono() { return butChrono; }
-
     public SnakeButton getButDuo() { return butDuo; }
-
-    public SnakeButton getBackDifficulty() { return backDifficulty; }
-
-    /**FIN getter des boutons pour menu jouer**/
-
-    /**boutton pour vider le tableau des scores**/
     public JButton getbClear() { return bClear; }
 
-    /**DEBUT getter des Panel pour menu skin**/
-
     public JPanel getSkinButtonPanel() { return skinButtonPanel; }
-
     public JPanel getSkinSerpentButtonPanel() { return skinSerpentButtonPanel; }
-
     public JPanel getSkinPseudoButtonPanel() { return skinPseudoButtonPanel; }
-
     public JPanel getSkinMapButtonPanel() { return skinMapButtonPanel; }
-
-    /**FIN getter des Panel pour menu skin**/
-
-    /**DEBUT getter des Panel pour menu jouer**/
+    public JComboBox getCbSerpent() { return cbSerpent; }
 
     public JPanel getPanPlay() { return panPlay; }
-
     public JPanel getPanDifficulty() {
         return panDifficulty;
     }
-    /**FIN getter des Panel pour menu jouer**/
 
-    /**DEBUT getter des Slider pour menu param**/
     public JSlider getSlVolumeMusique() { return slVolumeMusique; }
     public JSlider getSlVolumeBruits() { return slVolumeBruits; }
     public JRadioButton getRbFrench() { return rbFrench; }
     public JRadioButton getRbEnglish() { return rbEnglish; }
-    /**FIN getter des Slider pour menu param**/
-
 
     public SnakeButton getbRetour() { return bRetour; }
-
     public JComboBox getCbMap() { return cbMap; }
-
-    /**DEBUT méthodes changement de menu**/
-
-    public void changerMenuJouer(){
-        setupContainer();
-        this.creerTitre(lPlay,null,null);
-        this.addPlay();
-        setVisible(true);
-    }
-    public void changerMenuParam(){
-        setupContainer();
-        this.creerTitre(lParam,lImgTitreDroite,lImgTitreGauche);
-        this.creerParametresVue();
-        setVisible(true);
-    }
-    public void changerMenuCredit(){
-        setupContainer();
-        this.creerTitre(lCredits,null,null);
-        this.addCredit();
-        setVisible(true);
-    }
-
-    public void changerMenuScore(){
-        setupContainer();
-        this.creerTitreScore(lscore,  imgCoupeGauche, imgCoupeDroite);
-        this.creerInterface(pantitre2);
-        this.setVisible(true);
-    }
-
-    public void changerMenuSkin(){
-        setupContainer();
-        this.creerTitre(lSkin, null,null);
-        this.addSkin();
-        setVisible(true);
-    }
-
-    public void changerMenuPrincipal(){
-        setupContainer();
-        this.creerTitre(lMenuPrincipal, imgCoupeGauche, imgCoupeDroite);
-        this.creerWidgetMenuPrincipal();
-        this.setVisible(true);
-    }
-
-    public void setupContainer(){
-        this.getContentPane().removeAll();
-        this.repaint();
-        this.revalidate();
-    }
 
     public String[][] getData() {
         return data;
@@ -1002,37 +980,9 @@ class FenetreMenu extends JFrame {
         this.data = data;
     }
 
-    public JTable getTableau() {
-        return tableau;
-    }
-    public void setTableau(JTable tableau) {
-        this.tableau = tableau;
-    }
-
-    public TableModel getTable() {
-        return table;
-    }
-    public void setTable(TableModel table) {
-        this.table = table;
-    }
-
-    public Tableau getRender() {
-        return render;
-    }
-    public void setRender(Tableau render) {
-        this.render = render;
-    }
-
-    public Model getModel() { return model; }
-
     public JTextField getTfPseudo() {
         return tfPseudo;
     }
-    public void setTfPseudo(JTextField tfPseudo) {
-        this.tfPseudo = tfPseudo;
-    }
-
-    public JComboBox getCbSerpent() { return cbSerpent; }
 }
 
 
