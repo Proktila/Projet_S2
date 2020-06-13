@@ -30,8 +30,11 @@ class Model {
         score = new Score();
         j1 = new Snake();
         j2 = new Snake();
-
     }
+
+    /**
+     * @return un fruit selon les conditions d'apparitions definies
+     */
     public Fruit choisirFruit(){
         String difficulte = this.difficulty;
         String mode = this.mode;
@@ -431,62 +434,20 @@ class Model {
         return fruit;
     }
 
+    /**
+     * Choisi entre le texte francais ou anglais selon la langue courante
+     * @param fr texte francais
+     * @param en texte anglais
+     * @return un des deux textes
+     */
     public String textFromLang(String fr, String en) {
         if (lang == "langFR") return fr;
         return en;
     }
 
-    public Score getScore() { return score; }
-
-    public void setScore(Score score) { this.score = score; }
-
-    public String getDifficulty() { return difficulty; }
-
-    public void setDifficulty(String difficulty) { this.difficulty = difficulty; }
-
-    public String getMode() { return mode; }
-
-    public String getTheme() { return theme; }
-
-    public int getVOL_MIN() { return VOL_MIN; }
-
-    public int getVOL_MAX() { return VOL_MAX;}
-
-    public int getVOL_INIT() { return VOL_INIT; }
-
-    public int getVolumeMusique() { return volumeMusique; }
-
-    public int getVolumeBruits() { return volumeBruits; }
-
-    public void setMode(String mode) { this.mode = mode; }
-
-    public void setVolumeMusique(int volumeMusique) { this.volumeMusique = volumeMusique; }
-
-    public void setVolumeBruits(int volumeBruits) { this.volumeBruits = volumeBruits; }
-
-    public void setTheme(String theme) { this.theme = theme; }
-
-    public Snake getJ1() { return j1; }
-
-    public void setJ1(Snake j1) { this.j1 = j1; }
-
-    public List<Wall> getListeWall() { return listeWall; }
-
-    public List<Objet> getListeObjetsLaby() { return listeObjetsLaby; }
-
-    public List<Fruit> getListeFruit() { return listeFruit; }
-
-    public List<Fruit> getToAdd() { return toAdd; }
-
-    public Clip getMusicClip() { return musicClip; }
-    public void setMusicClip(Clip musicClip) { this.musicClip = musicClip; }
-
-    public Snake getJ2() { return j2; }
-
-    public void setChrono(Chrono chrono) { this.chrono = chrono; }
-
-    public Chrono getChrono() { return chrono; }
-
+    /**
+     * Creer une partie de mode chrono en fonction de la difficulte
+     */
     public void setChronoDifficulty(){
         switch(difficulty){
             case "easy":
@@ -501,9 +462,37 @@ class Model {
         }
     }
 
-    public int getMultiplicateur() { return multiplicateur; }
-    public void setMultiplicateur(int multiplicateur) { this.multiplicateur = multiplicateur; }
+    public Snake getJ1() { return j1; }
+    public Snake getJ2() { return j2; }
+    public String getMode() { return mode; }
+    public String getDifficulty() { return difficulty; }
+    public String getTheme() { return theme; }
+    public Score getScore() { return score; }
 
+    public int getVOL_MIN() { return VOL_MIN; }
+    public int getVOL_MAX() { return VOL_MAX;}
+    public int getVOL_INIT() { return VOL_INIT; }
+    public int getVolumeMusique() { return volumeMusique; }
+    public int getVolumeBruits() { return volumeBruits; }
+    public Clip getMusicClip() { return musicClip; }
+
+    public List<Wall> getListeWall() { return listeWall; }
+    public List<Objet> getListeObjetsLaby() { return listeObjetsLaby; }
+    public List<Fruit> getListeFruit() { return listeFruit; }
+    public List<Fruit> getToAdd() { return toAdd; }
+    public int getMultiplicateur() { return multiplicateur; }
+    public Chrono getChrono() { return chrono; }
+
+    public void setJ1(Snake j1) { this.j1 = j1; }
+    public void setMode(String mode) { this.mode = mode; }
+    public void setDifficulty(String difficulty) { this.difficulty = difficulty; }
+    public void setTheme(String theme) { this.theme = theme; }
+    public void setScore(Score score) { this.score = score; }
+    public void setVolumeMusique(int volumeMusique) { this.volumeMusique = volumeMusique; }
+    public void setVolumeBruits(int volumeBruits) { this.volumeBruits = volumeBruits; }
+    public void setMusicClip(Clip musicClip) { this.musicClip = musicClip; }
     public void setLang(String lang) { this.lang = lang; }
-    public String getLang() { return lang; }
+    
+    public void setMultiplicateur(int multiplicateur) { this.multiplicateur = multiplicateur; }
+    public void setChrono(Chrono chrono) { this.chrono = chrono; }
 }
