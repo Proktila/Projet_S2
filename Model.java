@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Model {
-
     private String difficulty;
     private String mode;
     private String theme = "";
@@ -14,26 +13,23 @@ class Model {
     private final int VOL_INIT = 40;
     private int volumeMusique = VOL_INIT;
     private int volumeBruits = VOL_INIT;
-    Clip musicClip;
+    private Clip musicClip;
 
     private int multiplicateur;
     private Score score;
     private Snake j1;
     private Snake j2;
 
-    private String chemin = "img/snake/";
-
-    private Chrono chrono;
-
     private List<Wall> listeWall=new ArrayList<Wall>();
     private List<Objet> listeObjetsLaby=new ArrayList<Objet>();
     private List<Fruit> listeFruit=new ArrayList<Fruit>();
     private java.util.List<Fruit> toAdd=new ArrayList<Fruit>();
+    private Chrono chrono;
 
     public Model(){
         score = new Score();
-        j1 = new Snake(this);
-        j2 = new Snake(this);
+        j1 = new Snake();
+        j2 = new Snake();
 
     }
     public Fruit choisirFruit(){
@@ -469,8 +465,6 @@ class Model {
     public void setVolumeBruits(int volumeBruits) { this.volumeBruits = volumeBruits; }
 
     public void setTheme(String theme) { this.theme = theme; }
-
-    public String getChemin() { return chemin; }
 
     public Snake getJ1() { return j1; }
 

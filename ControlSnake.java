@@ -199,7 +199,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             gameplay.getFen().dispose();
             gameplay.getFenetreMenu().setVisible(true);
             gameplay.getFenetreMenu().changerMenuPrincipal();
-            Snake s = new Snake(model);
+            Snake s = new Snake();
             s.skins(model.getJ1().getSkin());
             model.setJ1(s);
             model.getListeWall().clear();

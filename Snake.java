@@ -1,7 +1,6 @@
 import javax.swing.*;
 
 public class Snake {
-    private Model model;
     public int[][] snake = new int[720][2];
 
     private ImageIcon rightHead;
@@ -26,12 +25,7 @@ public class Snake {
     private int taille = 3;
     private int score = 0;
 
-    /**
-     * @param model
-     * créer un serpent et lui affecte son skin basique
-     */
-    public Snake(Model model){
-        this.model = model;
+    public Snake(){
         this.skin="green";
         this.setSkinImg();
     }
