@@ -9,20 +9,23 @@ import java.io.*;
 
 
 public class ControlSnake implements KeyListener, ActionListener {
-
-    FenetreSnake fenetreSnake;
-    Gameplay gameplay;
-    Model model;
-    boolean deathSoundPlayed;
+    private final Gameplay gameplay;
+    private final Model model;
+    private boolean deathSoundPlayed;
     private int first = 0;
 
     Timer timer;
 
+
+    /**
+     * @param fenetreSnake le jeu
+     * @param model le model
+     * initalise le listener
+     */
     public ControlSnake(FenetreSnake fenetreSnake, Model model){
         this.model = model;
-        this.fenetreSnake = fenetreSnake;
         this.deathSoundPlayed = false;
-        gameplay = fenetreSnake.getGameplay();
+        this.gameplay = fenetreSnake.getGameplay();
         gameplay.setFocusable(true);
         gameplay.setFocusTraversalKeysEnabled(false);
         gameplay.requestFocusInWindow();
@@ -35,18 +38,25 @@ public class ControlSnake implements KeyListener, ActionListener {
     public void keyTyped(KeyEvent e) {
     }
 
+    /**
+     * @param e
+     * on appuie sur une touche
+     */
     @Override
     public void keyPressed(KeyEvent e) {
 
+        // la première fois que l'on appuie sur une touche cela lance le chrono pour le mode chrono
         if(first == 0){
             model.setChronoDifficulty();
             first = 1;
         }
+        // si il n'y a plus de temps, le serpent meurt
         if(model.getChrono().getTime() <= 0){
             model.getJ1().setDead(true);
             gameplay.repaint();
         }
-        // j1
+        // touches pour le j1
+        // tourne à droite
         if(e.getKeyCode() == KeyEvent.VK_D){
             // des qu'on bouge begin augmentera et ne repositionnera plus le serpent
             gameplay.setBegin(gameplay.getBegin()+1);
@@ -62,6 +72,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.getJ1().setDown(false);
             model.getJ1().setUp(false);
         }
+        // tourne à gauche
         if(e.getKeyCode() == KeyEvent.VK_Q){
             gameplay.setBegin(gameplay.getBegin()+1);
             model.getJ1().setLeft(true);
@@ -75,6 +86,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.getJ1().setDown(false);
             model.getJ1().setUp(false);
         }
+        // tourne en bas
         if(e.getKeyCode() == KeyEvent.VK_S){
             gameplay.setBegin(gameplay.getBegin()+1);
             model.getJ1().setDown(true);
@@ -88,6 +100,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.getJ1().setRight(false);
             model.getJ1().setLeft(false);
         }
+        // tourne en haut
         if(e.getKeyCode() == KeyEvent.VK_Z){
             gameplay.setBegin(gameplay.getBegin()+1);
             model.getJ1().setUp(true);
@@ -101,7 +114,8 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.getJ1().setRight(false);
             model.getJ1().setLeft(false);
         }
-        // j2
+        // touches pour le j2
+        // tourne à droite
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             // des qu'on bouge begin augmentera et ne repositionnera plus le serpent
             gameplay.setBegin(gameplay.getBegin()+1);
@@ -117,6 +131,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.getJ2().setDown(false);
             model.getJ2().setUp(false);
         }
+        // tourne à gauche
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
             gameplay.setBegin(gameplay.getBegin()+1);
             model.getJ2().setLeft(true);
@@ -130,6 +145,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.getJ2().setDown(false);
             model.getJ2().setUp(false);
         }
+        // tourne en bas
         if(e.getKeyCode() == KeyEvent.VK_DOWN){
             gameplay.setBegin(gameplay.getBegin()+1);
             model.getJ2().setDown(true);
@@ -143,6 +159,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.getJ2().setRight(false);
             model.getJ2().setLeft(false);
         }
+        // tourne en haut
         if(e.getKeyCode() == KeyEvent.VK_UP){
             gameplay.setBegin(gameplay.getBegin()+1);
             model.getJ2().setUp(true);
@@ -156,13 +173,17 @@ public class ControlSnake implements KeyListener, ActionListener {
             model.getJ2().setRight(false);
             model.getJ2().setLeft(false);
         }
-        if(e.getKeyCode() == KeyEvent.VK_SPACE && (model.getJ1().isDead() || (model.getMode() == "duo" && model.getJ2().isDead()))) {
+        // si lorsque qu'on appue sur espace et que le serpent est mort ou si on est en mode duo l'autre serpent est mort
+        // relance le jeu
+        if(e.getKeyCode() == KeyEvent.VK_SPACE && (model.getJ1().isDead() || (model.getMode().equals("duo") && model.getJ2().isDead()))) {
 
+            // réinitialise la valeur first pour le chrono
             first = 0;
 
+            // enregistre le score du joueur 1 si on n'est pas en mode duo
             model.getScore().setActualScore(model.getJ1().getScore());
             String[][] tScore = gameplay.getFenetreMenu().getData();
-            if(model.getMode() != "duo") {
+            if(!model.getMode().equals("duo")) {
                 try {
                     addScoreInTableMenu();
                 } catch (IOException ex) {
@@ -170,7 +191,7 @@ public class ControlSnake implements KeyListener, ActionListener {
                 }
                 gameplay.getFenetreMenu().setData(tScore);
             }
-            // remise a zero lorsqu'on appuie sur espace et que l'on est mort
+            // reinitalise les serpents
             reset(model.getJ1());
             reset(model.getJ2());
         }
@@ -180,47 +201,56 @@ public class ControlSnake implements KeyListener, ActionListener {
     public void keyReleased(KeyEvent e) {
     }
 
+    /**
+     * @param e
+     * lorsqu'il se passe quelque chose (touches ou bouton)
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
+        // on lance le timer
         this.timer.start();
-
+        // fais avancer le serpent de 20px et les font mourir si ils dépassent les bords
         avance(model.getJ1());
         avance(model.getJ2());
 
-
+        // met le jeu en pause
         if(e.getSource().equals(gameplay.getPauseBut())){
             gameplay.setPause(!gameplay.isPause());
         }
+        // retourne sur le menu principal
         if(e.getSource().equals(gameplay.getHomeBut())){
+            // arrête le timer
             this.timer.stop();
+            // réinitialise les valeurs utilisé
             gameplay.setBegin(0);
             model.getScore().setActualScore(0);
             gameplay.repaint();
+            // ferme le jeu
             gameplay.getFen().dispose();
+            // afichhe le menu
             gameplay.getFenetreMenu().setVisible(true);
             gameplay.getFenetreMenu().changerMenuPrincipal();
-            Snake s = new Snake();
+            // recréer un snake avec le même skin
+            Snake s = new Snake(model);
             s.skins(model.getJ1().getSkin());
             model.setJ1(s);
+            // clear lest différentes liste
             model.getListeWall().clear();
             model.getListeFruit().clear();
             model.getListeObjetsLaby().clear();
         }
 
         // bruit mort
-        if(model.getJ1().isDead()  && !deathSoundPlayed){
+        if((model.getJ1().isDead() || (model.getJ2().isDead() && model.getMode().equals("duo")))  && !deathSoundPlayed){
             try {
                 Sound.playSound("sound/death.wav", model.getVolumeBruits());
                 deathSoundPlayed = true;
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (UnsupportedAudioFileException ex) {
-                ex.printStackTrace();
-            } catch (LineUnavailableException ex) {
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
             }
         }
-        if(model.getMode() == "duo"){
+        // si on est en mode duo tue le serpent qui mange l'autre
+        if(model.getMode().equals("duo")){
             for (int i=0;i< model.getJ1().getTaille();i++){
                 if(model.getJ2().getSnake()[0][0] == model.getJ1().getSnake()[i][0] && model.getJ2().getSnake()[0][1] == model.getJ1().getSnake()[i][1]){
                     model.getJ2().setDead(true);
@@ -231,61 +261,59 @@ public class ControlSnake implements KeyListener, ActionListener {
                     model.getJ1().setDead(true);
                 }
             }
-
-            if(model.getJ2().isDead()  && !deathSoundPlayed){
-                try {
-                    Sound.playSound("sound/death.wav", model.getVolumeBruits());
-                    deathSoundPlayed = true;
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (UnsupportedAudioFileException ex) {
-                    ex.printStackTrace();
-                } catch (LineUnavailableException ex) {
-                    ex.printStackTrace();
-                }
-            }
         }
-        // bruit mort
     }
 
+    /**
+     * @throws IOException
+     * ajoute le score actuelle dans le tableau de score
+     */
     public void addScoreInTableMenu() throws IOException {
-        //récup pseudo
         try {
             model.getScore().setActualPseudo(String.valueOf(gameplay.getFenetreMenu().getTfPseudo().getText()));
         } catch (PseudoOutOfBoundsException | SansPseudoException e) {
             e.printStackTrace();
         }
-        //récup score, seudo, mode, dfficulté
+        // récup score, seudo, mode, dfficulté
         model.getScore().initList();
         model.getScore().addScore();
         model.getScore().addScoreInFich();
     }
 
+    /**
+     * @param snake
+     * remet zero le serpent et le jeu pour rejouer danns un environnement différent
+     */
     public void reset(Snake snake){
+        model.getListeFruit().clear();
         deathSoundPlayed = false;
         snake.setDelay(100);
-        if(model.getMode() == "labyrinthe"){
+        if(model.getMode().equals("labyrinthe")){
             model.getListeObjetsLaby().clear();
             gameplay.createLaby(gameplay.getGrid());
         }
         else gameplay.initWall();
+        gameplay.initFruit();
         gameplay.setBegin(0);
-        snake.setScore(0);
-        snake.setTaille(3);
-        snake.setDead(false);
-        snake.setRight(false);
-        snake.setLeft(false);
-        snake.setUp(false);
-        snake.setDown(false);
+        Snake s = new Snake(model);
+        s.skins(model.getJ1().getSkin());
+        model.setJ1(s);
         gameplay.repaint();
         gameplay.revalidate();
         gameplay.initSnake();
     }
 
+    /**
+     * @param s
+     * fais avancer le serpent en fonction de sa direction
+     * ne le fais pas bouger lorsqu'il est mort/pause/paralysé
+     * et le fais mourir quand il le faut
+     */
     public void avance(Snake s){
         int[][] snake = s.getSnake();
 
         // si on va a droite
+        // si il n'est pas mort,parralysé et que le jeu n'est pas en pause
         if(s.isRight() && !s.isDead() && !gameplay.isPause() && !s.isParalysed() ){
             for (int i = s.getTaille()-1; i >=0;i--){
                 if (snake[0][0] >= 700) {
@@ -307,6 +335,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             // rappelle la méthode paint()
             gameplay.repaint();
         }
+        // même chause que pour la droite
         if(s.isLeft() && !s.isDead() && !gameplay.isPause() && !s.isParalysed()){
             for (int i = s.getTaille()-1; i >=0;i--){
                 if (snake[0][0] <= 0) {
@@ -325,6 +354,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             // rappelle la méthode paint()
             gameplay.repaint();
         }
+        // même chause que pour la droite
         if(s.isDown() && !s.isDead() && !gameplay.isPause() && !s.isParalysed()){
             for (int i = s.getTaille()-1; i >=0;i--){
                 if (snake[0][1] >= 700) {
@@ -343,6 +373,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             // rappelle la méthode paint()
             gameplay.repaint();
         }
+        // même chause que pour la droite
         if(s.isUp() && !s.isDead() && !gameplay.isPause() && !s.isParalysed()){
             for (int i = s.getTaille()-1; i >=0;i--){
                 if (snake[0][1] <= 0) {
@@ -369,6 +400,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             }
         }
         for(Wall w : model.getListeWall()){
+            // si le serpent mange un mur
             if(snake[0][0] == w.getX() && snake[0][1] == w.getY()){
                 s.setDead(true);
                 break;
