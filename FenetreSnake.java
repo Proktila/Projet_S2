@@ -350,7 +350,8 @@ class Gameplay extends JPanel{
         for(Fruit f : model.getListeFruit()){
             if((f.getPosX() == snake[0][0]) && (f.getPosY() == snake[0][1])){
                 s.setScore( s.getScore() + (10 * model.getMultiplicateur()));
-                s.setTaille(s.getTaille()+ 1);
+                s.setTaille(s.getTaille() + 1);
+                s.setDelay(s.getDelay() - model.getMultiplicateur());
                 // augmente la vitesse
                 f.effect(s,model);
                 toRemove.add(f);
@@ -391,7 +392,7 @@ class Gameplay extends JPanel{
         // si le serpent mange le Objet
         for(Objet obj : model.getListeObjetsLaby()){
             if((obj.getX() == snake[0][0]) && (obj.getY() == snake[0][1])){
-                obj.effect(s,model);
+                obj.effect(s);
                 toRemove.add(obj);
 
                 // Bruit objet

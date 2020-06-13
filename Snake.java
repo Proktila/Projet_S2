@@ -28,50 +28,43 @@ public class Snake {
     private Model model;
 
 
+    /**
+     * @param model
+     * créer un serpent et lui affecte son skin basique
+     */
     public Snake(Model model){
         this.model = model;
-        this.setBasicSkin();
-    }
-    // Gérer les skins avec un fonction par skin :
-    // Skin "traditionnel" du snake
-    public void setBasicSkin(){
-        this.rightHead = new ImageIcon(model.getChemin()+"green/HeadRight.png");
-        this.leftHead = new ImageIcon(model.getChemin()+"green/HeadLeft.png");
-        this.downHead = new ImageIcon(model.getChemin()+"green/HeadDown.png");
-        this.upHead = new ImageIcon(model.getChemin()+"green/HeadUp.png");
-        this.body = new ImageIcon(model.getChemin()+"green/Body.png");
+        this.skin="green";
+        this.setSkinImg();
     }
 
-    // Exemples de skin, à compléter une fois les skins acquis
-    public void setNyanCatSkin(){
-        this.rightHead = new ImageIcon(model.getChemin()+"nyan/HeadRight.png");
-        this.leftHead = new ImageIcon(model.getChemin()+"nyan/HeadLeft.png");
-        this.downHead = new ImageIcon(model.getChemin()+"nyan/HeadDown.png");
-        this.upHead = new ImageIcon(model.getChemin()+"nyan/HeadUp.png");
-        this.body = new ImageIcon(model.getChemin()+"nyan/Body.png");
-
+    /**
+     * affecte un skin
+     */
+    public void setSkinImg(){
+        this.rightHead = new ImageIcon(model.getChemin()+skin+"/HeadRight.png");
+        this.leftHead = new ImageIcon(model.getChemin()+skin+"/HeadLeft.png");
+        this.downHead = new ImageIcon(model.getChemin()+skin+"/HeadDown.png");
+        this.upHead = new ImageIcon(model.getChemin()+skin+"/HeadUp.png");
+        this.body = new ImageIcon(model.getChemin()+skin+"/Body.png");
     }
 
-    public void setGoldSkin(){
-
-    }
-
-    public void setCyborgSkin(){
-
-    }
-
-    // Gérer les skins avec un switch case :
-
+    /**
+     * @param skin
+     * affecte le skin en fonction du skin envoyé
+     */
     public void skins(String skin){
 
         switch (skin) {
 
             case "basique" :
-                this.setBasicSkin();
+                this.skin="green";
+                setSkinImg();
                 break;
 
             case "nyan" :
-                setNyanCatSkin();
+                this.skin="nyan";
+                setSkinImg();
                 break;
 
             case "gold" :
@@ -137,11 +130,7 @@ public class Snake {
 
     public String getSkin() { return skin; }
 
-    public void setSkin(String skin) {
-        this.skin = skin;
-        this.skins(this.skin);
-    }
-
+    public void setSkin(String skin) { this.skins(this.skin);}
     public boolean isParalysed() { return paralysed; }
 
     public void setParalysed(boolean paralysed) { this.paralysed = paralysed; }

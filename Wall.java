@@ -8,6 +8,14 @@ public class Wall{
     private int y;
     private ImageIcon wall;
 
+    /**
+     * @param model
+     * @param snake
+     * @param fruit
+     * création d'un mur avec une postion aléatoire qui n'encombre rien et l'ajoute à une liste de mur
+     * on a besoin de la postion du snake et de la postion du fruit actuelle
+     * ainsi que du model pour la liste
+     */
     public Wall(Model model,Snake snake,Fruit fruit){
         this.wall = new ImageIcon("img/snake/blackWall.png");
         int x,y;
@@ -20,6 +28,13 @@ public class Wall{
         model.getListeWall().add(this);
     }
 
+
+    /**
+     * @param model
+     * @param x
+     * @param y
+     * création d'un mur avec des coordonées précises et ajout dans une liste de murs
+     */
     public Wall(Model model,int x, int y){
         this.wall = new ImageIcon("img/snake/blackWall.png");
         this.x = x;
@@ -27,6 +42,9 @@ public class Wall{
         model.getListeWall().add(this);
     }
 
+    /**
+     * @return un int dans une postiion aléatoire mais dans les limites de l'écran
+     */
     public int randomX(){
         int random = (int)(Math.random()*((700)+1));
         while(random%20 != 0){
@@ -34,14 +52,27 @@ public class Wall{
         }
         return random;
     }
+
+    /**
+     * @return un int dans une postion aléatoire mais dans les limites de l'écran
+     * classe différentes car cela differe en fonction du systeme d'exploitation
+     */
     public int randomY(){
-        int random = (int) (Math.random() * ((660) + 1));
+        int random = (int) (Math.random() * ((700) + 1));
         while(random % 20 != 0){
-            random = (int) (Math.random() * ((660) + 1));
+            random = (int) (Math.random() * ((700) + 1));
         }
         return random;
     }
 
+    /**
+     * @param x
+     * @param y
+     * @param snake
+     * @param fruit
+     * @return true si le mur a un emplacement non valide
+     * false si il est valide
+     */
     public boolean wallIsNotValid( int x, int y,Snake snake,Fruit fruit){
         for(int i = 0; i < snake.getTaille();i++){
             if(((x == snake.getSnake()[i][0]) && (y == snake.getSnake()[i][1])) ||

@@ -12,7 +12,6 @@ import java.util.Timer;
 
 public class Fruit {
 
-	private static final long serialVersionUID = 1L;
 	private String typeFruit;
 	private BufferedImage bImgFruit = null;
 	private ImageIcon imgFruit;
@@ -25,10 +24,17 @@ public class Fruit {
 	private Model model;
 	private Timer timerEffect;
 	private int timeEffect;
-	private List<Wall> listeWallTampon = new ArrayList<Wall>();
+	private List<Wall> listeWallTampon = new ArrayList<Wall>(); // liste qui stocke les wall pour les enlever/Remettre après
 	
 	public Fruit(){}
 
+	/**
+	 * @param type
+	 * @param model
+	 * constructeur qui affecte le type de fruit
+	 * l'image au fruit
+	 * et son timer pour son temps d'apparation
+	 */
 	public Fruit(String type,Model model){
 		this.model = model;
 		this.typeFruit = type;
@@ -36,173 +42,169 @@ public class Fruit {
 		this.setTimer();
 	}
 
+	/**
+	 * Affecte l'icone au fruit correspondant
+	 * ainsi que la description de son effet
+	 */
 	public void setFruit(){
-		if (typeFruit == "banane") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/banane.png"));
-            	effet = "taille+3";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=true;
+		switch (typeFruit) {
+			case "banane":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/banane.png"));
+					effet = "taille+2";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = true;
+				break;
+			case "framboise":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/framb.png"));
+					effet = "enleve un mur";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = true;
+				break;
+			case "pasteque":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/pasteque.png"));
+					effet = "3 fruits bonus";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = true;
+				break;
+			case "mure":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/mure.png"));
+					effet = "ralentissement";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = true;
+				break;
+			case "peche":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/peche.png"));
+					effet = "murs immobiles 5sec";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = true;
+				break;
+			case "raisin":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/raisin.png"));
+					effet = "+60Score";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = true;
+				break;
+			case "pomme":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/pomme.png"));
+					effet = "taille+1";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = true;
+				break;
+			case "asperge":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/asperges.png"));
+					effet = "vitesse+20";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = false;
+				break;
+			case "ananas":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/ananas.png"));
+					effet = "chrono+10";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = true;
+				break;
+			case "cerise":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/cerises.png"));
+					effet = "joueur immobile";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = true;
+				break;
+			case "carotte":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/carotte.png"));
+					effet = "ajout d'un mur";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = false;
+				break;
+			case "piment":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/piment.png"));
+					effet = "mort";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = false;
+				break;
+			case "poivron":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/poivron.png"));
+					effet = "3 légumes malus";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = false;
+				break;
+			case "radis":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/radis.png"));
+					effet = "-40score";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = false;
+				break;
+			case "chou-fleur":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/choufleur.png"));
+					effet = "taille-2";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = false;
+				break;
+			case "aubergine":
+				try {
+					bImgFruit = ImageIO.read(new File("img/fruits/aubergine.png"));
+					effet = "diminution chrono";
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				this.bonus = false;
+				break;
 		}
-
-		else if (typeFruit == "framboise") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/framb.png"));
-            	effet = "enleve un mur";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=true;
-	    }
-
-		else if (typeFruit == "pasteque") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/pasteque.png"));
-            	effet = "3 fruits bonus";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=true;
-	    }
-
-		else if (typeFruit == "mure") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/mure.png"));
-            	effet = "ralentissement";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=true;
-	    }
-
-		else if (typeFruit == "peche") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/peche.png"));
-            	effet = "murs immobiles 5sec";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=true;
-	    }
-
-		else if (typeFruit == "raisin") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/raisin.png"));
-            	effet = "+60Score";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=true;
-		}
-
-		else if (typeFruit == "pomme") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/pomme.png"));
-            	effet = "taille+1";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=true;
-	    }
-
-		else if (typeFruit == "asperge") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/asperges.png"));
-            	effet = "vitesse+20";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=false;
-	    }
-
-	    else if (typeFruit == "ananas") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/ananas.png"));
-            	effet = "chrono+10";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=true;
-	    }
-
-	    else if (typeFruit == "cerise") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/cerises.png"));
-            	effet = "joueur immobile";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=true;
-	    }
-
-		else if (typeFruit == "carotte") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/carotte.png"));
-            	effet = "ajout d'un mur";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=false;
-		}
-
-		else if (typeFruit == "piment") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/piment.png"));
-            	effet = "mort";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=false;
-	    }
-
-		else if (typeFruit == "poivron") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/poivron.png"));
-            	effet = "3 légumes malus";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=false;
-	    }
-
-		else if (typeFruit == "radis") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/radis.png"));
-            	effet = "-40score";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=false;
-	    }
-
-		else if (typeFruit == "chou-fleur") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/choufleur.png"));
-            	effet = "taille-2";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=false;
-	    }
-
-	    else if (typeFruit == "aubergine") {
-			try {
-            	bImgFruit = ImageIO.read(new File("img/fruits/aubergine.png"));
-            	effet = "diminution chrono";
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			this.bonus=false;
-	    }
 
 		imgFruit = new ImageIcon(bImgFruit);
         imgFruit = new ImageIcon(imgFruit.getImage().getScaledInstance(20, 20, BufferedImage.SCALE_SMOOTH));
 	}
 
+
+	/**
+	 * @param snake
+	 * @param model
+	 * réalise les effets des fruits correspondant
+	 */
 	public void effect(Snake snake,Model model){
-		int delay = snake.getDelay();
 		switch(typeFruit){
 			default:
 				break;
@@ -231,14 +233,14 @@ public class Fruit {
 				snake.setScore(snake.getScore()+50);
 				break;
 			case "mure":
-				snake.setDelay(delay+50);
+				snake.setDelay(snake.getDelay()+50);
 				this.timerEffect = new Timer();
 				this.timeEffect = 5;
 
 				timerEffect.schedule(new TimerTask() {
 					public void run(){
 						if(timeEffect == 0){
-							snake.setDelay(delay-50);
+							snake.setDelay(snake.getDelay()-50);
 							cancel();
 						}
 						timeEffect--;
@@ -288,14 +290,14 @@ public class Fruit {
 				}, 1000, 1000);
 				break;
 			case "asperge" :
-				snake.setDelay(delay-50);
+				snake.setDelay(snake.getDelay()-50);
 				this.timerEffect = new Timer();
 				this.timeEffect = 5;
 
 				timerEffect.schedule(new TimerTask() {
 					public void run(){
 						if(timeEffect == 0){
-							snake.setDelay(delay+50);
+							snake.setDelay(snake.getDelay()+50);
 							cancel();
 						}
 						timeEffect--;
@@ -304,6 +306,8 @@ public class Fruit {
 				break;
 			case "chou-fleur":
 				snake.setTaille(snake.getTaille()-2);
+				if(snake.getTaille() <= 0)
+					snake.setDead(true);
 				break;
 			case "carotte":
 				model.getListeWall().add(new Wall(model,model.getJ1(),model.getListeFruit().get(0)));
@@ -334,9 +338,6 @@ public class Fruit {
 		}
 	}
 
-
-
-
 	public String toString(){
 		return ("le fruit est de type "+ typeFruit+", son effet est : "+ effet);
 	}
@@ -346,6 +347,12 @@ public class Fruit {
 	}
 
 
+	/**
+	 * @param snake
+	 * @param model
+	 * affecte les positions du fruit a un emplacement valide
+	 * pas sur le serpent, pas sur le mur et pas sur des objets
+	 */
 	public void validFruit(Snake snake,Model model){
 		int x,y;
 		do {
@@ -356,9 +363,9 @@ public class Fruit {
 		this.posY=y;
 	}
 
-	/*
-    Renvoie un entier random entre les bornes de la largeur de la fenetre
-     */
+	/**
+	 * @return un int dans une position aléatoire mais dans les limites de l'écran
+	 */
 	public int randomX(){
 		int random = (int)(Math.random()*((700)+1));
 		while(random%20 != 0){
@@ -367,9 +374,10 @@ public class Fruit {
 		return random;
 	}
 
-	/*
-    Renvoie un entier random entre les bornes de la hauteur de la fenetre
-     */
+	/**
+	 * @return un int dans une postion aléatoire mais dans les limites de l'écran
+	 * classe différentes car cela differe en fonction du systeme d'exploitation
+	 */
 	public int randomY(){
 		int random = (int) (Math.random() * ((660) + 1));
 		while(random % 20 != 0){
@@ -377,7 +385,16 @@ public class Fruit {
 		}
 		return random;
 	}
-	// renvoie true si le fruit se trouve sur une partie du serpent
+
+
+	/**
+	 * @param x
+	 * @param y
+	 * @param snake
+	 * @param model
+	 * @return true si le fruit a un emplacement non valide
+	 * false si il est valide
+	 */
 	public boolean fruitIsOnSnake(int x, int y,Snake snake,Model model){
 		for(int i = 0; i < snake.getTaille();i++){
 			if((x == snake.getSnake()[i][0]) && (y == snake.getSnake()[i][1])){
