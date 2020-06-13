@@ -38,7 +38,6 @@ class FenetreMenu extends JFrame {
 
 
     /**DEBUT MENU PRINCIPAL**/
-
     private JLabel lMenuPrincipal;
 
     //j'ai remplacer mybuttonproj par JButton pour l'instant
@@ -53,12 +52,10 @@ class FenetreMenu extends JFrame {
 
     private JLabel lserpentGauche;
     private JLabel lserpentDroite;
-
     /**FIN MENU PRICIPAL**/
 
 
     /**DEBUT MENU SKIN**/
-
     JPanel titreP;
     Container con;
 
@@ -86,27 +83,25 @@ class FenetreMenu extends JFrame {
     private JPanel skinPseudoButtonPanel;
     private JTextField tfPseudo;
     private JLabel lPseudo;
+    /**FIN MENU SKIN**/
 
 
-    // Elements du menu PARAMETRE
+    /**DEBUT MENU PARAMETRES**/
     private JLabel lParam;
     JPanel panTitleParam;
     JLabel lImgTitreDroite;
     JLabel lImgTitreGauche;
-    protected JSlider slVolumeMusique;
-    protected JSlider slVolumeBruits;
-    protected JRadioButton rbFrench;
-    protected JRadioButton rbEnglish;
+    private JSlider slVolumeMusique;
+    private JSlider slVolumeBruits;
+    private JRadioButton rbFrench;
+    private JRadioButton rbEnglish;
+    /**FIN MENU JOUER**/
+
     protected SnakeButton backParam;
-
-
-    // variables a modifier par les listener du menu parametres
-    private String lang;
-    /**FIN MENU SKIN**/
+    /**FIN MENU PARAMETRES**/
 
 
     /**DEBUT MENU SCORE**/
-
     private String[][] data;
     private String[] title;
     private JTable tableau;
@@ -133,11 +128,9 @@ class FenetreMenu extends JFrame {
 
     private SnakeButton bRetour;
     private JButton bClear;
-
     /**FIN MENU SCORE**/
 
     /**MENU JOUER**/
-
     private SnakeButton backPlay;
     private SnakeButton butEasy;
     private SnakeButton butNormal;
@@ -151,9 +144,6 @@ class FenetreMenu extends JFrame {
 
     private JPanel panPlay;
     private JPanel panDifficulty;
-
-    /**FIN MENU JOUER**/
-
     /** Credits **/
     private SnakeButton backCredits;
     private JPanel panelCredits;
@@ -212,10 +202,10 @@ class FenetreMenu extends JFrame {
         }
         // fin music
 
-        backCredits = new SnakeButton("retour");
+        backCredits = new SnakeButton(model.textFromLang("retour", "back"));
     }
     public void initMenuPrincipal(){
-        lMenuPrincipal = new JLabel (" Menu principal ") ;
+        lMenuPrincipal = new JLabel(model.textFromLang("Menu principal", "Main menu"));
         setupTitle(lMenuPrincipal);
         creerTitre(lMenuPrincipal,null,null);
 
@@ -226,25 +216,25 @@ class FenetreMenu extends JFrame {
         lserpentDroite = new JLabel(imageDroite);
 
         //je remplace myboutton par Snakeboutton
-        boutonJouer = new SnakeButton("Jouer");
-        boutonSkins = new SnakeButton("Skin");
-        boutonScores = new SnakeButton("Tableau des scores");
-        boutonParametres = new SnakeButton("Parametres");
+        boutonJouer = new SnakeButton(model.textFromLang("Jouer", "Play"));
+        boutonSkins = new SnakeButton(model.textFromLang("Apparence", "Skin"));
+        boutonScores = new SnakeButton(model.textFromLang("Tableau des scores", "Scoreboard"));
+        boutonParametres = new SnakeButton(model.textFromLang("Parametres", "Settings"));
         boutonCredits = new SnakeButton("Credits");
     }
 
     public void initJouer() {
 
-        butEasy = new SnakeButton("Facile");
+        butEasy = new SnakeButton(model.textFromLang("Facile", "Easy"));
         butNormal = new SnakeButton("Normal");
-        butHard = new SnakeButton("Difficile");
-        butTrad = new SnakeButton("Traditionnel");
-        butLaby = new SnakeButton("Labyrinthe");
-        butChrono = new SnakeButton("Chrono");
+        butHard = new SnakeButton(model.textFromLang("Difficile", "Hard"));
+        butTrad = new SnakeButton(model.textFromLang("Classique", "Classic"));
+        butLaby = new SnakeButton(model.textFromLang("Labyrinthe", "Maze"));
+        butChrono = new SnakeButton(model.textFromLang("Chrono", "Timer"));
         butDuo = new SnakeButton("Duo");
-        backPlay = new SnakeButton("Retour");
-        backDifficulty = new SnakeButton("Retour");
-        lPlay = new JLabel("Jouer");
+        backPlay = new SnakeButton(model.textFromLang("Retour", "Back"));
+        backDifficulty = new SnakeButton(model.textFromLang("Retour", "Back"));
+        lPlay = new JLabel(model.textFromLang("Jouer", "Play"));
         setupTitle(lPlay);
         creerTitre(lPlay,null,null);
     }
@@ -254,14 +244,13 @@ class FenetreMenu extends JFrame {
         creerTitre(lCredits,null,null);
     }
     public void initScore(){
-
         //JLabel titre
-        lscore = new JLabel("TABLEAU DES SCORES");
+        lscore = new JLabel(model.textFromLang("Tableau des scores", "Scoreboard"));
         //fonction seTup pour mettre à jout
         setupTitle(lscore);
         //initialisation du bouton retour
-        bRetour = new SnakeButton("retour");
-        bClear = new SnakeButton("vider le tableau");
+        bRetour = new SnakeButton(model.textFromLang("Retour", "Back"));
+        bClear = new SnakeButton(model.textFromLang("Vider le tableau", "Empty the table"));
 
         // contenu des cellules
         //tableau d'objet à 2 dimension
@@ -275,7 +264,7 @@ class FenetreMenu extends JFrame {
                 {"","","",""},{"","","",""}
         };
         // Les titres des colonnes
-        title = new String[]{"Mode","Difficulté", "Pseudo", "Score"};
+        title = new String[]{"Mode",model.textFromLang("Difficulte", "Difficulty"), "Pseudo", "Score"};
 
         //initialisation du tableau
         tableau = new JTable(data, title);
@@ -325,24 +314,22 @@ class FenetreMenu extends JFrame {
     }
 
     public void initSkin(){
-        lSkin = new JLabel("Skin");
+        lSkin = new JLabel(model.textFromLang("Apparence", "Skin"));
         setupTitle(lSkin);
 
         // SKIN Menu
-        skinMap = new SnakeButton("Theme map");
-        skinPseudo = new SnakeButton("pseudoSerpent");
-        backFromSkin = new SnakeButton("Retour");
-
-
-        skinSerpent = new SnakeButton("Serpent");
-        skinMap = new SnakeButton("Map");
+        skinMap = new SnakeButton(model.textFromLang("Theme plateau", "Map theme"));
         skinPseudo = new SnakeButton("Pseudo");
-        backFromSkin = new SnakeButton("Retour");
+        backFromSkin = new SnakeButton(model.textFromLang("Retour", "Back"));
 
-        backFromSkinChild = new SnakeButton("Retour");
+
+        skinSerpent = new SnakeButton(model.textFromLang("Serpent", "Snake"));
+        skinMap = new SnakeButton(model.textFromLang("Plateau", "Map"));
+        skinPseudo = new SnakeButton("Pseudo");
+        backFromSkin = new SnakeButton(model.textFromLang("Retour", "Back"));
+        backFromSkinChild = new SnakeButton(model.textFromLang("Retour", "Back"));
 
         // SKIN SERPENT
-
         cbSerpent = new JComboBox(listeSerpent);
         setupCb(cbSerpent);
 
@@ -381,7 +368,7 @@ class FenetreMenu extends JFrame {
         lImgTitreGauche =  new JLabel(new ImageIcon("img/paramIcon.png"));
         lImgTitreDroite =  new JLabel(new ImageIcon("img/paramIcon.png"));
 
-        lParam = new JLabel("Parametres");
+        lParam = new JLabel(model.textFromLang("Parametres", "Settings"));
         setupTitle(lParam);
         creerTitre(lParam, lImgTitreDroite, lImgTitreGauche);
 
@@ -391,14 +378,13 @@ class FenetreMenu extends JFrame {
         rbLangue.add(rbFrench);
         rbLangue.add(rbEnglish);
 
-        backParam = new SnakeButton("Retour");
+        backParam = new SnakeButton(model.textFromLang("Retour", "Back"));
     }
 
 
     /**Créer la banderole au dessus du menu**/
     /**@param **/
     public void creerTitre(JLabel titre,  JLabel img, JLabel img2) {
-
         titreP = new JPanel();
         titreP.setLayout(new GridBagLayout());
         titreP.setBounds(0,25,1280,125);
@@ -417,7 +403,6 @@ class FenetreMenu extends JFrame {
     /**FIN methodes pour tous les menus**/
 
     /**DEBUT Methodes menu principale : Marion**/
-
     public void creerWidgetMenuPrincipal(){
         creerTitre(lMenuPrincipal,null,null);
 
@@ -433,9 +418,7 @@ class FenetreMenu extends JFrame {
 
         pantitre2.add(content);
         setContentPane(pantitre2);
-
     }
-
     /**FIN methodes menu principale**/
 
     /**DEBUT methodes menu skin : Arthur**/
@@ -566,10 +549,10 @@ class FenetreMenu extends JFrame {
     public void creerParametresVue() {
         panTitleParam = setupContent();
 
-        JLabel lSon = new JLabel("Parametres son");
-        JLabel lMusique = new JLabel("Volume de la musique");
-        JLabel lBruitages = new JLabel("Volume des bruitages");
-        JLabel lLangue = new JLabel("Langue");
+        JLabel lSon = new JLabel(model.textFromLang("Parametres son", "Sound settings"));
+        JLabel lMusique = new JLabel(model.textFromLang("Volume de la musique", "Music volume"));
+        JLabel lBruitages = new JLabel(model.textFromLang("Volume des bruitages", "Sounds volume"));
+        JLabel lLangue = new JLabel(model.textFromLang("Langage", "Language"));
 
         // centre les textes dans leurs labels et applique la bonne police
         lMusique.setHorizontalAlignment(JLabel.CENTER);
@@ -631,10 +614,6 @@ class FenetreMenu extends JFrame {
 
         panTitleParam.add(panParametre);
         setContentPane(panTitleParam);
-
-
-        // listeners du menu parametre (a bouger dans le controleur et adapter)
-
     }
 
     /**methode à commenter**/
@@ -654,7 +633,6 @@ class FenetreMenu extends JFrame {
     /**methode à commenter**/
     /**@param **/
     public void addSkinSerpent(){
-
         skinSerpentButtonPanel = setupContent();
         JPanel content = new JPanel();
         content.setBackground(null);
@@ -663,13 +641,11 @@ class FenetreMenu extends JFrame {
         content.add(backFromSkinChild);
         skinSerpentButtonPanel.add(content);
         setContentPane(skinSerpentButtonPanel);
-
     }
 
     /**methode à commenter**/
     /**@param **/
     public void addSkinMap(){
-
         skinMapButtonPanel = setupContent();
         JPanel content = new JPanel();
         content.setBackground(null);
@@ -684,7 +660,6 @@ class FenetreMenu extends JFrame {
     /**methode à commenter**/
     /**@param **/
     public void addSkinPseudo(){
-
         skinPseudoButtonPanel = setupContent();
         JPanel content = new JPanel();
         content.setBackground(null);
@@ -693,17 +668,14 @@ class FenetreMenu extends JFrame {
         content.add(tfPseudo);
         content.add(backFromSkinChild);
 
-
         skinPseudoButtonPanel.add(content);
         setContentPane(skinPseudoButtonPanel);
     }
-
     /**FIN methodes menu skin**/
 
 
 
     /**DEBUT methodes menu score : Lisa**/
-
     // je cree une image(x2)
     // je cree un label dans l'image(x2)
     // je cree un label pour cette image(x2)
@@ -738,14 +710,12 @@ class FenetreMenu extends JFrame {
         pantitre2.add(pantitre);
 
         this.setContentPane(pantitre2);
-
     }
 
 
     /**création du contenu de la page score**/
     /**@param titre titre qui est ajouter à la page**/
     public void creerInterface(JPanel titre) {
-
         // panel tableau (tableau + titres colonnes)
         JPanel pan = new JPanel();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
@@ -830,12 +800,10 @@ class FenetreMenu extends JFrame {
         panFinal.add(panEnsemble);
 
         this.setContentPane(panFinal);
-
     }
     /**FIN methodes menu score**/
 
     /**DEBUT methodes controller**/
-
     /**ajout tous les bouttons quand vues faites**/
     public void setControlButton(ControlBouton controlBut){
         // Menu
@@ -861,6 +829,8 @@ class FenetreMenu extends JFrame {
         this.backParam.addActionListener(controlBut);
         this.slVolumeBruits.addChangeListener(controlBut);
         this.slVolumeMusique.addChangeListener(controlBut);
+        this.rbEnglish.addActionListener(controlBut);
+        this.rbFrench.addActionListener(controlBut);
         // Jouer
         this.backPlay.addActionListener(controlBut);
         this.butEasy.addActionListener(controlBut);
@@ -871,9 +841,7 @@ class FenetreMenu extends JFrame {
         this.butChrono.addActionListener(controlBut);
         this.butDuo.addActionListener(controlBut);
         this.backDifficulty.addActionListener(controlBut);
-        
     }
-
     /**FIN methodes controller*/
 
 
@@ -968,11 +936,10 @@ class FenetreMenu extends JFrame {
     /**FIN getter des Panel pour menu jouer**/
 
     /**DEBUT getter des Slider pour menu param**/
-
     public JSlider getSlVolumeMusique() { return slVolumeMusique; }
-
     public JSlider getSlVolumeBruits() { return slVolumeBruits; }
-
+    public JRadioButton getRbFrench() { return rbFrench; }
+    public JRadioButton getRbEnglish() { return rbEnglish; }
     /**FIN getter des Slider pour menu param**/
 
 
@@ -1031,7 +998,6 @@ class FenetreMenu extends JFrame {
     public String[][] getData() {
         return data;
     }
-
     public void setData(String[][] data) {
         this.data = data;
     }
@@ -1039,7 +1005,6 @@ class FenetreMenu extends JFrame {
     public JTable getTableau() {
         return tableau;
     }
-
     public void setTableau(JTable tableau) {
         this.tableau = tableau;
     }
@@ -1047,7 +1012,6 @@ class FenetreMenu extends JFrame {
     public TableModel getTable() {
         return table;
     }
-
     public void setTable(TableModel table) {
         this.table = table;
     }
@@ -1055,7 +1019,6 @@ class FenetreMenu extends JFrame {
     public Tableau getRender() {
         return render;
     }
-
     public void setRender(Tableau render) {
         this.render = render;
     }
@@ -1065,7 +1028,6 @@ class FenetreMenu extends JFrame {
     public JTextField getTfPseudo() {
         return tfPseudo;
     }
-
     public void setTfPseudo(JTextField tfPseudo) {
         this.tfPseudo = tfPseudo;
     }

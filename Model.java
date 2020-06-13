@@ -7,13 +7,14 @@ class Model {
     private String difficulty;
     private String mode;
     private String theme = "";
+    private String lang = "langFR";
 
     private final int VOL_MIN = 0;
     private final int VOL_MAX = 100;
     private final int VOL_INIT = 40;
-
     private int volumeMusique = VOL_INIT;
     private int volumeBruits = VOL_INIT;
+    Clip musicClip;
 
     private int multiplicateur;
     private Score score;
@@ -21,7 +22,6 @@ class Model {
     private Snake j2;
 
     private String chemin = "img/snake/";
-    Clip musicClip;
 
     private Chrono chrono;
 
@@ -435,6 +435,11 @@ class Model {
         return fruit;
     }
 
+    public String textFromLang(String fr, String en) {
+        if (lang == "langFR") return fr;
+        return en;
+    }
+
     public Score getScore() { return score; }
 
     public void setScore(Score score) { this.score = score; }
@@ -503,6 +508,8 @@ class Model {
     }
 
     public int getMultiplicateur() { return multiplicateur; }
-
     public void setMultiplicateur(int multiplicateur) { this.multiplicateur = multiplicateur; }
+
+    public void setLang(String lang) { this.lang = lang; }
+    public String getLang() { return lang; }
 }

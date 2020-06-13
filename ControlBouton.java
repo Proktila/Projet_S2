@@ -184,7 +184,14 @@ public class ControlBouton implements ActionListener, ChangeListener {
         if (a.getSource().equals(fenMenu.getCbMap())){
             model.setTheme(( (JComboBox) a.getSource()).getSelectedItem().toString());
         }
-
+        // choix langage
+        if (a.getSource().equals(fenMenu.getRbEnglish()) || a.getSource().equals(fenMenu.getRbFrench())){
+            if (a.getSource().equals(fenMenu.getRbEnglish())) model.setLang("langEN");
+            else model.setLang("langFR");
+            fenMenu.dispose();
+            model.getMusicClip().close();
+            new ControlBouton(new FenetreMenu(model), model);
+        }
     }
     //méthode qui affiche les scores dans le tableau
     public void showScore() throws IOException{
