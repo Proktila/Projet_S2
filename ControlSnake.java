@@ -231,7 +231,7 @@ public class ControlSnake implements KeyListener, ActionListener {
             gameplay.getFenetreMenu().setVisible(true);
             gameplay.getFenetreMenu().changerMenuPrincipal();
             // recréer un snake avec le même skin
-            Snake s = new Snake(model);
+            Snake s = new Snake();
             s.skins(model.getJ1().getSkin());
             model.setJ1(s);
             // clear lest différentes liste
@@ -295,7 +295,7 @@ public class ControlSnake implements KeyListener, ActionListener {
         else gameplay.initWall();
         gameplay.initFruit();
         gameplay.setBegin(0);
-        Snake s = new Snake(model);
+        Snake s = new Snake();
         s.skins(model.getJ1().getSkin());
         model.setJ1(s);
         gameplay.repaint();
