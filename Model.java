@@ -5,7 +5,7 @@ import java.util.List;
 class Model {
     private String difficulty;
     private String mode;
-    private String theme = "";
+    private String theme = "Classic";
     private String lang = "langFR";
 
     private final int VOL_MIN = 0;
@@ -492,7 +492,7 @@ class Model {
     public void setVolumeBruits(int volumeBruits) { this.volumeBruits = volumeBruits; }
     public void setMusicClip(Clip musicClip) { this.musicClip = musicClip; }
     public void setLang(String lang) { this.lang = lang; }
-    
+
     public void setMultiplicateur(int multiplicateur) { this.multiplicateur = multiplicateur; }
     public void setChrono(Chrono chrono) { this.chrono = chrono; }
 }

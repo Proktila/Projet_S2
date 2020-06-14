@@ -46,7 +46,7 @@ class FenetreMenu extends JFrame {
 
     private JPanel skinMapButtonPanel;
     private JComboBox cbMap;
-    private Object[] listeMap = new Object[]{"Rouge", "Bleu", "Element 3", "Element 4", "Element 5"};
+    private Object[] listeMap = new Object[]{"Classic", "Space", "Cloud", "Matrix", "Wall"};
 
     private JPanel skinPseudoButtonPanel;
     private JTextField tfPseudo;

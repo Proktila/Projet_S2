@@ -133,7 +133,6 @@ class Gameplay extends JPanel{
             // initalise le chrono à la bonne valeur
             model.setChronoDifficulty();
         }
-        bg = new ImageIcon("img/snake/mapSpace.png");
     }
 
     /**
@@ -231,6 +230,7 @@ class Gameplay extends JPanel{
         g.fillRect(720,0,280,720);
 
         // Dessine le milieu du jeu
+        setTheme();
         bg.paintIcon(this,g,0,0);
 
         if(!model.getMode().equals("duo")) {
@@ -317,18 +317,12 @@ class Gameplay extends JPanel{
     }
 
     /**
-     * @param map
-     * @return la couleur en fonction de la map sélectionné
+     * Definit le theme du jeu
      */
-    private Color setThemeColor(String map) {
-        switch (map) {
-            case "Rouge":
-                return Color.RED;
-            case "Bleu":
-                return Color.BLUE;
-            default:
-                return this.green;
-        }
+    private void setTheme() {
+        String map = model.getTheme();
+        System.out.println("maps/theme/map"+map+".png");
+        bg = new ImageIcon("maps/theme/map"+map+".png");
     }
 
 

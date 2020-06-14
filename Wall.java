@@ -17,7 +17,7 @@ public class Wall{
      * ainsi que du model pour la liste
      */
     public Wall(Model model,Snake snake,Fruit fruit){
-        this.wall = new ImageIcon("img/snake/blackWall.png");
+        this.wall = getWallColor(model);
         int x,y;
         do {
             x = randomX();
@@ -36,10 +36,19 @@ public class Wall{
      * création d'un mur avec des coordonées précises et ajout dans une liste de murs
      */
     public Wall(Model model,int x, int y){
-        this.wall = new ImageIcon("img/snake/blackWall.png");
+        this.wall = getWallColor(model);
         this.x = x;
         this.y = y;
         model.getListeWall().add(this);
+    }
+
+    /**
+     * Change le mur en fonction du theme du plateau
+     * @return ImageIcon du bon mur
+     */
+    private ImageIcon getWallColor(Model model) {
+        if (model.getTheme().equals("Classic") || model.getTheme().equals("Cloud") || model.getTheme().equals("Wall")) return new ImageIcon("img/snake/blackWall.png");
+        return new ImageIcon("img/snake/whiteWall.png");
     }
 
     /**
