@@ -321,7 +321,6 @@ class Gameplay extends JPanel{
      */
     private void setTheme() {
         String map = model.getTheme();
-        System.out.println("maps/theme/map"+map+".png");
         bg = new ImageIcon("maps/theme/map"+map+".png");
     }
 

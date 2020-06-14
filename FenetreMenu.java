@@ -42,7 +42,7 @@ class FenetreMenu extends JFrame {
 
     private JPanel skinSerpentButtonPanel;
     private JComboBox cbSerpent;
-    private Object[] listeSerpent = new Object[]{"basique", "nyan", "hack", "Element 4", "Element 5"};
+    private Object[] listeSerpent = new Object[]{"basique", "nyan", "hack", "gold", "fish"};
 
     private JPanel skinMapButtonPanel;
     private JComboBox cbMap;

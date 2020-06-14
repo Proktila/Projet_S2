@@ -58,15 +58,18 @@ public class Snake {
                 setSkinImg();
                 break;
 
-            case "gold" :
-                break;
-
             case "hack" :
                 this.skin="hack";
                 setSkinImg();
                 break;
 
-            default:
+            case "gold" :
+                this.skin="gold";
+                setSkinImg();
+                break;
+            case "fish" :
+                this.skin="fish";
+                setSkinImg();
                 break;
         }
     }
