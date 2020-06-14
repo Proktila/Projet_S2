@@ -321,8 +321,8 @@ class FenetreMenu extends JFrame {
      * Initialisation des objets du menu parametre
      */
     public void initParametre(){
-        slVolumeMusique = new JSlider(JSlider.HORIZONTAL,model.getVOL_MIN(), model.getVOL_MAX(), model.getVOL_INIT());
-        slVolumeBruits = new JSlider(JSlider.HORIZONTAL, model.getVOL_MIN(), model.getVOL_MAX(), model.getVOL_INIT());
+        slVolumeMusique = new JSlider(JSlider.HORIZONTAL,model.getVOL_MIN(), model.getVOL_MAX(), model.getVOL_INIT_MUSIC());
+        slVolumeBruits = new JSlider(JSlider.HORIZONTAL, model.getVOL_MIN(), model.getVOL_MAX(), model.getVOL_INIT_BRUITS());
 
         slVolumeMusique.setMajorTickSpacing(10);
         slVolumeMusique.setMinorTickSpacing(5);

@@ -10,9 +10,10 @@ class Model {
 
     private final int VOL_MIN = 0;
     private final int VOL_MAX = 100;
-    private final int VOL_INIT = 40;
-    private int volumeMusique = VOL_INIT;
-    private int volumeBruits = VOL_INIT;
+    private final int VOL_INIT_MUSIC = 40;
+    private final int VOL_INIT_BRUITS = 90;
+    private int volumeMusique = VOL_INIT_MUSIC;
+    private int volumeBruits = VOL_INIT_BRUITS;
     private Clip musicClip;
 
     private int multiplicateur;
@@ -471,7 +472,8 @@ class Model {
 
     public int getVOL_MIN() { return VOL_MIN; }
     public int getVOL_MAX() { return VOL_MAX;}
-    public int getVOL_INIT() { return VOL_INIT; }
+    public int getVOL_INIT_BRUITS() { return VOL_INIT_BRUITS; }
+    public int getVOL_INIT_MUSIC() { return VOL_INIT_MUSIC; }
     public int getVolumeMusique() { return volumeMusique; }
     public int getVolumeBruits() { return volumeBruits; }
     public Clip getMusicClip() { return musicClip; }
