@@ -213,7 +213,7 @@ class FenetreMenu extends JFrame {
         lscore = new JLabel(model.textFromLang("Tableau des scores", "Scoreboard"));
         //fonction seTup pour mettre à jout
         setupTitle(lscore);
-        //initialisation du bouton retour
+        //initialisation du bouton retour et vide
         bRetour = new SnakeButton(model.textFromLang("Retour", "Back"));
         bClear = new SnakeButton(model.textFromLang("Vider le tableau", "Empty the table"));
 
@@ -619,7 +619,7 @@ class FenetreMenu extends JFrame {
      * @param titre Jpanel du titre
      */
     public void createInterface(JPanel titre) {
-        // panel tableau (tableau + titres colonnes)
+        // panel tableau (tableau + titres colonnes)+ scrollPane
         JPanel pan = new JPanel();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
         pan.add(tableau.getTableHeader());
