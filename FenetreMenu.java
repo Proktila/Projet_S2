@@ -149,6 +149,7 @@ class FenetreMenu extends JFrame {
 
         try {
             model.setMusicClip(Sound.playMusic("sound/music.wav", model.getVolumeMusique()));
+            model.setMusicClip(Sound.playMusic("sound/music.wav", model.getVolumeMusique()));
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
             creerDialogErr(e.getMessage());
         }
@@ -376,18 +377,19 @@ class FenetreMenu extends JFrame {
      * Creer le menu credits
      */
     public void addCredit(){
-        JLabel taText1 = new JLabel("Le jeu à été concu par");
-        JLabel taText2 = new JLabel("Julien, Lisa, Marion, Theo, Nathan, Arthur");
-        JLabel taText3 = new JLabel("La musique utilisee est celle de");
-        JLabel taText4 = new JLabel("Harry potter, Nyan Cat etc");
-        JLabel taText5 = new JLabel("Pour la realisation de ce jeu on tient a remercier ");
-        JLabel taText6 = new JLabel("notre tuteur monsieur Couchot etc. ");
+        JLabel taText1 = new JLabel("Ce jeu à été concu par DUHOUX Arthur, DOYEN Lisa, ");
+        JLabel taText2 = new JLabel("DUBAIL Marion, GANARD theo, SCHNEIDER Nathan, VERWAERDE Julien,");
+        JLabel taText3 = new JLabel("dans le cadre de notre projet tuteuré de S2.");
+        JLabel taText4 = new JLabel("La musique utilisée sur le menu et en jeu est");
+        JLabel taText5 = new JLabel("Blippy Trance de MACLEOD Kevin.");
+        JLabel taText6 = new JLabel("Pour la realisation de ce jeu nous tenons a remercier ");
+        JLabel taText7 = new JLabel("notre tuteur monsieur CHARR Jean Claude.");
 
         panelCredits = setupContent();
 
         JPanel content = new JPanel();
         content.setBackground(BLUE);
-        content.setBounds(340,200,600,425);
+        content.setBounds(280,170,720,425);
 
         applyStyle(taText1);
         applyStyle(taText2);
@@ -395,18 +397,19 @@ class FenetreMenu extends JFrame {
         applyStyle(taText4);
         applyStyle(taText5);
         applyStyle(taText6);
+        applyStyle(taText7);
 
+        content.add(Box.createVerticalStrut(50));
         content.add(taText1);
-        content.add(Box.createVerticalStrut(50));
         content.add(taText2);
-        content.add(Box.createVerticalStrut(50));
         content.add(taText3);
         content.add(Box.createVerticalStrut(50));
         content.add(taText4);
-        content.add(Box.createVerticalStrut(50));
         content.add(taText5);
         content.add(Box.createVerticalStrut(50));
         content.add(taText6);
+        content.add(taText7);
+        content.add(Box.createVerticalStrut(50));
         content.add(backCredits);
 
         panelCredits.add(content);
