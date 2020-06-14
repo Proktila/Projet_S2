@@ -60,6 +60,8 @@ class Gameplay extends JPanel{
 
     private String[][] grid; // contient le labyrinthe
 
+    private ImageIcon bg; // fond d'écran
+
 
     /**
      * @param fen
@@ -131,6 +133,7 @@ class Gameplay extends JPanel{
             // initalise le chrono à la bonne valeur
             model.setChronoDifficulty();
         }
+        bg = new ImageIcon("img/snake/mapSpace.png");
     }
 
     /**
@@ -228,8 +231,7 @@ class Gameplay extends JPanel{
         g.fillRect(720,0,280,720);
 
         // Dessine le milieu du jeu
-        g.setColor(setThemeColor(model.getTheme()));
-        g.fillRect(0,0,720,720);
+        bg.paintIcon(this,g,0,0);
 
         if(!model.getMode().equals("duo")) {
             // Dessine effet et type
