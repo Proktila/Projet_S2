@@ -12,6 +12,9 @@ public class Chrono {
         this.time = time;
     }
 
+    /**
+     * lance le chrono
+     */
     public void setChrono(){
         this.timer = new Timer();
 
