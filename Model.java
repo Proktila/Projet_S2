@@ -33,8 +33,8 @@ class Model {
     private final Color BLUE = new Color(47, 81, 103);
     private final Color LIGHT_BLUE = new Color(85,220,238);
     private final Font FONT_50 = new Font("Monospaced", Font.BOLD, 50);
-    private final Font FONT_38 = new Font("Monospaced", Font.BOLD, 18);
-    private final Font FONT_24 = new Font("Monospaced", Font.BOLD, 18);
+    private final Font FONT_38 = new Font("Monospaced", Font.BOLD, 38);
+    private final Font FONT_24 = new Font("Monospaced", Font.BOLD, 24);
     private final Font FONT_18 = new Font("Monospaced", Font.BOLD, 18);
 
     public Model(){
