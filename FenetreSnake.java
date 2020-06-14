@@ -31,26 +31,17 @@ public class FenetreSnake extends JFrame {
 
 class Gameplay extends JPanel{
 
-    private Model model;
-    private Color blue = new Color(47, 81, 103);
-    private Color green = new Color(50, 99, 23);
-    private Color lightGreen = new Color(99, 205, 42);
-    private Color lightBlue = new Color(85,220,238);
+    private final Model model;
+    private final Color blue = new Color(47, 81, 103);
+    private final Color lightGreen = new Color(99, 205, 42);
+    private final Color lightBlue = new Color(85,220,238);
 
-
-
-    // Les différentes partie du serpent
-    private ImageIcon rightHead;
-    private ImageIcon leftHead;
-    private ImageIcon downHead;
-    private ImageIcon upHead;
-    private ImageIcon body;
 
     // variable qui sert à positionner le serpent au début
     private int begin = 0;
 
-    private JFrame fen;
-    private FenetreMenu fenetreMenu;
+    private final JFrame fen;
+    private final FenetreMenu fenetreMenu;
 
     private boolean pause=false;
     private SnakeButton pauseBut;
@@ -333,6 +324,9 @@ class Gameplay extends JPanel{
      */
     public void showSnake(int[][] snake,Graphics g,Snake s){
 
+        // Les différentes partie du serpent
+        ImageIcon rightHead;
+        ImageIcon leftHead;
         if(s == model.getJ2()){
             leftHead = s.getLeftHead();
             leftHead.paintIcon(this,g,snake[0][0],snake[0][1]);
@@ -356,17 +350,17 @@ class Gameplay extends JPanel{
             }
             // si la tete va vers le bas
             if(i==0 && s.isDown()){
-                downHead = s.getDownHead();
+                ImageIcon downHead = s.getDownHead();
                 downHead.paintIcon(this,g,snake[i][0],snake[i][1]);
             }
             // si la tete va vers le haut
             if(i==0 && s.isUp()){
-                upHead = s.getUpHead();
+                ImageIcon upHead = s.getUpHead();
                 upHead.paintIcon(this,g,snake[i][0],snake[i][1]);
             }
             // si c'est un corp
             if(i != 0){
-                body = s.getBody();
+                ImageIcon body = s.getBody();
                 body.paintIcon(this,g,snake[i][0],snake[i][1]);
             }
         }
@@ -383,7 +377,7 @@ class Gameplay extends JPanel{
      */
     public void eatSnake(int[][] snake,Graphics g, Snake s){
         // liste qui contiendra les fruits a enlever
-        java.util.List<Fruit> toRemove=new ArrayList<Fruit>();
+        java.util.List<Fruit> toRemove= new ArrayList<>();
         // si le serpent mange le fruit
         for(Fruit f : model.getListeFruit()){
             // si le fruit est au même endroit que la tête du serpent
@@ -595,7 +589,7 @@ class Gameplay extends JPanel{
     public void showScoreIndiv(Graphics g){
         g.setColor(lightGreen);
         g.setFont(new Font("Monospaced", Font.BOLD, 18));
-        if(model.getMode() == "chrono"){
+        if(model.getMode().equals("chrono")){
             g.drawString("Temps " + model.getChrono().getTime(), 740, 40);
         }
         g.drawString("Score: " + model.getJ1().getScore(), 740, 60);

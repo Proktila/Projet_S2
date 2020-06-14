@@ -25,9 +25,6 @@ class FenetreMenu extends JFrame {
     ImageIcon imageGauche;
     ImageIcon imageDroite;
 
-    private JLabel lserpentGauche;
-    private JLabel lserpentDroite;
-
     // menu skin
     JPanel titreP;
     Container con;
@@ -42,15 +39,14 @@ class FenetreMenu extends JFrame {
 
     private JPanel skinSerpentButtonPanel;
     private JComboBox cbSerpent;
-    private Object[] listeSerpent = new Object[]{"basique", "nyan", "hack", "gold", "fish"};
+    private final Object[] listeSerpent = new Object[]{"basique", "nyan", "hack", "gold", "fish"};
 
     private JPanel skinMapButtonPanel;
     private JComboBox cbMap;
-    private Object[] listeMap = new Object[]{"Classic", "Space", "Cloud", "Matrix", "Wall"};
+    private final Object[] listeMap = new Object[]{"Classic", "Space", "Cloud", "Matrix", "Wall"};
 
     private JPanel skinPseudoButtonPanel;
     private JTextField tfPseudo;
-    private JLabel lPseudo;
 
 
     // menu parametre
@@ -64,8 +60,6 @@ class FenetreMenu extends JFrame {
     private JRadioButton rbEnglish;
     protected SnakeButton backParam;
 
-    // score
-    private String[] title;
     private JTable tableau;
 
     private JLabel lscore;
@@ -78,15 +72,7 @@ class FenetreMenu extends JFrame {
     private JLabel lMedaille2Gauche;
     private JLabel lMedaille3Gauche;
 
-    private ImageIcon imgCoupe;
-    private ImageIcon imgMedaille1;
-    private ImageIcon imgMedaille2;
-    private ImageIcon imgMedaille3;
-
     private JPanel pantitre2;
-
-    private TableModel table;
-    private Tableau render;
 
     private SnakeButton bRetour;
     private JButton bClear;
@@ -109,7 +95,6 @@ class FenetreMenu extends JFrame {
 
     // Credits
     private SnakeButton backCredits;
-    private JPanel panelCredits;
     private JLabel lCredits;
 
     public FenetreMenu(Model model) {
@@ -163,12 +148,6 @@ class FenetreMenu extends JFrame {
         lMenuPrincipal = new JLabel(model.textFromLang("Sn'hack", "Sn'hack"));
         setupTitle(lMenuPrincipal);
         createTitle(lMenuPrincipal,null,null);
-
-        imageGauche = new ImageIcon("img/menuPrinc/serpent1.png");
-        imageDroite = new ImageIcon("img/menuPrinc/serpent2.png");
-
-        lserpentGauche = new JLabel(imageGauche);
-        lserpentDroite = new JLabel(imageDroite);
 
         //je remplace myboutton par Snakeboutton
         boutonJouer = new SnakeButton(model.textFromLang("Jouer", "Play"));
@@ -229,14 +208,15 @@ class FenetreMenu extends JFrame {
                 {"","","",""},{"","","",""}
         };
         // Les titres des colonnes
-        title = new String[]{"Mode",model.textFromLang("Difficulte", "Difficulty"), "Pseudo", "Score"};
+        // score
+        String[] title = new String[]{"Mode", model.textFromLang("Difficulte", "Difficulty"), "Pseudo", "Score"};
 
         //initialisation du tableau
         tableau = new JTable(data, title);
 
         // tableau qui appelle les classes TableModel et Tableau
-        table = new TableModel(data, title);
-        render = new Tableau();
+        TableModel table = new TableModel(data, title);
+        Tableau render = new Tableau();
         tableau.setModel(table);
         tableau.setDefaultRenderer(Object.class, render);
 
@@ -248,23 +228,23 @@ class FenetreMenu extends JFrame {
         // espacement entre les celulles du tableau
         tableau.setRowHeight(30);
 
-        //largeur des cellulles du tableau
+        // largeur des cellulles du tableau
         tableau.getColumnModel().getColumn(0).setPreferredWidth(200);
         tableau.getColumnModel().getColumn(1).setPreferredWidth(250);
         tableau.getColumnModel().getColumn(2).setPreferredWidth(250);
         tableau.getColumnModel().getColumn(3).setPreferredWidth(150);
 
         // image coupe
-        imgCoupe = new ImageIcon("img/score/coupe.png");
+        ImageIcon imgCoupe = new ImageIcon("img/score/coupe.png");
 
         //label coupe (gauche et droite)
         imgCoupeGauche =  new JLabel(imgCoupe);
         imgCoupeDroite =  new JLabel(imgCoupe);
 
         // images medailles
-        imgMedaille1 = new ImageIcon("img/score/medaille1.png");
-        imgMedaille2 = new ImageIcon("img/score/Medaille2.png");
-        imgMedaille3 = new ImageIcon("img/score/Medaille3.png");
+        ImageIcon imgMedaille1 = new ImageIcon("img/score/medaille1.png");
+        ImageIcon imgMedaille2 = new ImageIcon("img/score/Medaille2.png");
+        ImageIcon imgMedaille3 = new ImageIcon("img/score/Medaille3.png");
 
         // label avec images de médailles
         //médailles de droite
@@ -313,7 +293,7 @@ class FenetreMenu extends JFrame {
         tfPseudo.setText("Pseudo");
         tfPseudo.setPreferredSize(new Dimension(300,91));
 
-        lPseudo = new JLabel();
+        JLabel lPseudo = new JLabel();
         lPseudo.add(tfPseudo);
     }
 
@@ -384,7 +364,7 @@ class FenetreMenu extends JFrame {
         JLabel taText6 = new JLabel("Pour la realisation de ce jeu nous tenons a remercier ");
         JLabel taText7 = new JLabel("notre tuteur monsieur CHARR Jean Claude.");
 
-        panelCredits = setupContent();
+        JPanel panelCredits = setupContent();
 
         JPanel content = new JPanel();
         content.setBackground(BLUE);
@@ -692,7 +672,7 @@ class FenetreMenu extends JFrame {
         panCadre.add(pantable2);
         panCadre.add(panBoutton);
 
-        //ajoutu d'un panel dans un panel
+        //ajout d'un panel dans un panel
         JPanel panEnsemble = new JPanel();
         panEnsemble.setLayout(new BoxLayout(panEnsemble, BoxLayout.Y_AXIS));
         panEnsemble.add(panCadre);
@@ -921,10 +901,8 @@ class FenetreMenu extends JFrame {
     public void creerDialogErr(String messageErr) {
         //création OptionPane, le message est de type erreur
         JOptionPane messErr = new JOptionPane();
-        messErr.showMessageDialog(this,messageErr, "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this,messageErr, "Erreur", JOptionPane.ERROR_MESSAGE);
     }
-
-    public Model getModel() { return model; }
 
     public SnakeButton getBoutonScores() {
         return boutonScores;

@@ -3,7 +3,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Chrono {
-    private Timer timer;
     private int time;
 
 
@@ -16,7 +15,7 @@ public class Chrono {
      * lance le chrono
      */
     public void setChrono(){
-        this.timer = new Timer();
+        Timer timer = new Timer();
 
         timer.schedule(new TimerTask(){
 

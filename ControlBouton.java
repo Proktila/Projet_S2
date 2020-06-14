@@ -146,7 +146,7 @@ public class ControlBouton implements ActionListener, ChangeListener {
             fenMenu.setVisible(false);
             model.getScore().setActualMode(fenMenu.getButTrad().getText());
             fenSnake  = new FenetreSnake(fenMenu, model);
-            ControlSnake controlSnake = new ControlSnake(fenSnake,model);
+            new ControlSnake(fenSnake,model);
 
         }
         if(a.getSource().equals(fenMenu.getButLaby())){
@@ -155,7 +155,7 @@ public class ControlBouton implements ActionListener, ChangeListener {
             fenMenu.setVisible(false);
             model.getScore().setActualMode(fenMenu.getButLaby().getText());
             fenSnake  = new FenetreSnake(fenMenu, model);
-            ControlSnake controlSnake = new ControlSnake(fenSnake,model);
+            new ControlSnake(fenSnake,model);
         }
         if(a.getSource().equals(fenMenu.getButChrono())){
             // lance le jeu labyrinthe
@@ -163,14 +163,14 @@ public class ControlBouton implements ActionListener, ChangeListener {
             fenMenu.setVisible(false);
             model.getScore().setActualMode(fenMenu.getButChrono().getText());
             fenSnake  = new FenetreSnake(fenMenu, model);
-            ControlSnake controlSnake = new ControlSnake(fenSnake,model);
+            new ControlSnake(fenSnake,model);
         }
         if(a.getSource().equals(fenMenu.getButDuo())){
             // lance le jeu labyrinthe
             model.setMode("duo");
             fenMenu.setVisible(false);
             fenSnake  = new FenetreSnake(fenMenu, model);
-            ControlSnake controlSnake = new ControlSnake(fenSnake,model);
+            new ControlSnake(fenSnake,model);
         }
         if(a.getSource().equals(fenMenu.getBackDifficulty())){
             fenMenu.getPanDifficulty().setVisible(false);
