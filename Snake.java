@@ -9,7 +9,7 @@ public class Snake {
     private ImageIcon upHead;
     private ImageIcon body;
 
-    private String skin = "basique";
+    private String skin;
     private String imgDir = "img/snake/";
 
     private boolean right = false;
@@ -61,7 +61,9 @@ public class Snake {
             case "gold" :
                 break;
 
-            case "cyborg" :
+            case "hack" :
+                this.skin="hack";
+                setSkinImg();
                 break;
 
             default:
@@ -93,7 +95,7 @@ public class Snake {
     public ImageIcon getBody() { return body; }
 
     public void setSnake(int[][] snake) { this.snake = snake; }
-    public void setSkin(String skin) { this.skins(this.skin);}
+    public void setSkin(String skin) { this.skins(skin); }
 
     public void setLeft(boolean left) { this.left = left; }
     public void setRight(boolean right) { this.right = right; }
