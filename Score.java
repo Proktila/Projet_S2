@@ -49,7 +49,8 @@ public class Score {
     //constructeur vide
     public Score(){}
 
-    //initialisation des listes
+    /**initialisation des listes
+     */
     public void initList(){
         listScore = new java.util.LinkedList<>();
         listPseudo = new java.util.LinkedList<>();
@@ -58,7 +59,8 @@ public class Score {
         listData = new java.util.LinkedList<>();
     }
 
-    //ajout du score, mode, difficulté, pseudo dans la liste correspondante
+    /**ajout du score, mode, difficulté, pseudo dans la liste correspondante
+     */
     public void addScore() {
         getListMode().add(getActualMode());
         getListDifficulty().add(getActualDifficulty());
@@ -66,7 +68,9 @@ public class Score {
         getListScore().add(String.valueOf(getActualScore()));
     }
 
-    //ajout des valeurs des scores,modes, difficultés et pseudo dans les fichiers textes correspondants
+    /**ajout des valeurs des scores,modes, difficultés et pseudo dans les fichiers textes correspondants
+        @throws java.io.IOException
+     */
     public void addScoreInFich() throws IOException {
         Files.write(getFichierMode(), getListMode(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
         Files.write(getFichierDiff(), getListDifficulty(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
@@ -74,8 +78,11 @@ public class Score {
         Files.write(getFichierScore(), getListScore(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
     }
 
-    //repère de l'indice du score dans la liste trié pour pouvoir trier le pseudo, la difficulté et le mode
-    //en fonction de cet indice
+    /**repère de l'indice du score dans la liste trié pour pouvoir trier le pseudo, la difficulté et le mode
+     en fonction de cet indice
+     @param score
+     @return int : l'indice
+     */
     public int indiceScore(Score score){
         int indScore;
         for (indScore = 0; indScore < score.getListScore().size(); indScore++) {
@@ -89,7 +96,8 @@ public class Score {
         return 0;
     }
 
-    //tri des scores dans la liste d'entier
+    /**tri des scores dans la liste d'entier
+     */
     public void triScore(){
         getListScore().clear();
         for (Integer myInt :getListData()) {
@@ -98,7 +106,9 @@ public class Score {
         }
     }
 
-    //méthodes qui initialise les fichiers (qui seront à lire)
+    /**méthodes qui initialise les fichiers (qui seront à lire)
+     * @throws java.io.IOException
+     */
     public void initFich() throws IOException {
         fileScore = new File("score/score.txt");
         filePseudo = new File("score/pseudo.txt");
@@ -111,7 +121,9 @@ public class Score {
         fileDiff.createNewFile();
     }
 
-    //méthode qui initialise les fichiers textes de lecture
+    /**méthode qui initialise les fichiers textes de lecture
+     * @throws java.io.FileNotFoundException
+     */
     public void initReaderFich() throws FileNotFoundException {
         fileReaderScore = new FileReader("score/score.txt");
         fileReaderPseudo = new FileReader("score/pseudo.txt");
@@ -119,7 +131,8 @@ public class Score {
         fileReaderDiff = new FileReader("score/difficulte.txt");
     }
 
-    //méthode qui lie initialise la lecture des fichiers à lire
+    /**méthode qui lie initialise la lecture des fichiers à lire
+     */
     public void readFich() {
         readerScore = new BufferedReader(getFileReaderScore());
         readerPseudo = new BufferedReader(getFileReaderPseudo());
@@ -127,7 +140,8 @@ public class Score {
         readerDiff = new BufferedReader(getFileReaderDiff());
     }
 
-    //méthode qui vide les listes
+    /**méthode qui vide les listes
+     */
     public void videScore(){
         getListMode().clear();
         getListDifficulty().clear();
@@ -136,7 +150,9 @@ public class Score {
         getListData().clear();
     }
 
-    //méthode qui vide les fichiers textes
+    /**méthode qui vide les fichiers textes
+     * @throws java.io.IOException
+     */
     public void videFich() throws IOException {
         FileWriter newFichScore = new FileWriter(getFileScore(),false);
         FileWriter newFichPseudo = new FileWriter(getFilePseudo(),false);
