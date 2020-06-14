@@ -246,7 +246,7 @@ public class ControlSnake implements KeyListener, ActionListener {
                 Sound.playSound("sound/death.wav", model.getVolumeBruits());
                 deathSoundPlayed = true;
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
-                ex.printStackTrace();
+                gameplay.getFenetreMenu().creerDialogErr(ex.getMessage());
             }
         }
         // si on est en mode duo tue le serpent qui mange l'autre

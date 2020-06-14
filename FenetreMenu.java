@@ -149,7 +149,6 @@ class FenetreMenu extends JFrame {
 
         try {
             model.setMusicClip(Sound.playMusic("sound/music.wav", model.getVolumeMusique()));
-            model.setMusicClip(Sound.playMusic("sound/music.wav", model.getVolumeMusique()));
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
             creerDialogErr(e.getMessage());
         }

@@ -414,12 +414,8 @@ class Gameplay extends JPanel{
                 // Bruit manger
                 try {
                     Sound.playSound("sound/eat.wav", model.getVolumeBruits());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (UnsupportedAudioFileException ex) {
-                    ex.printStackTrace();
-                } catch (LineUnavailableException ex) {
-                    ex.printStackTrace();
+                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+                    fenetreMenu.creerDialogErr(e.getMessage());
                 }
             }
         }
@@ -454,14 +450,9 @@ class Gameplay extends JPanel{
                 // Bruit objet
                 try {
                     Sound.playSound("sound/coin.wav", model.getVolumeBruits());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (UnsupportedAudioFileException ex) {
-                    ex.printStackTrace();
-                } catch (LineUnavailableException ex) {
-                    ex.printStackTrace();
+                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+                    fenetreMenu.creerDialogErr(e.getMessage());
                 }
-                // fin bruit objet
             }
         }
         model.getListeObjetsLaby().removeAll(toRemove);
