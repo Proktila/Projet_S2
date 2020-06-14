@@ -376,7 +376,7 @@ class FenetreMenu extends JFrame {
      * Creer le menu credits
      */
     public void addCredit(){
-        JLabel taText1 = new JLabel("Ce jeu à été concu par DUHOUX Arthur, DOYEN Lisa, ");
+        JLabel taText1 = new JLabel("Ce jeu à été conçu par DUHOUX Arthur, DOYEN Lisa, ");
         JLabel taText2 = new JLabel("DUBAIL Marion, GANARD theo, SCHNEIDER Nathan, VERWAERDE Julien,");
         JLabel taText3 = new JLabel("dans le cadre de notre projet tuteuré de S2.");
         JLabel taText4 = new JLabel("La musique utilisée sur le menu et en jeu est");
