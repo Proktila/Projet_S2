@@ -1,4 +1,5 @@
 import javax.sound.sampled.Clip;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,15 @@ class Model {
     private List<Fruit> listeFruit=new ArrayList<Fruit>();
     private java.util.List<Fruit> toAdd=new ArrayList<Fruit>();
     private Chrono chrono;
+
+    private final Color GREEN = new Color(50,99,23);
+    private final Color LIGHT_GREEN = new Color(99, 205, 42);
+    private final Color BLUE = new Color(47, 81, 103);
+    private final Color LIGHT_BLUE = new Color(85,220,238);
+    private final Font FONT_50 = new Font("Monospaced", Font.BOLD, 50);
+    private final Font FONT_38 = new Font("Monospaced", Font.BOLD, 18);
+    private final Font FONT_24 = new Font("Monospaced", Font.BOLD, 18);
+    private final Font FONT_18 = new Font("Monospaced", Font.BOLD, 18);
 
     public Model(){
         score = new Score();
@@ -484,6 +494,15 @@ class Model {
     public List<Fruit> getToAdd() { return toAdd; }
     public int getMultiplicateur() { return multiplicateur; }
     public Chrono getChrono() { return chrono; }
+
+    public Color getGREEN() { return GREEN; }
+    public Color getLIGHT_GREEN() { return LIGHT_GREEN; }
+    public Color getBLUE() { return BLUE; }
+    public Color getLIGHT_BLUE() { return LIGHT_BLUE; }
+    public Font getFONT_50() { return FONT_50; }
+    public Font getFONT_38() { return FONT_38; }
+    public Font getFONT_24() { return FONT_24; }
+    public Font getFONT_18() { return FONT_18; }
 
     public void setJ1(Snake j1) { this.j1 = j1; }
     public void setMode(String mode) { this.mode = mode; }

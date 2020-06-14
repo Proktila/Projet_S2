@@ -6,12 +6,6 @@ import java.awt.*;
 import java.io.IOException;
 
 class FenetreMenu extends JFrame {
-    private final Color GREEN = new Color(50,99,23);
-    private final Color LIGHT_GREEN = new Color(99, 205, 42);
-    private final Color BLUE = new Color(47, 81, 103);
-    private final Font TITLE_FONT = new Font("Monospaced", Font.BOLD, 50);
-    private final Font BTN_FONT = new Font("Monospaced", Font.BOLD, 18);
-
     private final Model model;
 
     // menu principal
@@ -110,7 +104,7 @@ class FenetreMenu extends JFrame {
         this.addMainMenu();
 
         this.setTitle("Sn'hack");
-        this.getContentPane().setBackground(GREEN);
+        this.getContentPane().setBackground(model.getGREEN());
         this.setLocation(100,0);
         this.setSize(1280, 720);
         this.setResizable(false);
@@ -221,8 +215,8 @@ class FenetreMenu extends JFrame {
         tableau.setDefaultRenderer(Object.class, render);
 
         // styles des titres des colonnes du tableau
-        tableau.getTableHeader().setBackground(LIGHT_GREEN);
-        tableau.getTableHeader().setForeground(BLUE);
+        tableau.getTableHeader().setBackground(model.getLIGHT_GREEN());
+        tableau.getTableHeader().setForeground(model.getBLUE());
         tableau.getTableHeader().setFont(new Font("Monospaced", Font.BOLD, 30));
 
         // espacement entre les celulles du tableau
@@ -287,9 +281,9 @@ class FenetreMenu extends JFrame {
 
         // SKIN PSEUDO
         tfPseudo = new JTextField(25);
-        tfPseudo.setFont(BTN_FONT);
-        tfPseudo.setForeground(LIGHT_GREEN);
-        tfPseudo.setBackground(BLUE);
+        tfPseudo.setFont(model.getFONT_18());
+        tfPseudo.setForeground(model.getLIGHT_GREEN());
+        tfPseudo.setBackground(model.getBLUE());
         tfPseudo.setText("Pseudo");
         tfPseudo.setPreferredSize(new Dimension(300,91));
 
@@ -367,7 +361,7 @@ class FenetreMenu extends JFrame {
         JPanel panelCredits = setupContent();
 
         JPanel content = new JPanel();
-        content.setBackground(BLUE);
+        content.setBackground(model.getBLUE());
         content.setBounds(280,170,720,425);
 
         applyStyle(taText1);
@@ -452,15 +446,15 @@ class FenetreMenu extends JFrame {
         applyStyle(lLangue);
         applyStyle(rbFrench);
         applyStyle(rbEnglish);
-        lSon.setFont(BTN_FONT);
-        lLangue.setFont(BTN_FONT);
+        lSon.setFont(model.getFONT_18());
+        lLangue.setFont(model.getFONT_18());
 
         // applique une dimension de 400px par 25px au JSlider et donne la couleur du background
         Dimension slDimensions = new Dimension(400,25);
         slVolumeMusique.setPreferredSize(slDimensions);
         slVolumeBruits.setPreferredSize(slDimensions);
-        slVolumeMusique.setBackground(GREEN);
-        slVolumeBruits.setBackground(GREEN);
+        slVolumeMusique.setBackground(model.getGREEN());
+        slVolumeBruits.setBackground(model.getGREEN());
 
         JPanel panSonTitre = new JPanel(new GridLayout(1,1));
         panSonTitre.add(lSon);
@@ -482,7 +476,7 @@ class FenetreMenu extends JFrame {
         panButtonCenter.add(backParam);
 
         JPanel panParametre = new JPanel();
-        panParametre.setBackground(GREEN);
+        panParametre.setBackground(model.getGREEN());
         panParametre.setBounds(240,150,800,525);
         panParametre.setLayout(new BoxLayout(panParametre, BoxLayout.Y_AXIS));
         panParametre.add(panSonTitre);
@@ -572,11 +566,11 @@ class FenetreMenu extends JFrame {
     public void createTitleScoreMenu(JLabel titre, JLabel img, JLabel img2){
         //panCoupe
         JPanel panImgDroite = new JPanel();
-        panImgDroite.setBackground(BLUE);
+        panImgDroite.setBackground(model.getBLUE());
         panImgDroite.add(img);
 
         JPanel panImgGauche = new JPanel();
-        panImgGauche.setBackground(BLUE);
+        panImgGauche.setBackground(model.getBLUE());
         panImgGauche.add(img2);
 
         // panel coupe + titre
@@ -588,7 +582,7 @@ class FenetreMenu extends JFrame {
 
         // pan titre2
         pantitre2 = new JPanel();
-        pantitre2.setBackground(GREEN);
+        pantitre2.setBackground(model.getGREEN());
         pantitre2.add(pantitre);
 
         this.setContentPane(pantitre2);
@@ -605,8 +599,8 @@ class FenetreMenu extends JFrame {
         pan.add(tableau.getTableHeader());
         JScrollPane scrollPane = new JScrollPane(tableau, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setLayout(new ScrollPaneLayout());
-        scrollPane.setBackground(GREEN);
-        scrollPane.setBorder(BorderFactory.createLineBorder(GREEN));
+        scrollPane.setBackground(model.getGREEN());
+        scrollPane.setBorder(BorderFactory.createLineBorder(model.getGREEN()));
         pan.add(scrollPane);
         pan.setPreferredSize(new Dimension(700, 250));
         //création Jpanel avec tous les label des médailles de droite
@@ -614,7 +608,7 @@ class FenetreMenu extends JFrame {
         panImgMedailleDroite.setLayout(new BoxLayout(panImgMedailleDroite, BoxLayout.Y_AXIS));
         //création d'une box area pour ajuster la position des médailles
         panImgMedailleDroite.add(Box.createRigidArea(new Dimension(0, 25)));
-        panImgMedailleDroite.setBackground(GREEN);
+        panImgMedailleDroite.setBackground(model.getGREEN());
         panImgMedailleDroite.add(lMedaille1Droite);
         panImgMedailleDroite.add(lMedaille2Droite);
         panImgMedailleDroite.add(lMedaille3Droite);
@@ -624,43 +618,43 @@ class FenetreMenu extends JFrame {
         //création d'une box area pour ajuster la position des médailles
         panImgMedailleGauche.setLayout(new BoxLayout(panImgMedailleGauche, BoxLayout.Y_AXIS));
         panImgMedailleGauche.add(Box.createRigidArea(new Dimension(0, 25)));
-        panImgMedailleGauche.setBackground(GREEN);
+        panImgMedailleGauche.setBackground(model.getGREEN());
         panImgMedailleGauche.add(lMedaille1Gauche);
         panImgMedailleGauche.add(lMedaille2Gauche);
         panImgMedailleGauche.add(lMedaille3Gauche);
 
         //panel supplémentaire regroupant le panel qui contient les médaille de droite
         JPanel panImgMedailleDroite2 = new JPanel();
-        panImgMedailleDroite2.setBackground(GREEN);
+        panImgMedailleDroite2.setBackground(model.getGREEN());
         panImgMedailleDroite2.add(panImgMedailleDroite);
 
         //panel supplémentaire regroupant le panel qui contient les médaille de gauche
         JPanel panImgMedailleGauche2 = new JPanel();
-        panImgMedailleGauche2.setBackground(GREEN);
+        panImgMedailleGauche2.setBackground(model.getGREEN());
         panImgMedailleGauche2.add(panImgMedailleGauche);
 
         // panel médaille + tableau
         JPanel panTable = new JPanel();
         panTable.setLayout(new BoxLayout(panTable, BoxLayout.X_AXIS));
-        panTable.setBackground(GREEN);
+        panTable.setBackground(model.getGREEN());
         panTable.add(panImgMedailleGauche2);
         panTable.add(pan);
         panTable.add(panImgMedailleDroite2);
 
         //panel bouton vide tableau
         JPanel panBouttonClear = new JPanel();
-        panBouttonClear.setBackground(GREEN);
+        panBouttonClear.setBackground(model.getGREEN());
         panBouttonClear.add(bClear);
 
         // pan tableau2
         JPanel pantable2 = new JPanel();
-        pantable2.setBackground(GREEN);
+        pantable2.setBackground(model.getGREEN());
         pantable2.add(panTable);
         pantable2.add(panBouttonClear);
 
         // pan boutton
         JPanel panBoutton = new JPanel();
-        panBoutton.setBackground(GREEN);
+        panBoutton.setBackground(model.getGREEN());
         panBoutton.add(Box.createRigidArea(new Dimension(0, 200)));
         panBoutton.add(bRetour);
 
@@ -679,7 +673,7 @@ class FenetreMenu extends JFrame {
 
         //la panel final est affiché
         JPanel panFinal = new JPanel();
-        panFinal.setBackground(GREEN);
+        panFinal.setBackground(model.getGREEN());
         panFinal.add(panEnsemble);
 
         this.setContentPane(panFinal);
@@ -695,7 +689,7 @@ class FenetreMenu extends JFrame {
         titreP = new JPanel();
         titreP.setLayout(new GridBagLayout());
         titreP.setBounds(0,25,1280,125);
-        titreP.setBackground(BLUE);
+        titreP.setBackground(model.getBLUE());
         if(img != null){
             titreP.add(img);
             titreP.add(Box.createHorizontalStrut(50));
@@ -714,9 +708,9 @@ class FenetreMenu extends JFrame {
      */
     public void setupCb(JComboBox cb){
         cb.setPreferredSize(new Dimension(300,91));
-        cb.setBackground(BLUE);
-        cb.setForeground(LIGHT_GREEN);
-        cb.setFont(BTN_FONT);
+        cb.setBackground(model.getBLUE());
+        cb.setForeground(model.getLIGHT_GREEN());
+        cb.setFont(model.getFONT_18());
     }
 
     /**
@@ -754,9 +748,9 @@ class FenetreMenu extends JFrame {
      */
     public void setupTitle(JLabel l){
         l.setHorizontalAlignment(SwingConstants.LEFT);
-        l.setFont(TITLE_FONT);
-        l.setForeground(LIGHT_GREEN);
-        l.setBackground(BLUE);
+        l.setFont(model.getFONT_50());
+        l.setForeground(model.getLIGHT_GREEN());
+        l.setBackground(model.getBLUE());
         l.setOpaque(true);
     }
 
@@ -766,9 +760,9 @@ class FenetreMenu extends JFrame {
      * @param obj objet a editer
      */
     public void applyStyle(JComponent obj) {
-        obj.setBackground(GREEN);
-        obj.setFont(BTN_FONT);
-        obj.setForeground(LIGHT_GREEN);
+        obj.setBackground(model.getGREEN());
+        obj.setFont(model.getFONT_18());
+        obj.setForeground(model.getLIGHT_GREEN());
     }
 
     /**
@@ -778,7 +772,7 @@ class FenetreMenu extends JFrame {
     public JPanel setupContent(){
         JPanel c = new JPanel();
         c.setLayout(null);
-        c.setBackground(GREEN);
+        c.setBackground(model.getGREEN());
         c.add(titreP);
         return c;
     }

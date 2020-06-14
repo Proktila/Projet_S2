@@ -30,12 +30,7 @@ public class FenetreSnake extends JFrame {
 }
 
 class Gameplay extends JPanel{
-
     private final Model model;
-    private final Color blue = new Color(47, 81, 103);
-    private final Color lightGreen = new Color(99, 205, 42);
-    private final Color lightBlue = new Color(85,220,238);
-
 
     // variable qui sert à positionner le serpent au début
     private int begin = 0;
@@ -48,7 +43,6 @@ class Gameplay extends JPanel{
     private SnakeButton homeBut;
 
     private Fruit firstFruit = new Fruit(); // le premier fruit a apparaitre
-
     private String[][] grid; // contient le labyrinthe
 
     private ImageIcon bg; // fond d'écran
@@ -72,7 +66,7 @@ class Gameplay extends JPanel{
         // le panel qui contien les boutons
         JPanel panelButton = new JPanel();
         panelButton.setLayout(null);
-        panelButton.setBackground(blue);
+        panelButton.setBackground(model.getBLUE());
         panelButton.setBounds(0,0,280,720);
 
         //créeation du bouton pause
@@ -217,7 +211,7 @@ class Gameplay extends JPanel{
         int[][] snake = model.getJ1().getSnake();
 
         // Dessine la bande bleu sur le côtés
-        g.setColor(blue);
+        g.setColor(model.getBLUE());
         g.fillRect(720,0,280,720);
 
         // Dessine le milieu du jeu
@@ -268,10 +262,10 @@ class Gameplay extends JPanel{
         }
         // affiche la pause
         if(pause){
-            g.setColor(blue);
+            g.setColor(model.getBLUE());
             g.fillRect(120,235,500,250);
-            g.setColor(lightGreen);
-            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            g.setColor(model.getLIGHT_GREEN());
+            g.setFont(model.getFONT_50());
             // Dessine la taille du serpent
             g.drawString("PAUSE",300,300);
             g.setFont(new Font("Monospaced", Font.BOLD, 25));
@@ -294,7 +288,7 @@ class Gameplay extends JPanel{
             snake[0][1]=20;
         }
         // affichage personallisé pour les 2 joueurs
-        g.setColor(lightGreen);
+        g.setColor(model.getLIGHT_GREEN());
         g.setFont(new Font("Monospaced", Font.BOLD, 18));
         g.drawString("J1",740,40);
         showScoreIndiv(g);
@@ -455,14 +449,14 @@ class Gameplay extends JPanel{
      */
     public void deadTraditionnel(Graphics g){
         if(model.getJ1().isDead()){
-            g.setColor(blue);
+            g.setColor(model.getBLUE());
             g.fillRect(120,225,500,250);
-            g.setColor(lightGreen);
-            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            g.setColor(model.getLIGHT_GREEN());
+            g.setFont(model.getFONT_50());
             g.drawString("GAME OVER ",230,300);
             g.drawString("Scores: "+model.getJ1().getScore(),230,350);
             g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
-            g.setFont(new Font("Monospaced", Font.BOLD, 24));
+            g.setFont(model.getFONT_24());
             g.drawString("Appuyer sur espace pour rejouer",150,450);
         }
     }
@@ -473,14 +467,14 @@ class Gameplay extends JPanel{
      */
     public void deadChrono(Graphics g){
         if(model.getJ1().isDead()){
-            g.setColor(blue);
+            g.setColor(model.getBLUE());
             g.fillRect(120,225,500,250);
-            g.setColor(lightGreen);
-            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            g.setColor(model.getLIGHT_GREEN());
+            g.setFont(model.getFONT_50());
             g.drawString("TIME OVER",230,300);
             g.drawString("Scores: "+model.getJ1().getScore(),230,350);
             g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
-            g.setFont(new Font("Monospaced", Font.BOLD, 24));
+            g.setFont(model.getFONT_24());
             g.drawString("Appuyer sur espace pour rejouer",150,450);
         }
     }
@@ -492,15 +486,15 @@ class Gameplay extends JPanel{
      */
     public void deadLaby(Graphics g){
         if( model.getJ1().isWinLaby()){
-            g.setColor(blue);
+            g.setColor(model.getBLUE());
             g.fillRect(120,225,500,250);
-            g.setColor(lightGreen);
-            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            g.setColor(model.getLIGHT_GREEN());
+            g.setFont(model.getFONT_50());
             g.drawString("Win! ",230,300);
             g.drawString("Scores: "+model.getJ1().getScore(),230,350);
             // Dessine la taile du serpent
             g.drawString("Taille: "+model.getJ1().getTaille(),230,400);
-            g.setFont(new Font("Monospaced", Font.BOLD, 24));
+            g.setFont(model.getFONT_24());
             g.drawString("Appuyer sur espace pour rejouer",150,450);
             model.getJ1().setWinLaby(false);
         }
@@ -522,17 +516,17 @@ class Gameplay extends JPanel{
                 best = model.getJ2();
                 s = "J2";
             }
-            g.setColor(blue);
+            g.setColor(model.getBLUE());
             g.fillRect(120,225,500,275);
-            g.setColor(lightGreen);
-            g.setFont(new Font("Monospaced", Font.BOLD, 50));
+            g.setColor(model.getLIGHT_GREEN());
+            g.setFont(model.getFONT_50());
             g.drawString("GAME OVER ",230,300);
-            g.setFont(new Font("Monospaced", Font.BOLD, 38));
+            g.setFont(model.getFONT_38());
             g.drawString(s + " a gagné",250,350);
             // Dessine la taile du serpent
             g.drawString("avec ",325,400);
             g.drawString(best.getScore() + " points",280,430);
-            g.setFont(new Font("Monospaced", Font.BOLD, 24));
+            g.setFont(model.getFONT_24());
             g.drawString("Appuyer sur espace pour rejouer",150,475);
         }
     }
@@ -544,11 +538,11 @@ class Gameplay extends JPanel{
      * affiche le fruit actuellement à l'écran
      */
     public void showInfoFruitStyle(Graphics g, int k, int i){
-        g.setColor(lightBlue);
+        g.setColor(model.getLIGHT_BLUE());
         g.drawString("Type Fruit/Légume: ", 740, k);
         g.setColor(new Color(153, 241, 188));
         g.drawString("" + model.getListeFruit().get(i).getTypeFruit(), 740, k+20);
-        g.setColor(lightBlue);
+        g.setColor(model.getLIGHT_BLUE());
         g.drawString("Effet: ", 740, k+60);
         g.setColor(new Color(225, 245, 228));
         g.drawString("" + model.getListeFruit().get(i).getEffet(), 740, k+80);
@@ -587,7 +581,7 @@ class Gameplay extends JPanel{
      * sur la droite de l'écran
      */
     public void showScoreIndiv(Graphics g){
-        g.setColor(lightGreen);
+        g.setColor(model.getLIGHT_GREEN());
         g.setFont(new Font("Monospaced", Font.BOLD, 18));
         if(model.getMode().equals("chrono")){
             g.drawString("Temps " + model.getChrono().getTime(), 740, 40);
