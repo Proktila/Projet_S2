@@ -7,6 +7,16 @@ import java.awt.*;
 /**class qui permet de mettre un fond de couleur sur les 3 premières lignes du tableau**/
 class Tableau extends DefaultTableCellRenderer {
 
+    /*** Methode permettant de définir une couleur de fond particulière
+     * pour la ligne 0, 1, 2
+     * @param table : composant JTable
+     * @param value : objets dans la JTable
+     * @param isSelected
+     * @param hasFocus
+     * @param row : ligne
+     * @param column : colonne
+     * @return Component
+     */
     public Component getTableCellRendererComponent(JTable table, Object value,
                                                    boolean isSelected, boolean hasFocus,
                                                    int row, int column) {
@@ -16,7 +26,6 @@ class Tableau extends DefaultTableCellRenderer {
             table.getColumnModel().getColumn(i).setCellRenderer(this);
 
         }
-
         if (row == 0) {
             Color clr = new Color(229, 220, 192);
             this.setBackground(clr);
@@ -43,7 +52,6 @@ class Tableau extends DefaultTableCellRenderer {
 
         return this;
     }
-
 }
 
 /**FIN CLASS TABLERENDERER**/
