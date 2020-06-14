@@ -21,6 +21,9 @@ public class FenetreSnake extends JFrame {
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Sn'hack");
+        Image icone =Toolkit.getDefaultToolkit().getImage("img/icone.png");
+        this.setIconImage(icone);
     }
 
     public Gameplay getGameplay() { return gameplay; }

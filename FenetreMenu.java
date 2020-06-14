@@ -160,7 +160,7 @@ class FenetreMenu extends JFrame {
      * Initialisation des objets du menu principal
      */
     public void initMenuPrincipal(){
-        lMenuPrincipal = new JLabel(model.textFromLang("Menu principal", "Main menu"));
+        lMenuPrincipal = new JLabel(model.textFromLang("Sn'hack", "Sn'hack"));
         setupTitle(lMenuPrincipal);
         createTitle(lMenuPrincipal,null,null);
 
